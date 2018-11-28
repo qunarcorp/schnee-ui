@@ -1,0 +1,12 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.anu-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+}

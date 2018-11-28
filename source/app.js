@@ -1,7 +1,20 @@
 import React from '@react';
 import './pages/index/index';
-
-
+import './pages/demo/button/index';
+import './pages/demo/checkbox/index';
+import './pages/demo/input/index';
+import './pages/demo/slider/index';
+import './pages/demo/picker/index';
+import './pages/demo/radio/index';
+import './pages/demo/textarea/index';
+import './pages/demo/label/index';
+import './pages/demo/view/index';
+import './pages/demo/scrollView/index';
+import './pages/demo/movableView/index';
+import './pages/demo/image/index';
+import './pages/demo/video/index';
+import './pages/demo/progress/index';
+import './pages/demo/switch/index';
 import './pages/demo/swiper/index';
 
 import './app.scss';

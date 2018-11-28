@@ -6,13 +6,16 @@ class P extends React.Component {
 
     constructor(props) {
         super(props);
+        const ROOT_PATH = '/pages/demo';
         this.state = {
-            list: [
-                {
-                    title: 'Swiper',
-                    url: '/pages/demo/native/swiper1/index'
-                }
-            ]
+            list: 'button,checkbox,input,slider,picker,switch,progress,radio,swiper,textarea,label,image,video'
+                .split(',')
+                .map(function(name) {
+                    return {
+                        url: `${ROOT_PATH}/${name}/index`,
+                        name: name
+                    };
+                })
         };
     }
 
@@ -35,7 +38,7 @@ class P extends React.Component {
                 <div class="anu-block">
                     {this.state.list.map(function(item) {
                         return (<div class="anu-item" onTap={this.goto.bind(this, item.url)}>
-                            <text>{item.title}</text>
+                            <text>{item.name}</text>
                         </div>);
                     })}
                 </div>
