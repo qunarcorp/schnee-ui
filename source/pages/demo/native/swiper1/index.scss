@@ -1,0 +1,15 @@
+.swiper-content {
+    display: flex;
+    flex-direction: column;
+    border: 4px solid black;
+    background-color: red;
+    width: 100%;
+    height: 200px;
+}
+
+.anu-swiper__item {
+    flex-grow:1;
+    flex-shrink:0;
+    width: 100%;
+    height: 100%;
+}
