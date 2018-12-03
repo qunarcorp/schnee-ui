@@ -6,13 +6,29 @@ import Swiper from '@components/Swiper/index';
 class SwiperDemo extends React.Component {
     render() {
         return (
-            <Swiper>
-                {[0,1,2,3,4,5].map(function(item) {
-                    return <div className="anu-swiper__item">
-                        <div className="swiper-content">{item}</div>
-                    </div>;
-                })}
-            </Swiper>
+            <div>
+                <Swiper
+                    indicatorDots={true}
+                    autoPlay={true}
+                    interval={2500}
+                    style={{ margin: '80px', height: '400px' }}
+                    onChange={(e) => console.log(e)}
+                    onAnimationfinish={(e) => console.log(e)}
+                >
+                    {[0,1,2,3,4,5].map(function(item) {
+                        return <div className="anu-swiper__item">
+                            <div className="swiper-content">{item}</div>
+                        </div>;
+                    })}
+                </Swiper>
+                <Swiper indicatorDots={true} vertical={true} style={{ margin: '80px', height: '400px' }}>
+                    {[0,1,2,3,4,5].map(function(item) {
+                        return <div className="anu-swiper__item">
+                            <div className="swiper-content">{item}</div>
+                        </div>;
+                    })}
+                </Swiper>
+            </div>
         );
     }
 }

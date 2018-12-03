@@ -3,10 +3,11 @@
     flex-direction: column;
     overflow: hidden;
 }
+
 .anu-swiper__wrapper {
     width: 100%;
     height: 100%;
-    transition: transform .4s;
+    transition-property: transform;
 }
 
 .anu-swiper__content {
@@ -17,7 +18,7 @@
 }
 
 .anu-swiper__content--transition {
-    transition: transform .4s;
+    transition-property: transform;
 }
 
 .anu-swiper__item {
@@ -29,19 +30,28 @@
 
 .anu-swiper__pagination {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     transform:translate(0, -18px);
-
 }
 
 .anu-swiper__pagination-bullet {
     width: 8px;
     height: 8px;
     border-radius: 100%;
-    margin: 0 5px;
-    background-color: #eee;
+    margin: 0 4px;
 }
 
-.anu-swiper__pagination-bullet--active {
-    background-color: #1aad19;
+.anu-swiper--vertical {
+    flex-direction: row;
+    .anu-swiper__content {
+        flex-direction: column;
+    }
+    .anu-swiper__pagination {
+        flex-direction: column;
+        transform:translate(-18px, 0);
+    }
+    .anu-swiper__pagination-bullet {
+        margin: 4px 0;
+    }
 }

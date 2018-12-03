@@ -12,22 +12,23 @@ function createArrayByLength(length) {
 
 class Swiper extends React.Component {
     static defaultProps = {
-        indicatorDots: false,
-        indicatorColor: 'rgba(0, 0, 0, .3)',
-        indicatorActiveColor: '#000',
-        autoplay: false,
-        current: 0,
+        style: false, // Swiper 样式
+        indicatorDots: false, // 是否显示面板指示点
+        indicatorColor: 'rgba(0, 0, 0, .3)', // 指示点颜色
+        indicatorActiveColor: '#000', // 当前选中的指示点颜色
+        autoplay: false, // 是否自动切换
+        current: 0, // 当前所在滑块的 index
         cuurentItemId: '',
-        interval: 5000,
-        duration: 500,
+        interval: 5000, // 自动切换时间间隔
+        duration: 500, // 滑动动画时长
         circular: false,
-        vertical: false,
+        vertical: false, // 滑动方向是否为纵向
         previousMargin: '0px',
         nextMargin: '0px',
         displayMultipleItems: 1,
         skipHiddenItemLayout: false,
-        bindchange: () => {},
-        bindanimationfinish: () => {}
+        // onChange: () => {}, // current 改变时会触发 change 事件，event.detail = {current: current, source: source}
+        // onAnimationfinish: () => {} // 动画结束时会触发 animationfinish 事件，event.detail 同上
     };
 
     constructor() {
@@ -45,10 +46,10 @@ class Swiper extends React.Component {
         this.pageX = 0;
         this.pageY = 0;
         this.arr = [];
+        this.intervalId = null;
     }
 
     handleTouchStart(e) {
-        console.log('handleTouchStart');
         const point = e.touches ? e.touches[0] : e;
         this.pageX = point.pageX;
         this.pageY = point.pageY;
@@ -58,39 +59,32 @@ class Swiper extends React.Component {
     }
 
     handleTouchMove(e) {
-        console.log('handleTouchMove');
         const point = e.touches ? e.touches[0] : e;
         const deltaX = point.pageX - this.pageX;
         const deltaY = point.pageY - this.pageY;
-        this.setState({
-            translateX: this.state.translateX + deltaX
-        });
+        if (this.props.vertical) {
+            this.setState({
+                translateY: this.state.translateY + deltaY
+            });
+        } else {
+            this.setState({
+                translateX: this.state.translateX + deltaX
+            });
+        }
         this.pageX = point.pageX;
         this.pageY = point.pageY;
     }
 
     handleTouchEnd(e) {
-        console.log('handleTouchEnd');
-        const deltaX = this.state.translateX;
-        const deltaY = this.state.translateY;
+        const deltaLength = this.props.vertical ? this.state.translateY : this.state.translateX
         let nextIndex = this.state.curIndex;
-        if (deltaX < -30) {
+        if (deltaLength < -30) {
             if (this.state.curIndex + 1 < this.count) {
                 nextIndex++;
-                setTimeout(() => {
-                    this.setState({
-                       curIndex: this.state.curIndex + 1
-                    });
-                }, 400);
             }
-        } else if (deltaX > 30) {
+        } else if (deltaLength > 30) {
             if (this.state.curIndex - 1 >= 0) {
                 nextIndex--;
-                setTimeout(() => {
-                    this.setState({
-                        curIndex: this.state.curIndex - 1
-                    });
-                }, 400);
             }
         }
         this.setState({
@@ -99,11 +93,33 @@ class Swiper extends React.Component {
         this.goto(nextIndex);
     }
 
+    autoPlay() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
+        this.intervalId = setInterval(() => {
+            this.state.touching || this.goto((this.state.curIndex + 1) % this.count );
+        }, this.props.interval);
+    }
+
     goto(index) {
-        this.setState({
-            translateX: 0,
-            wrapperTranslateX: `-${100 * index}%`
-        });
+        const { onChange, onAnimationfinish, duration } = this.props;
+        let state = {
+            curIndex: index,
+            translateX: 0
+        };
+        this.props.vertical ?
+            (state.translateY = 0, state.wrapperTranslateY = `-${100 * index}%`) :
+            (state.translateX = 0, state.wrapperTranslateX = `-${100 * index}%`);
+        this.setState(state);
+        onChange && onChange({ detail: {
+            current: index
+        } });
+        setTimeout(() => {
+            onAnimationfinish && onAnimationfinish({ detail: {
+                current: index
+            } });
+        }, duration);
     }
 
     calculateTransform(x, y) {
@@ -117,17 +133,27 @@ class Swiper extends React.Component {
         this.setState({
            arr: createArrayByLength(this.count)
         });
+        this.props.autoPlay && this.autoPlay();
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        nextProps.autoPlay ?
+            this.autoPlay() :
+            (this.intervalId && clearInterval(this.intervalId));
+    }
+
+    componentWillUnmount() {
+        this.intervalId && clearInterval(this.intervalId);
     }
 
     render() {
-        console.log(this.props.children, this.state.arr);
         return (
-            <div className="anu-swiper">
+            <div className={this.props.vertical ? 'anu-swiper anu-swiper--vertical' : 'anu-swiper'} style={this.props.style}>
                 <div className="anu-swiper__wrapper"
-                    style={{ transform: this.calculateTransform(this.state.wrapperTranslateX, this.state.wrapperTranslateY) }}
+                    style={{ transitionDuration: this.props.duration / 1000 + 's', transform: this.calculateTransform(this.state.wrapperTranslateX, this.state.wrapperTranslateY) }}
                 >
                     <div className={this.state.touching ? 'anu-swiper__content' : 'anu-swiper__content anu-swiper__content--transition'}
-                        style={{ transform: this.calculateTransform(this.state.translateX, this.state.translateY) }}
+                        style={{ transitionDuration: this.state.touching ? '0' : this.props.duration / 1000 + 's', transform: this.calculateTransform(this.state.translateX, this.state.translateY) }}
                         onTouchStart={this.handleTouchStart}
                         onTouchMove={this.handleTouchMove}
                         onTouchEnd={this.handleTouchEnd}
@@ -136,13 +162,13 @@ class Swiper extends React.Component {
                         {this.props.children}
                     </div>
                 </div>
-                <div className="anu-swiper__pagination">
+                {this.props.indicatorDots ? <div className="anu-swiper__pagination">
                     {this.state.arr.map(function(item, index) {
                         return (index === this.state.curIndex ?
-                            <div className="anu-swiper__pagination-bullet anu-swiper__pagination-bullet--active"></div> :
-                            <div className="anu-swiper__pagination-bullet"></div>);
+                            <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: this.props.indicatorActiveColor }}></div> :
+                            <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: this.props.indicatorColor }}></div>);
                     })}
-                </div>
+                </div> : null}
             </div>
         );
     }

@@ -4,7 +4,11 @@
     border: 4px solid black;
     background-color: red;
     width: 100%;
-    height: 200px;
+    height: 100%;
+    box-sizing: border-box;
+    justify-content:center;
+    align-items:center;
+
 }
 
 .anu-swiper__item {
