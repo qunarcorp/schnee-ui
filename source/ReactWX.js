@@ -882,16 +882,13 @@ function injectAPIs(ReactWX, facade, override) {
 }
 
 var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-function _uuid() {
-    return (Math.random() + '').slice(-4);
-}
 var shareObject = {
     app: {}
 };
 function _getApp() {
     return shareObject.app;
 }
-if (typeof getApp == 'function') {
+if (typeof getApp === 'function') {
     _getApp = getApp;
 }
 function callGlobalHook(method, e) {
@@ -911,9 +908,6 @@ function _getCurrentPages() {
     if (typeof getCurrentPages === 'function') {
         return getCurrentPages();
     }
-}
-function getUUID() {
-    return _uuid() + _uuid();
 }
 function updateMiniApp(instance) {
     if (!instance || !instance.wx) {
@@ -941,6 +935,7 @@ function isReferenceType(val) {
 function useComponent(props) {
     var is = props.is;
     var clazz = registeredComponents[is];
+    props.key = props.key || props['data-instance-uid'] || new Date() - 0;
     delete props.is;
     var args = [].slice.call(arguments, 2);
     args.unshift(clazz, props);
@@ -2301,8 +2296,10 @@ function onBeforeRender(fiber) {
     var type = fiber.type;
     var instance = fiber.stateNode;
     if (type.reactInstances) {
-        var uuid = fiber.props['data-instance-uid'] || 'i' + getUUID();
-        instance.instanceUid = uuid;
+        var uuid = fiber.props['data-instance-uid'] || null;
+        if (!instance.instanceUid) {
+            instance.instanceUid = uuid;
+        }
         if (fiber.props.isPageComponent) {
             _getApp().page = instance;
         }
@@ -2494,21 +2491,17 @@ function registerComponent(type, name) {
         lifetimes: {
             attached: function attached() {
                 usingComponents[name] = type;
-                var uuid = this.dataset.instanceUid;
-                console.log('attached', uuid);
-                for (var i = reactInstances.length - 1; i >= 0; i--) {
+                var uuid = this.dataset.instanceUid || null;
+                for (var i = 0; i < reactInstances.length; i++) {
                     var reactInstance = reactInstances[i];
                     if (reactInstance.instanceUid === uuid) {
                         reactInstance.wx = this;
                         this.reactInstance = reactInstance;
                         updateMiniApp(reactInstance);
-                        reactInstances.splice(i, 1);
-                        break;
+                        return reactInstances.splice(i, 1);
                     }
                 }
-                if (!this.reactInstance) {
-                    wxInstances.push(this);
-                }
+                wxInstances.push(this);
             },
             detached: function detached() {
                 var t = this.reactInstance;
@@ -2516,7 +2509,7 @@ function registerComponent(type, name) {
                     t.wx = null;
                     this.reactInstance = null;
                 }
-                console.log('detached...', name);
+                console.log('detached ' + name + ' \u7EC4\u4EF6');
             }
         },
         methods: {

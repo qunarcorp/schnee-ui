@@ -83,3 +83,6 @@ dist/
 src/
 
 build/
+
+source/ReactWX.js
+source/ReactBU.js
