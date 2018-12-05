@@ -48,5 +48,3 @@ Progress.defaultProps = {
 };
 
 export default Progress;
-
-

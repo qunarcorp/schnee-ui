@@ -1,4 +1,5 @@
 .page {
+    margin: 20px;
   flex: 1;
   flex-direction: column;
   width: 100%;
@@ -12,9 +13,9 @@
   .col {
     display:flex;
     flex-direction: column;
-    
+
   }
-  
+
   .c-flex__item {
     flex: 1;
   }
@@ -38,7 +39,7 @@
       border-bottom-right-radius:5px;
     }
     .radius-bottom-right image {
-      
+
       border-bottom-left-radius: 5px;
     }
     .item-wrapper {
@@ -104,7 +105,7 @@
     height: 130rpx !important;
     display: flex;
     flex-direction: row;
-    
+
     .special-offer-item {
       flex: 1;
       display: flex;

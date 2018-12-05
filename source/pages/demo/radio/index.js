@@ -19,26 +19,25 @@ class P extends React.Component {
 
     radioChange(e) {
         // eslint-disable-next-line
-        console.log('radio发生change事件，携带value值为：', e.value);
+        console.log('radio发生change事件，携带value值为：', e.value, e);
     }
 
     render() {
         return (
           <div class="container">
           <RadioGroup class="radio-group" onChange={this.radioChange}>
-              {this.state.items.map(function(item) {
-                  return (
-                    <div style={{marginBottom: '18px'}}>
-                        {/* <label class="radio">
-                          {item.value}
-                      </label> */}
-                      <Radio
-                       value={item.value}
-                       checked={item.checked}
-                      />
-                    </div>
-                  );
-              })}
+              <radio checked={true} />
+              <radio />
+              <radio disabled />
+              <Radio />
+              <Radio value="USA" text="美国" />
+              <Radio value="USA" text="美国" checked={true} />
+              <Radio value="USA" text="美国" size="large" />
+              <Radio value="USA" text="美国" size="small" />
+              <Radio value="USA" text="美国" isRight={false} />
+              <Radio value="USA" text="美国" color="red" />
+              <Radio value="USA" text="美国" color="red" disabled={true} />
+              <Radio value="USA" text="美国" color="red" disabled={true} checked={true} />
           </RadioGroup>
       </div>
         );
