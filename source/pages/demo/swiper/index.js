@@ -6,7 +6,7 @@ import Swiper from '@components/Swiper/index';
 class SwiperDemo extends React.Component {
     render() {
         return (
-            <div>
+            <div className="col">
                 <Swiper
                     indicatorDots={true}
                     autoPlay={true}

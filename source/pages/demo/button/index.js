@@ -44,7 +44,7 @@ class P extends React.Component {
   }
   render() {
     return (
-      <div class="container button-wrapper col">
+      <div class="col">
         <div class="item">
           <Button
             class="item"
@@ -70,14 +70,14 @@ class P extends React.Component {
         </div>
         <div class="item">
           <Button class="item" type="warn"
-           disabled={this.state.disabled} 
+           disabled={this.state.disabled}
            plain={this.state.plain}
            loading={this.state.loading}
            >
             warn
           </Button>
           <Button class="item" type="warn"
-           disabled={this.state.disabled} 
+           disabled={this.state.disabled}
            plain={this.state.plain}
            >
             warn1111
