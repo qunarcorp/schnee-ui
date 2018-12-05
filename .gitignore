@@ -84,5 +84,8 @@ src/
 
 build/
 
+sign/
+
 source/ReactWX.js
 source/ReactBU.js
+source/ReactQuick.js
