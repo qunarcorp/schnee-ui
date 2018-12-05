@@ -1,12 +1,20 @@
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.checkbox-container {
+    display: flex;
+    align-items: center;
 }
 
-.col {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
+.checkbox {
+    border-radius:4px;
+    border: 1px solid #d1d1d1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox__check {
+    transform: scale(1.5, 1);
+}
+
+.checkbox__check::after {
+    content: '\2713';
 }

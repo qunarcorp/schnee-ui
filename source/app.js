@@ -33,4 +33,3 @@ class Global extends React.Component {
 //React.applyAppStore(store);
 // eslint-disable-next-line
 export default App(new Global());
-

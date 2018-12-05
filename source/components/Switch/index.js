@@ -123,7 +123,7 @@ Switch.defaultProps = {
     backgroundColor: '#ffffff'
   },
   wrapperStyle: {
-    width: '156px',
+    width: '140px',
     height: '76px',
     borderRadius: '38px',
     backgroundColor: '#C1C1C1'
