@@ -1,5 +1,5 @@
 import React from '@react';
-// import './index.scss';
+import './index.scss';
 import Radio from '@components/Radio/index';
 import RadioGroup from '@components/RadioGroup/index';
 class P extends React.Component {
