@@ -16,8 +16,8 @@ function collectRadioInstances(p, ret, instance) {
 }
 
 const styleConfig = {
-    check_width: 30,
-    thumb_width: 20,
+    check_width: 34,
+    thumb_width: 24,
     gap: 4
 };
 
@@ -119,30 +119,34 @@ class Radio extends React.Component {
     }
 
     render() {
-        console.log('this.state.', this.state.thumb_width)
         return (
-            <div class="radio-container">
+            <div class="nnc-radio-container">
                 {!this.props.isRight && <text>{this.props.text}</text>}
                 <div
-                    class="radio"
+                    class="nnc-radio"
                     onClick={this.handleClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
                         borderColor: this.props.disabled ? DISABLED_ENHANCE_COLOR : (this.state.checked ? this.props.color : UNCHECKED_COLOR),
-                        marginLeft: this.props.isRight ? '0px' : '10px',
-                        marginRight: this.props.isRight ? '10px' : '0px',
+                        borderRadius: this.state.check_width, // 快应用不支持百分比形式
                         width: this.state.check_width,
-                        height: this.state.check_width
+                        height: this.state.check_width,
+                        marginLeft: this.props.isRight ? '0px' : '10px',
+                        marginRight: this.props.isRight ? '10px' : '0px'
                     }}
                 >
                     {
                         this.state.checked ?
                         <span
-                            class="radio__check"
+                            class="nnc-radio__check"
                             style={{
                                 backgroundColor: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
                                 width: this.state.thumb_width,
-                                height: this.state.thumb_width
+                                height: this.state.thumb_width,
+                                // 快应用不支持百分比形式
+                                // 但在百度/微信小程序中，width: 20px border-radius: 10px 的时候
+                                // 并不是圆形(快应用中是圆形)，border-radius 需要再大点，所以索性直接填 width 的值
+                                borderRadius: this.state.thumb_width,
                             }}
                         ></span> :
                         null

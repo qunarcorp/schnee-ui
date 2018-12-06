@@ -1,17 +1,18 @@
-.radio-container {
+.nnc-radio-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
 }
 
-.radio {
-    border-radius: 50%;
+.nnc-radio {
     border-width: 2px;
     border-style: solid;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.radio__check {
-    border-radius: 50%;
+.nnc-radio__check {
+    // border-radius: 50%;
 }
