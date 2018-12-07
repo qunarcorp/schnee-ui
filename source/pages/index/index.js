@@ -32,16 +32,13 @@ class P extends React.Component {
     }
 
     render() {
-        console.log(this);
         return (
-            <div class="page">
-                <div class="anu-block">
-                    {this.state.list.map(function(item) {
-                        return (<div class="anu-item" onTap={this.goto.bind(this, item.url)}>
-                            <text>{item.name}</text>
-                        </div>);
-                    })}
-                </div>
+            <div class="col">
+                {this.state.list.map(function(item) {
+                    return (<div class="anu-item" onTap={this.goto.bind(this, item.url)}>
+                        <text>{item.name}</text>
+                    </div>);
+                })}
             </div>
         );
     }

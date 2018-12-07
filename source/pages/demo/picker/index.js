@@ -101,7 +101,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="col">
         <button onClick={this.click.bind(this)}>点击</button>
         <button onClick={this.multiClick.bind(this)}>多列点击</button>
         <button onClick={this.timeClick.bind(this)}>时间点击</button>

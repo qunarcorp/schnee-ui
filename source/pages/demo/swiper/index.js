@@ -6,14 +6,12 @@ import Swiper from '@components/Swiper/index';
 class SwiperDemo extends React.Component {
     render() {
         return (
-            <div>
+            <div className="col">
                 <Swiper
                     indicatorDots={true}
                     autoPlay={true}
                     interval={2500}
                     style={{ margin: '80px', height: '400px' }}
-                    onChange={(e) => console.log(e)}
-                    onAnimationfinish={(e) => console.log(e)}
                 >
                     {[0,1,2,3,4,5].map(function(item) {
                         return <div className="anu-swiper__item">

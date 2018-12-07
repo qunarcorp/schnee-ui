@@ -1,8 +1,8 @@
 import React from '@react';
-
 import Progress from '@components/Progress/index';
 
-  
+import './index.scss';
+
 class P extends React.Component {
   constructor() {
     super();
@@ -11,7 +11,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div class="container col">
+      <div className="col">
         <div class="progress-title">
           <text>默认样式：</text>
         </div>

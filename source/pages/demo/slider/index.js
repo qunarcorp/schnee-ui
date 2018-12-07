@@ -43,7 +43,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div class="container anu-block">
+      <div className="col">
         {/* <div class="section section_gap anu-block">
           <text class="section__title">设置step</text>
           <div class="body-div">
