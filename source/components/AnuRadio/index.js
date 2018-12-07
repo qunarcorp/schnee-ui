@@ -4,7 +4,7 @@ import "./index.scss";
 function collectRadioInstances(p, ret, instance) {
     console.log('p', p)
     for (p = p.child; p; p = p.sibling) {
-        if (p.name == "Radio") {
+        if (p.name == "AnuRadio") {
             // 不是当前节点
             if (p.stateNode !== instance) {
                 ret.push(p.stateNode);
@@ -43,7 +43,7 @@ const DISABLED_ENHANCE_COLOR = '#b3b3b3'; // disabled 强调色
 const UNCHECKED_COLOR = '#CCCCCC';
 const DEFAULT_CHECKED_COLOR = '#1aad16';
 
-class Radio extends React.Component {
+class AnuRadio extends React.Component {
     constructor(props) {
         super(props);
 
@@ -120,10 +120,10 @@ class Radio extends React.Component {
 
     render() {
         return (
-            <div class="nnc-radio-container">
+            <div class="anu-radio-container">
                 {!this.props.isRight && <text>{this.props.text}</text>}
                 <div
-                    class="nnc-radio"
+                    class="anu-radio"
                     onClick={this.handleClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
@@ -138,7 +138,7 @@ class Radio extends React.Component {
                     {
                         this.state.checked ?
                         <span
-                            class="nnc-radio__check"
+                            class="anu-radio__check"
                             style={{
                                 backgroundColor: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
                                 width: this.state.thumb_width,
@@ -158,7 +158,7 @@ class Radio extends React.Component {
     }
 }
 
-Radio.defaultProps = {
+AnuRadio.defaultProps = {
     size: 'default',
     color: DEFAULT_CHECKED_COLOR,
     disabled: false,
@@ -168,4 +168,4 @@ Radio.defaultProps = {
     isRight: true
 };
 
-export default Radio;
+export default AnuRadio;

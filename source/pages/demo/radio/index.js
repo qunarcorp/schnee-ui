@@ -1,6 +1,6 @@
 import React from '@react';
 import './index.scss';
-import Radio from '@components/Radio/index';
+import AnuRadio from '@components/AnuRadio/index';
 import RadioGroup from '@components/RadioGroup/index';
 class P extends React.Component {
     constructor() {
@@ -29,15 +29,15 @@ class P extends React.Component {
               <radio checked={true} />
               <radio />
               <radio disabled />
-              <Radio />
-              <Radio value="USA" text="美国" />
-              <Radio value="USA" text="美国" checked={true} />
-              <Radio value="USA" text="美国" size="large" />
-              <Radio value="USA" text="美国" size="small" />
-              <Radio value="USA" text="美国" isRight={false} />
-              <Radio value="USA" text="美国" color="red" />
-              <Radio value="USA" text="美国" color="red" disabled={true} />
-              <Radio value="USA" text="美国" color="red" disabled={true} checked={true} />
+              <AnuRadio />
+              <AnuRadio value="USA" text="美国" />
+              <AnuRadio value="USA" text="美国" checked={true} />
+              <AnuRadio value="USA" text="美国" size="large" />
+              <AnuRadio value="USA" text="美国" size="small" />
+              <AnuRadio value="USA" text="美国" isRight={false} />
+              <AnuRadio value="USA" text="美国" color="red" />
+              <AnuRadio value="USA" text="美国" color="red" disabled={true} />
+              <AnuRadio value="USA" text="美国" color="red" disabled={true} checked={true} />
           </RadioGroup>
       </div>
         );
