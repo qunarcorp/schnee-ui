@@ -1,19 +1,6 @@
 import React from '@react';
 import './index.scss';
 
-const baseInnerStyle = {
-  width: '68px',
-  height: '68px',
-  borderRadius: '34px',
-  backgroundColor: '#ffffff'
-};
-
-const baseWrapperStyle = {
-  width: '156px',
-  height: '76px',
-  borderRadius: '38px',
-  backgroundColor: '#C1C1C1'
-};
 
 function jsonEqual(objA, objB) {
   let flag = false;
@@ -48,9 +35,13 @@ class Switch extends React.Component {
   computeState(props, checked) {
     const { innerStyle, wrapperStyle } = props;
     let backgroundColor = checked ? this.props.color : this.props.checkColor;
-    let newWrapperStyle = Object.assign({}, baseWrapperStyle, wrapperStyle, { backgroundColor });
-    let newInnerStyle = Object.assign({}, baseInnerStyle, innerStyle);
-    console.log('newWrapper', newWrapperStyle);
+    let newWrapperStyle = Object.assign({}, wrapperStyle, { backgroundColor });
+    let newInnerStyle = Object.assign({}, innerStyle, {
+      margin: ((parseFloat(wrapperStyle.height) - parseFloat(innerStyle.height)) / 2) + 'px',
+      transform: `translateX(${checked ?
+        (parseFloat(wrapperStyle.width) - parseFloat(innerStyle.width) - parseFloat(wrapperStyle.height) + parseFloat(innerStyle.height)) + 'px' : '0'})`
+    });
+    console.log('newInnerStyle', newInnerStyle);
     return {
       checked,
       innerStyle: newInnerStyle,
