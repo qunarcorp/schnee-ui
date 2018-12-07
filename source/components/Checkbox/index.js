@@ -121,7 +121,7 @@ class Checkbox extends React.Component {
 
 Checkbox.defaultProps = {
   disabled: false,
-  checked: true,
+  checked: false,
   value: '',
   text: '',
   isRight: true,
