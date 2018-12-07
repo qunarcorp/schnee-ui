@@ -4,13 +4,11 @@ import './index.scss'
 class RadioGroup extends React.Component {
     constructor(props) {
         super(props);
-        console.log("props", props);
     }
 
     emitEvent(value) {
-        console.log("radio group:", value);
         var fn = this.props.onChange || Number;
-        fn({value});
+        fn({detail: {value}});
     }
     render() {
         return <div class="col">{this.props.children}</div>;

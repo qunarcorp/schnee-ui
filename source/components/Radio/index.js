@@ -91,7 +91,7 @@ class Radio extends React.Component {
         }
         console.log(radioInstances,'!!!')
         var checked = this.state.checked;
-        this.switchState(!checked)
+        this.switchState(!checked);
         radioInstances.forEach(function(instance){
           instance.switchState(checked);
         });

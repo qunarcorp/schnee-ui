@@ -5,6 +5,5 @@
 
 # 问题
 
-## 快应用
-
-1. `class='radio'` 的 `div` 有概率会被转换成 `input`
+1. 快应用: `class='radio'` 的 `div` 有概率会被转换成 `input`
+2. nanachi：`export default class P extends Component` 会报错，需要写成 `class P extends Component ... export default P` 的形式

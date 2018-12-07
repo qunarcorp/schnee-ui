@@ -19,7 +19,7 @@ class P extends React.Component {
 
     radioChange(e) {
         // eslint-disable-next-line
-        console.log('radio发生change事件，携带value值为：', e.value, e);
+        console.log('radio发生change事件，携带value值为：', e.detail.value);
     }
 
     render() {

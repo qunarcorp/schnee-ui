@@ -2,6 +2,16 @@
 import React from '@react';
 import './index.scss';
 
+function collectCheckboxInstances(fiber, ret, instance) {
+    for (fiber = fiber.child; fiber; fiber = fiber.sibling) {
+        if (fiber.name === 'Checkbox') {
+            ret.push(fiber.stateNode);
+        } else if (fiber.child) {
+            collectCheckboxInstances(fiber, ret, instance);
+        }
+    }
+}
+
 const styleConfig = {
     width: 36,
     fontSize: 30,
@@ -51,17 +61,26 @@ class Checkbox extends React.Component {
       }
 
       let fiber = this._reactInternalFiber;
+      const checkboxInstances = [];
       let parentInstance = null;
       while (fiber.return) {
           fiber = fiber.return;
           if (fiber.name === 'CheckboxGroup') {
               parentInstance = fiber.stateNode;
+              collectCheckboxInstances(fiber, checkboxInstances, this);
           }
       }
 
-      this.setState({ checked: !this.state.checked });
+      this.setState(
+          { checked: !this.state.checked },
+          () => {
+              const checkedCheckboxes = checkboxInstances.filter(checkboxInstance => checkboxInstance.state.checked)
+                                                         .map(checkboxInstance => checkboxInstance.props.value);
 
-      parentInstance && parentInstance.emitEvent(this.props.value);
+              parentInstance && parentInstance.emitEvent(checkedCheckboxes);
+          }
+      );
+
   }
 
   componentWillReceiveProps(nextProps) {

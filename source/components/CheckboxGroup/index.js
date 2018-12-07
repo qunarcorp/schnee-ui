@@ -1,4 +1,5 @@
 import React from '@react';
+import './index.scss';
 
 class CheckboxGroup extends React.Component {
     constructor(props) {
@@ -6,11 +7,11 @@ class CheckboxGroup extends React.Component {
     }
 
     emitEvent(value) {
-        this.props.onChange && this.props.onChange({value});
+        this.props.onChange && this.props.onChange({detail: {value}});
     }
 
     render() {
-        return <div>{this.props.children}</div>
+        return <div class="col">{this.props.children}</div>
     }
 }
 
