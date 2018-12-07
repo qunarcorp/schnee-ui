@@ -1,8 +1,7 @@
 import React from '@react';
 import './index.scss';
-import Checkbox from '@components/Checkbox/index';
-import CheckboxGroup from '@components/CheckboxGroup/index';
-import Label from '@components/Label/index';
+import XCheckbox from '@components/XCheckbox/index';
+import XCheckboxGroup from '@components/XCheckboxGroup/index';
 class P extends React.Component {
     constructor() {
         super();
@@ -51,16 +50,16 @@ class P extends React.Component {
 
     render() {
         return (<div>
-            <CheckboxGroup onChange={this.checkboxChange}>
-                <Checkbox />
-                <Checkbox value="USA" text="美国" />
-                <div><Checkbox value="USA" text="美国" checked={true} /></div>
-                <div><Checkbox value="USA" text="美国" size="large" /></div>
-                <div><Checkbox value="USA" text="美国" size="small" /></div>
-                <div><Checkbox value="USA" text="美国" isRight={false} /></div>
-                <div><Checkbox value="USA" text="美国" color="red" /></div>
-                <div><Checkbox value="USA" text="美国" color="red" disabled={true} /></div>
-            </CheckboxGroup>
+            <XCheckboxGroup onChange={this.checkboxChange}>
+                <XCheckbox />
+                <XCheckbox value="USA" text="美国" />
+                <div><XCheckbox value="USA" text="美国" checked={true} /></div>
+                <div><XCheckbox value="USA" text="美国" size="large" /></div>
+                <div><XCheckbox value="USA" text="美国" size="small" /></div>
+                <div><XCheckbox value="USA" text="美国" isRight={false} /></div>
+                <div><XCheckbox value="USA" text="美国" color="red" /></div>
+                <div><XCheckbox value="USA" text="美国" color="red" disabled={true} /></div>
+            </XCheckboxGroup>
         </div>);
     }
 }

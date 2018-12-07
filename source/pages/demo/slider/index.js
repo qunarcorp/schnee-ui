@@ -1,6 +1,6 @@
 import React from '@react';
 import './index.scss';
-import Slider from '@components/Slider/index';
+import XSlider from '@components/XSlider/index';
 class P extends React.Component {
   constructor() {
     super();
@@ -66,7 +66,7 @@ class P extends React.Component {
         <div class="section section_gap anu-block">
           <text class="section__title">设置最小/最大值</text>
           <div class="body-div">
-            <Slider
+            <XSlider
               class="slider"
               onChange={this.sliderChange.bind(this)}
               min={50}

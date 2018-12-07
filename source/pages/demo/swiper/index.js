@@ -1,13 +1,13 @@
 import React from '@react';
 import './index.scss';
-import Swiper from '@components/Swiper/index';
+import XSwiper from '@components/XSwiper/index';
 
 
 class SwiperDemo extends React.Component {
     render() {
         return (
             <div className="col">
-                <Swiper
+                <XSwiper
                     indicatorDots={true}
                     autoPlay={true}
                     interval={2500}
@@ -18,14 +18,14 @@ class SwiperDemo extends React.Component {
                             <div className="swiper-content">{item}</div>
                         </div>;
                     })}
-                </Swiper>
-                <Swiper indicatorDots={true} vertical={true} style={{ margin: '80px', height: '400px' }}>
+                </XSwiper>
+                <XSwiper indicatorDots={true} vertical={true} style={{ margin: '80px', height: '400px' }}>
                     {[0,1,2,3,4,5].map(function(item) {
                         return <div className="anu-swiper__item">
                             <div className="swiper-content">{item}</div>
                         </div>;
                     })}
-                </Swiper>
+                </XSwiper>
             </div>
         );
     }

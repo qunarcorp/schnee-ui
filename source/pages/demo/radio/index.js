@@ -1,7 +1,7 @@
 import React from '@react';
 import './index.scss';
-import AnuRadio from '@components/AnuRadio/index';
-import RadioGroup from '@components/RadioGroup/index';
+import XRadio from '@components/XRadio/index';
+import XRadioGroup from '@components/XRadioGroup/index';
 class P extends React.Component {
     constructor() {
         super();
@@ -25,20 +25,20 @@ class P extends React.Component {
     render() {
         return (
           <div class="container">
-          <RadioGroup class="radio-group" onChange={this.radioChange}>
+          <XRadioGroup class="radio-group" onChange={this.radioChange}>
               <radio checked={true} />
               <radio />
               <radio disabled />
-              <AnuRadio />
-              <AnuRadio value="USA" text="美国" />
-              <AnuRadio value="USA" text="美国" checked={true} />
-              <AnuRadio value="USA" text="美国" size="large" />
-              <AnuRadio value="USA" text="美国" size="small" />
-              <AnuRadio value="USA" text="美国" isRight={false} />
-              <AnuRadio value="USA" text="美国" color="red" />
-              <AnuRadio value="USA" text="美国" color="red" disabled={true} />
-              <AnuRadio value="USA" text="美国" color="red" disabled={true} checked={true} />
-          </RadioGroup>
+              <XRadio />
+              <XRadio value="USA" text="美国" />
+              <XRadio value="USA" text="美国" checked={true} />
+              <XRadio value="USA" text="美国" size="large" />
+              <XRadio value="USA" text="美国" size="small" />
+              <XRadio value="USA" text="美国" isRight={false} />
+              <XRadio value="USA" text="美国" color="red" />
+              <XRadio value="USA" text="美国" color="red" disabled={true} />
+              <XRadio value="USA" text="美国" color="red" disabled={true} checked={true} />
+          </XRadioGroup>
       </div>
         );
     }

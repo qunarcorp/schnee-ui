@@ -1,7 +1,7 @@
 import React from '@react';
 import './index.scss';
 // import Button from '@components/Button/index';
-import Button from '@components/Button/index';
+import XButton from '@components/XButton/index';
 class P extends React.Component {
   constructor() {
     super();
@@ -46,7 +46,7 @@ class P extends React.Component {
     return (
       <div class="col">
         <div class="item">
-          <Button
+          <XButton
             class="item"
             type="default"
             loading={this.state.loading}
@@ -54,10 +54,10 @@ class P extends React.Component {
             plain={this.state.plain}
           >
             default
-          </Button>
+          </XButton>
         </div>
         <div class="item">
-          <Button
+          <XButton
             class="item"
             type="primary"
             size="mini"
@@ -66,31 +66,31 @@ class P extends React.Component {
             plain={this.state.plain}
           >
             primary
-          </Button>
+          </XButton>
         </div>
         <div class="item">
-          <Button class="item" type="warn"
+          <XButton class="item" type="warn"
            disabled={this.state.disabled}
            plain={this.state.plain}
            loading={this.state.loading}
            >
             warn
-          </Button>
-          <Button class="item" type="warn"
+          </XButton>
+          <XButton class="item" type="warn"
            disabled={this.state.disabled}
            plain={this.state.plain}
            >
             warn1111
-          </Button>
+          </XButton>
         </div>
         <div class="item">
-          <Button click={this.setDisabled.bind(this)} >点击设置以上按钮disabled属性</Button>
+          <XButton click={this.setDisabled.bind(this)} >点击设置以上按钮disabled属性</XButton>
         </div>
         <div class="item">
-          <Button click={this.setPlain.bind(this)}>点击设置以上按钮plain属性</Button>
+          <XButton click={this.setPlain.bind(this)}>点击设置以上按钮plain属性</XButton>
         </div>
         <div class="item">
-          <Button click={this.setLoading.bind(this)}>点击设置以上按钮loading属性</Button>
+          <XButton click={this.setLoading.bind(this)}>点击设置以上按钮loading属性</XButton>
         </div>
         <div class="item">
           <input value="xxxxx" color="rgba(1,0,0,1)" type="button"></input>

@@ -1,7 +1,6 @@
 import React from '@react';
-import Picker from '@components/Picker/index';
+import XPicker from '@components/XPicker/index';
 import cnCity from '../../../common/utils/cnCity';
-import DatePicker from '@components/DatePicker/index';
 class P extends React.Component {
   constructor(props) {
     super(props);
@@ -106,20 +105,20 @@ class P extends React.Component {
         <button onClick={this.multiClick.bind(this)}>多列点击</button>
         <button onClick={this.timeClick.bind(this)}>时间点击</button>
 
-        <Picker
+        <XPicker
           onChange={this.handleChange.bind(this)}
           range={this.state.picker_group}
           show={this.state.picker_show}
           onCancel={this.handelCanel.bind(this)}
         />
-        <Picker
+        <XPicker
           type="multiSelector"
           onChange={this.handleChange.bind(this)}
           range={cnCity}
           show={this.state.multi_picker_show}
           onCancel={this.handelCanel.bind(this)}
         />
-         <Picker
+         <XPicker
           type="date"
           value={this.state.time}
           onChange={this.handleChange.bind(this)}

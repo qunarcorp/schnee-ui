@@ -1,6 +1,6 @@
 import React from '@react';
 // import './index.scss';
-import Label from '@components/Label/index';
+import XLabel from '@components/XLabel/index';
 
 class P extends React.Component {
   constructor() {
@@ -29,9 +29,9 @@ class P extends React.Component {
     return (
       <div className="col">
         {this.state.condition2 ? (
-          <Label onTap={this.toggleCondition2.bind(this)} class="btn">Inactive Condition2</Label>
+          <XLabel onTap={this.toggleCondition2.bind(this)} class="btn">Inactive Condition2</XLabel>
         ) : (
-          <Label onTap={this.toggleCondition2.bind(this)} class="btn">Active Condition2</Label>
+          <XLabel onTap={this.toggleCondition2.bind(this)} class="btn">Active Condition2</XLabel>
         )}
       </div>
     );
