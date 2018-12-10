@@ -1,1 +1,12 @@
-@import '../../common//style/common.scss';
+@import '../../common/style/common.scss';
+
+.anu-item {
+    padding: 10px 20px;
+    background-color: #eee;
+    margin: 2px 0px;
+    text {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+}

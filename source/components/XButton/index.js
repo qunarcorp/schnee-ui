@@ -60,8 +60,6 @@ class XButton extends React.Component {
     });
   }
   click(e) {
-    console.log(222);
-
     var fn = this.props.click;
     fn && fn.call(this, e);
 
@@ -77,12 +75,11 @@ class XButton extends React.Component {
   render() {
     return (
       <div
-        class={'center button ' + this.state.buttonStyle}
+        class={'row center vertical button ' + this.state.buttonStyle}
         disabled={this.props.disabled}
         onClick={this.click.bind(this)}
       >
         <image  show={this.props.loading} class='loading-style' src="https://s.qunarzz.com/flight_qzz/loading.gif" />
-
         <text style={{ color: this.state.textStyle, fontSize: this.state.fontStyle }}>{this.props.value}</text>
       </div>
     );
