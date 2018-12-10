@@ -10,48 +10,7 @@ import XDatePickerItem from '../XDatePickerItem/index.js';
  *
  */
 class XPickerItem extends React.Component {
-  // static propTypes = {
-  //   /**
-  //    * consists of array of object(max 2) with property `label` and others pass into element
-  //    *
-  //    */
-  //   actions: PropTypes.array,
-  //   /**
-  //    * array objects consists of groups for each scroll group
-  //    *
-  //    */
-  //   groups: PropTypes.array,
-  //   /**
-  //    * default group index thats selected, if not provide, automatic chose the best fiting item when mounted
-  //    *
-  //    */
-  //   defaultSelect: PropTypes.array,
-  //   /**
-  //    * trigger when individual group change, pass property(`item`, `item index in group`, `group index in groups`, `selected`, `picker instance`)
-  //    *
-  //    */
-  //   onGroupChange: PropTypes.func,
-  //   /**
-  //    * on selected change, pass property `selected` for array of slected index to `groups`
-  //    *
-  //    */
-  //   onChange: PropTypes.func,
-  //   /**
-  //    * excute when the popup about to close
-  //    *
-  //    */
-  //   onCancel: PropTypes.func,
-  //   /**
-  //    * display the component
-  //    *
-  //    */
-  //   show: PropTypes.bool,
-  //   /**
-  //    * language object consists of `leftBtn` and `rightBtn`
-  //    *
-  //    */
-  //   lang: PropTypes.object
-  // };
+  
 
   static defaultProps = {
     actions: [],
@@ -105,7 +64,7 @@ class XPickerItem extends React.Component {
 
   handleChange(item, i, groupIndex) {
     console.log('handeChange', item);
-    if (this.props.type === 'date') {
+    if (this.props.type === 'date' || this.props.type === 'time') {
 
       this.setState({
         selected: item.value
@@ -205,7 +164,7 @@ class XPickerItem extends React.Component {
             {this.props.groups.map(function(group, i) {
               return (
                 <div style="display: flex; flex: 1; justify-content:center">
-                  {this.props.type === 'date' ? (
+                  {this.props.type === 'date'  || this.props.type === 'time'? (
                     <XDatePickerItem
                       key={i}
                       value={this.props.defaultSelect}

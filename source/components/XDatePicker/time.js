@@ -115,3 +115,13 @@ export function nextSecond(now, index = 0) {
   const date = new Date(now.getTime() + index * 1000);
   return date;
 }
+
+export function getDate(date) {
+  throwIfInvalidDate(date);
+  return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+}
+
+export function getTime(time) {
+  throwIfInvalidDate(time);
+  return `${time.getHours()}: ${time.getMinutes()}`
+}

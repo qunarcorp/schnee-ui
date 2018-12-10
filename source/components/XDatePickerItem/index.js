@@ -57,6 +57,7 @@ class XDatePickerItem extends React.Component {
 
   _iniDates(date) {
     const typeName = this.props.type;
+    console.log('typeName', typeName);
     const dates = Array(...Array(DATE_LENGTH)).map((item, index) => {
       let value = TimeUtil[`next${typeName}`](date, (index - MIDDLE_INDEX) * this.props.step);
       // return TimeUtil.convertDate(value, this.props.format);

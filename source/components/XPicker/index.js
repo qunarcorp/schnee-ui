@@ -1,57 +1,13 @@
 import React from '@react';
 // import PropTypes from 'prop-types';
 import XPickerItem from '../XPickerItem/index';
-import { nextDate } from '../XDatePicker/time';
+import { nextDate, nextMinute, getDate, getTime } from '../XDatePicker/time';
 
 /**
  *  Mobile select ui, currently only support Touch Events
  *
  */
 class XPicker extends React.Component {
-  // static propTypes = {
-  //   type: PropTypes.string,
-  //   /**
-  //    * consists of array of object(max 2) with property `label` and others pass into element
-  //    *
-  //    */
-  //   actions: PropTypes.array,
-  //   /**
-  //    * array objects consists of groups for each scroll group
-  //    *
-  //    */
-  //   data: PropTypes.array,
-  //   /**
-  //    * default group index thats selected, if not provide, automatic chose the best fiting item when mounted
-  //    *
-  //    */
-  //   defaultSelect: PropTypes.array,
-  //   /**
-  //    * trigger when individual group change, pass property(`item`, `item index in group`, `group index in groups`, `selected`, `picker instance`)
-  //    *
-  //    */
-  //   onGroupChange: PropTypes.func,
-  //   /**
-  //    * on selected change, pass property `selected` for array of slected index to `groups`
-  //    *
-  //    */
-  //   onChange: PropTypes.func,
-  //   /**
-  //    * excute when the popup about to close
-  //    *
-  //    */
-  //   onCancel: PropTypes.func,
-  //   /**
-  //    * display the component
-  //    *
-  //    */
-  //   show: PropTypes.bool,
-  //   /**
-  //    * language object consists of `leftBtn` and `rightBtn`
-  //    *
-  //    */
-  //   lang: PropTypes.object
-  // };
-
   static defaultProps = {
     type: 'selector',
     dataMap: { id: 'name', items: 'sub' },
@@ -100,6 +56,16 @@ class XPicker extends React.Component {
       ];
 
       let newselected = nextDate(selected);
+
+      return { groups, newselected };
+    }
+
+    if (this.props.type === 'time') {
+      let groups = [
+        { format: 'hh', caption: '时', step: 1, type: 'Hour' },
+        { format: 'mm', caption: '分', step: 1, type: 'Minute' }
+      ];
+      let newselected = nextMinute(selected);
 
       return { groups, newselected };
     }
@@ -160,9 +126,11 @@ class XPicker extends React.Component {
 
   handleChange(selected) {
     let fn = this.props.onChange;
-    console.log('Picker', selected);
+    console.log('Picker', getTime(selected));
     if (this.props.type === 'date') {
-      fn && fn(selected);
+      fn && fn(getDate(selected));
+    } else if (this.props.type === 'time') {
+      fn && fn(getTime(selected));
     } else {
       this.updateDataBySelected(selected, () => {
         fn && fn(this.state.text);
