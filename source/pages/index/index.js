@@ -8,7 +8,7 @@ class P extends React.Component {
         super(props);
         const ROOT_PATH = '/pages/demo';
         this.state = {
-            list: 'button,checkbox,label,picker,progress,radio,slider,swiper,switch'
+            list: 'button,checkbox,label,picker,progress,radio,slider,swiper,switch,icon'
                 .split(',')
                 .map(function(name) {
                     return {
@@ -33,10 +33,10 @@ class P extends React.Component {
 
     render() {
         return (
-            <div class="col">
+            <div class="anu-col">
                 {this.state.list.map(function(item) {
                     return (<div class="anu-item" onTap={this.goto.bind(this, item.url)}>
-                        <text>{item.name}</text>
+                        <text className="anu-item">{item.name}</text>
                     </div>);
                 })}
             </div>

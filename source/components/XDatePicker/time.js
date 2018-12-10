@@ -1,5 +1,3 @@
-
-
 /**
  * @module time工具
  */
@@ -70,11 +68,9 @@ export function nextYear(now, index = 0) {
     );
     return date;
   } else {
-    return  parseInt(now)+index
+    return parseInt(now) + index;
   }
 }
-
-
 
 export function nextMonth(now, index = 0) {
   throwIfInvalidDate(now);
@@ -115,3 +111,37 @@ export function nextSecond(now, index = 0) {
   const date = new Date(now.getTime() + index * 1000);
   return date;
 }
+
+export function getDate(date) {
+  throwIfInvalidDate(date);
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+export function getTime(time) {
+  throwIfInvalidDate(time);
+  return `${time.getHours()}: ${time.getMinutes()}`;
+}
+
+/**
+ * 时间字符串 "08:00:00" | "2016-03-02" 转换成日期对象
+ * @param  {String} str 08:00:00
+ * @param {String} type 'time' | 'date'
+ * @return {Date}     日期对象
+ */
+export const timeStrToDate = (str = '', type) => {
+  console.log('str', str);
+  if (typeof str === 'string') {
+    const d = new Date();
+    if (type === 'time') {
+      const arr = str.split(':');
+      d.setHours(arr[0], arr[1], '00');
+    } else if (type === 'date') {
+      const arr = str.split('-');
+      d.setFullYear(arr[0], arr[1] - 1, arr[2]);
+    }
+    console.log('d', d);
+    return d;
+  } else {
+    return str;
+  }
+};

@@ -1,57 +1,13 @@
 import React from '@react';
 // import PropTypes from 'prop-types';
 import XPickerItem from '../XPickerItem/index';
-import { nextDate } from '../XDatePicker/time';
+import { nextDate, nextMinute, getDate, getTime, timeStrToDate } from '../XDatePicker/time';
 
 /**
  *  Mobile select ui, currently only support Touch Events
  *
  */
 class XPicker extends React.Component {
-  // static propTypes = {
-  //   type: PropTypes.string,
-  //   /**
-  //    * consists of array of object(max 2) with property `label` and others pass into element
-  //    *
-  //    */
-  //   actions: PropTypes.array,
-  //   /**
-  //    * array objects consists of groups for each scroll group
-  //    *
-  //    */
-  //   data: PropTypes.array,
-  //   /**
-  //    * default group index thats selected, if not provide, automatic chose the best fiting item when mounted
-  //    *
-  //    */
-  //   defaultSelect: PropTypes.array,
-  //   /**
-  //    * trigger when individual group change, pass property(`item`, `item index in group`, `group index in groups`, `selected`, `picker instance`)
-  //    *
-  //    */
-  //   onGroupChange: PropTypes.func,
-  //   /**
-  //    * on selected change, pass property `selected` for array of slected index to `groups`
-  //    *
-  //    */
-  //   onChange: PropTypes.func,
-  //   /**
-  //    * excute when the popup about to close
-  //    *
-  //    */
-  //   onCancel: PropTypes.func,
-  //   /**
-  //    * display the component
-  //    *
-  //    */
-  //   show: PropTypes.bool,
-  //   /**
-  //    * language object consists of `leftBtn` and `rightBtn`
-  //    *
-  //    */
-  //   lang: PropTypes.object
-  // };
-
   static defaultProps = {
     type: 'selector',
     dataMap: { id: 'name', items: 'sub' },
@@ -65,13 +21,13 @@ class XPicker extends React.Component {
   constructor(props) {
     super(props);
     // 多列选择器
-    const { range, dataMap, value } = props;
+    const { range, dataMap, value, start, end, type } = props;
     const { groups, newselected } = this.parseData(range, dataMap.items, value);
-    // const dataConfigList = this.normalizeDateConfig(props.dateConfig);
     this.state = {
       groups,
-      // dataConfigList,
-      selected: newselected
+      selected: newselected,
+      start: timeStrToDate(start, type),
+      end: timeStrToDate(end, type)
     };
 
     this.parseData = this.parseData.bind(this);
@@ -90,9 +46,10 @@ class XPicker extends React.Component {
     }
   }
 
-  parseData(data, subKey, selected = [], group = [], newselected = []) {
-    console.log('selected', selected);
+  parseData(data, subKey, selected, group = [], newselected = []) {
+    console.log('selected****', selected);
     if (this.props.type === 'date') {
+      selected = selected ? new Date(selected) : new Date();
       let groups = [
         { format: 'YYYY', caption: '年', step: 1, type: 'Year' },
         { format: 'MM', caption: '月', step: 1, type: 'Month' },
@@ -103,6 +60,20 @@ class XPicker extends React.Component {
 
       return { groups, newselected };
     }
+
+    if (this.props.type === 'time') {
+      selected = selected ? timeStrToDate(selected, 'time') : new Date();
+
+      let groups = [
+        { format: 'hh', caption: '时', step: 1, type: 'Hour' },
+        { format: 'mm', caption: '分', step: 1, type: 'Minute' }
+      ];
+      let newselected = nextMinute(selected);
+
+      return { groups, newselected };
+    }
+
+    selected = selected || [];
 
     let _selected = 0;
 
@@ -160,9 +131,11 @@ class XPicker extends React.Component {
 
   handleChange(selected) {
     let fn = this.props.onChange;
-    console.log('Picker', selected);
+    console.log('Picker', getTime(selected));
     if (this.props.type === 'date') {
-      fn && fn(selected);
+      fn && fn(getDate(selected));
+    } else if (this.props.type === 'time') {
+      fn && fn(getTime(selected));
     } else {
       this.updateDataBySelected(selected, () => {
         fn && fn(this.state.text);
@@ -194,8 +167,8 @@ class XPicker extends React.Component {
         type={this.props.type}
         defaultSelect={this.state.selected}
         onCancel={this.handleCancel.bind(this)}
-        start={this.props.start}
-        end={this.props.end}
+        start={this.state.start}
+        end={this.state.end}
       />
     );
   }

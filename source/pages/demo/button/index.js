@@ -44,7 +44,7 @@ class P extends React.Component {
   }
   render() {
     return (
-      <div class="col">
+      <div class="anu-col">
         <div class="item">
           <XButton
             class="item"
@@ -53,7 +53,18 @@ class P extends React.Component {
             disabled={this.state.disabled}
             plain={this.state.plain}
           >
-            default
+            Default
+          </XButton>
+        </div>
+        <div class="item">
+          <XButton
+            class="item"
+            type="primary"
+            loading={this.state.loading}
+            disabled={this.state.disabled}
+            plain={this.state.plain}
+          >
+            Primary
           </XButton>
         </div>
         <div class="item">
@@ -65,7 +76,7 @@ class P extends React.Component {
             disabled={this.state.disabled}
             plain={this.state.plain}
           >
-            primary
+            Mini
           </XButton>
         </div>
         <div class="item">
@@ -74,13 +85,13 @@ class P extends React.Component {
            plain={this.state.plain}
            loading={this.state.loading}
            >
-            warn
+            Warn
           </XButton>
           <XButton class="item" type="warn"
            disabled={this.state.disabled}
            plain={this.state.plain}
            >
-            warn1111
+            Warn
           </XButton>
         </div>
         <div class="item">
