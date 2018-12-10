@@ -1,111 +1,134 @@
-// eslint-disable-next-line
-import React from '@react';
-import './index.scss';
-
-function handleStyle(props) {
-  let buttonStyle = props.size + ' ';
-  let textStyle = '';
-  let value;
-  if (props.disabled) {
-    if (props.plain) {
-      value = props.type + '-disabled-plain';
-    } else {
-      value = props.type + '-disabled';
-    }
-  } else {
-    if (props.plain) {
-      value = props.type + '-plain';
-    } else {
-      value = props.type;
-    }
-  }
-
-  textStyle = colorStyleMap[value];
-  buttonStyle += value;
-  let fontStyle = fontStyleMap[props.size]
-
-  return {
-    textStyle,
-    buttonStyle,
-    fontStyle
-  };
-}
+/*eslint-disable*/
+import React from "@react";
+import "./index.scss";
 
 class XButton extends React.Component {
-  constructor(props) {
-    super(props);
-    let { buttonStyle, textStyle, fontStyle } = handleStyle(props);
-    if (typeof props.children === 'object') {
-      console.wan('button内部只能传字符串与数字'); //eslint-disable-line
+    constructor(props) {
+        super(props);
+        let newState = this.computeState(props, false);
+        this.state = newState;
     }
-    props.value = props.children;
-    this.state = {
-      buttonStyle,
-      textStyle,
-      fontStyle
-    };
-  }
 
+    computeState(props, active) {
+        let buttonArray = [props.size];
+        let textAray = [props.type];
+        if (props.disabled) {
+            textAray.push("disabled");
+        } else {
+            if (active) {
+                buttonArray.push(props.type + "-active");
+            }
+        }
+        if (props.plain) {
+            textAray.push("plain");
+        }
+        var textStyle = colorStyleMap[textAray.join("-")];
+        var buttonStyle = buttonArray.concat(textAray.join("-")).join(" ");
+        let fontStyle = fontStyleMap[props.size];
+        return {
+            value: props.children,
+            textStyle,
+            buttonStyle,
+            fontStyle
+        };
+    }
+    updateState(nextProps, active) {
+        let newState = this.computeState(nextProps, active);
+        let oldState = this.state;
+        let lastState = {};
+        let diff = false;
+        for (var i in oldState) {
+            if (oldState[i] !== newState[i]) {
+                diff = true;
+                lastState[i] = newState[i];
+            }
+        }
+        if (diff) {
+            this.setState(lastState);
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        this.updateState(nextProps, false);
+    }
+    handleClick(e) {
+        var props = this.props;
+        Array("onTap", "catchTap", "onClick", "catchClick").forEach(function(
+            name
+        ) {
+            var fn = props[name];
+            if (fn) {
+                fn(e);
+                if (name == "catchTap" || name == '"catchClick"') {
+                    e.stopPropagation();
+                }
+            }
+        });
+        if (props.disabled) {
+            return;
+        }
+        this.updateState(this.props, true);
 
+        setTimeout(() => {
+            this.updateState(this.props, false);
+        }, 150);
+    }
+    render() {
+        return (
+            <stack
+                class={"anu-col anu-center anu-middle button " + this.state.buttonStyle}
+                disabled={this.props.disabled}
+                plain={this.props.plain}
+                type={this.props.type}
+                size={this.props.size}
+            >
+                <div>
+                    <image
+                        show={this.props.loading}
+                        class="loading-style"
+                        src="https://s.qunarzz.com/flight_qzz/loading.gif"
+                    />
 
-  componentWillReceiveProps(nextProps) {
-    let { buttonStyle, textStyle, fontStyle } = handleStyle(nextProps);
-    nextProps.value = nextProps.children;
-    this.setState({
-      buttonStyle,
-      textStyle,
-      fontStyle
-    });
-  }
-
-  handleClick(e) {
-    var fn = this.props.click;
-    fn && fn.call(this, e);
-
-    this.setState({
-      buttonStyle: handleStyle(this.props, true).buttonStyle
-    });
-  }
-  render() {
-    return (
-      <div
-        class={'anu-row anu-center anu-vertical button ' + this.state.buttonStyle}
-        disabled={this.props.disabled}
-        onClick={this.handleClick.bind(this)}
-      >
-        <image  show={this.props.loading} class='loading-style' src="https://s.qunarzz.com/flight_qzz/loading.gif" />
-        <text style={{ color: this.state.textStyle, fontSize: this.state.fontStyle }}>{this.props.value}</text>
-      </div>
-    );
-  }
+                    <text
+                        style={{
+                            color: this.state.textStyle,
+                            fontSize: this.state.fontStyle
+                        }}
+                    >
+                        {this.state.value}
+                    </text>
+                </div>
+                <input class="mask" type='button' onClick={this.handleClick.bind(this)} />
+            </stack>
+        );
+    }
 }
 
 XButton.defaultProps = {
-  type: 'default',
-  disabled: false,
-  plain: false,
-  size: 'default',
-  loading: false
+    type: 'default',
+    disabled: false,
+    plain: false,
+    size: 'default',
+    loading: false
 };
 
 const colorStyleMap = {
-  default: '#000000',
-  primary: '#ffffff',
-  warn: '#ffffff',
-  'default-disabled': 'rgba(0, 0, 0, 0.3)',
-  'primary-disabled': 'rgba(255, 255, 255, 0.6)',
-  'warn-disabled': 'rgba(255, 255, 255, 0.6)',
-  'default-disabled-plain': 'rgba(0, 0, 0, 0.2)',
-  'primary-disabled-plain': 'rgba(0, 0, 0, 0.2)',
-  'warn-disabled-plain': 'rgba(0, 0, 0, 0.2)',
-  'default-plain': '#353535',
-  'primary-plain': '#1aad19',
-  'warn-plain': '#e64340'
+    default: '#000000',
+    primary: '#ffffff',
+    warn: '#ffffff',
+    'default-disabled': 'rgba(0, 0, 0, 0.3)',
+    'primary-disabled': 'rgba(255, 255, 255, 0.6)',
+    'warn-disabled': 'rgba(255, 255, 255, 0.6)',
+    'default-disabled-plain': 'rgba(0, 0, 0, 0.2)',
+    'primary-disabled-plain': 'rgba(0, 0, 0, 0.2)',
+    'warn-disabled-plain': 'rgba(0, 0, 0, 0.2)',
+    'default-plain': '#353535',
+    'primary-plain': '#1aad19',
+    'warn-plain': '#e64340'
 };
 
 const fontStyleMap = {
-  'default': '18px',
-  'mini': '13px'
-}
+    default: '26px',
+    mini: '20px'
+};
 
 export default XButton;
