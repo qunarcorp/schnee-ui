@@ -5,13 +5,14 @@ import './index.scss';
 class XIcon extends React.Component {
 
     render() {
-        console.log(this.props);
-        return <div className={this.props.className}>{this.props.content}</div>
+        return <span className={this.props.className} style={{ color: this.props.color, 'font-size': this.props.size }}>
+            {this.props.content}
+        </span>;
     }
 }
 
 XIcon.defaultProps = {
-    className: 'iconfont'
+    className: 'iconfont',
 };
 
 export default XIcon;

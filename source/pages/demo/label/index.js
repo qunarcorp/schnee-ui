@@ -27,7 +27,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div className="col">
+      <div className="anu-col">
         {this.state.condition2 ? (
           <XLabel onTap={this.toggleCondition2.bind(this)} class="btn">Inactive Condition2</XLabel>
         ) : (

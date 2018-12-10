@@ -33,7 +33,7 @@ class P extends React.Component {
 
     render() {
         return (
-            <div class="col">
+            <div class="anu-col">
                 {this.state.list.map(function(item) {
                     return (<div class="anu-item" onTap={this.goto.bind(this, item.url)}>
                         <text className="anu-item">{item.name}</text>

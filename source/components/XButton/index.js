@@ -2,9 +2,8 @@
 import React from '@react';
 import './index.scss';
 
-function handleStyle(props, active) {
-  let activeStyle = active ?  'active ' : ''
-  let buttonStyle = props.size + ' ' + activeStyle;
+function handleStyle(props) {
+  let buttonStyle = props.size + ' ';
   let textStyle = '';
   let value;
   if (props.disabled) {
@@ -23,7 +22,6 @@ function handleStyle(props, active) {
 
   textStyle = colorStyleMap[value];
   buttonStyle += value;
-  console.log('buttonStyle', buttonStyle);
   let fontStyle = fontStyleMap[props.size]
 
   return {
@@ -59,25 +57,21 @@ class XButton extends React.Component {
       fontStyle
     });
   }
-  click(e) {
+
+  handleClick(e) {
     var fn = this.props.click;
     fn && fn.call(this, e);
 
     this.setState({
       buttonStyle: handleStyle(this.props, true).buttonStyle
     });
-    // setTimeout(() => {
-    //   this.setState({
-    //     buttonStyle: handleStyle(this.props).buttonStyle
-    //   });
-    // }, 150);
   }
   render() {
     return (
       <div
-        class={'row center vertical button ' + this.state.buttonStyle}
+        class={'anu-row anu-center anu-vertical button ' + this.state.buttonStyle}
         disabled={this.props.disabled}
-        onClick={this.click.bind(this)}
+        onClick={this.handleClick.bind(this)}
       >
         <image  show={this.props.loading} class='loading-style' src="https://s.qunarzz.com/flight_qzz/loading.gif" />
         <text style={{ color: this.state.textStyle, fontSize: this.state.fontStyle }}>{this.props.value}</text>

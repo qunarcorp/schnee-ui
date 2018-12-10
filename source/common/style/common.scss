@@ -1,17 +1,38 @@
-.row {
+.anu-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.col {
+.anu-col {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.center {
+.anu-center {
   justify-content: center;
 }
-.vertical {
+.anu-vertical {
   align-items: center;
+}
+
+.anu-item {
+  padding: 10px 5px;
+  background-color: #eee;
+  margin: 2px 0px;
+  text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.anu-header {
+  margin: 10px 0px;
+  font-weight: bold;
+  text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
 }

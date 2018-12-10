@@ -11,7 +11,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div className="col">
+      <div className="anu-col">
         <div class="progress-title">
           <text>默认样式：</text>
         </div>

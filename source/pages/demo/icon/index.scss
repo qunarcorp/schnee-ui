@@ -1,8 +1,5 @@
-@font-face {
-    font-family: 'iconfont';
-    src: url(https://ss.qunarzz.com/yo/font/1.0.3/font.ttf);
-}
+@import '../../../common/style/common.scss';
 
-.iconfont {
-    font-family: 'iconfont';
+.custom-iconfont {
+    color: red;
 }
