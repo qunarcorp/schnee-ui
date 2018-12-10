@@ -2,9 +2,8 @@ import React from "@react";
 import "./index.scss";
 
 function collectRadioInstances(p, ret, instance) {
-    console.log('p', p)
     for (p = p.child; p; p = p.sibling) {
-        if (p.name == "AnuRadio") {
+        if (p.name == "XRadio") {
             // 不是当前节点
             if (p.stateNode !== instance) {
                 ret.push(p.stateNode);
@@ -83,13 +82,12 @@ class XRadio extends React.Component {
         var parentInstance = null;
         while (fiber.return) {
             fiber = fiber.return;
-            if (fiber.name === "RadioGroup") {
+            if (fiber.name === "XRadioGroup") {
                 parentInstance = fiber.stateNode;
                 collectRadioInstances(fiber, radioInstances, this);
                 break;
             }
         }
-        console.log(radioInstances,'!!!')
         var checked = this.state.checked;
         this.switchState(!checked);
         radioInstances.forEach(function(instance){
