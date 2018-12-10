@@ -4,7 +4,7 @@ import './index.scss';
 
 function collectCheckboxInstances(fiber, ret, instance) {
     for (fiber = fiber.child; fiber; fiber = fiber.sibling) {
-        if (fiber.name === 'Checkbox') {
+        if (fiber.name === 'XCheckbox') {
             ret.push(fiber.stateNode);
         } else if (fiber.child) {
             collectCheckboxInstances(fiber, ret, instance);
@@ -65,7 +65,7 @@ class XCheckbox extends React.Component {
       let parentInstance = null;
       while (fiber.return) {
           fiber = fiber.return;
-          if (fiber.name === 'CheckboxGroup') {
+          if (fiber.name === 'XCheckboxGroup') {
               parentInstance = fiber.stateNode;
               collectCheckboxInstances(fiber, checkboxInstances, this);
           }
