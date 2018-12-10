@@ -164,9 +164,9 @@ export default P;
 
 | 属性     | 类型          | 默认值 | 说明                                             |
 | -------- | ------------- | ------ |------------------------------------------------ |
-| value     | Date        |    当前时间   |           time 格式： hh:mm ; date 格式： YYYY-MM-DD                  |
-| start    | Date |       | 开始| 
-|end  | Date     |      | 结束                         |
+| value     | String        |    当前时间   |           time 格式： hh:mm ; date 格式： YYYY-MM-DD                  |
+| start    | String |       | 开始| 
+|end  | String     |      | 结束                         |
 | onChange     | function      |        | selected 改变时触发 change 事件                           |
 | onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
