@@ -1,43 +1,99 @@
 // eslint-disable-next-line
 import React from '@react';
-import './index.scss'
-class XLabel extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log('label', props)
-    this.state = {
-      value: props.children
-    }
-  }
+import './index.scss';
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
-    this.setState({
-      value: nextProps.children
-    })
-  }
-  click(e) {
-    var props = this.props;
-    Array("onTap", "catchTap", "onClick", "catchClick").forEach(function (
-        name
-    ) {
-        var fn = props[name];
-        if (fn) {
-            fn(e);
-            if (name == "catchTap" || name == '"catchClick"') {
-                e.stopPropagation();
-            }
+const supportWidgets = [
+    'XCheckbox', 'XRadio',
+    'XButton', 'XSwitch'
+];
+
+// 获得对应 id 的 fiber
+function getFibersById(fiber, id) {
+    let ret = [];
+    fiberRecursive(fiber, fiber => {
+        if (fiber.props.id === id && supportWidgets.indexOf(fiber.name) !== -1) {
+            ret.push(fiber);
         }
     });
-  }
-  render() {
-    return (
-      <div onClick={this.click.bind(this)}>
-        <text>{this.state.value}</text>
-      </div>
-    );
-  }
+    return ret;
 }
 
+function getFirstWidget(fiber) {
+    let ret = null;
+    fiberRecursive(fiber, fiber => {
+        if (supportWidgets.indexOf(fiber.name) !== -1) {
+            ret = fiber;
+            return true;
+        }
+    });
+    return ret;
+}
+
+// 遍历 fiber 下所有节点
+// handler 返回 true 的话，停止遍历，提高性能
+function fiberRecursive(fiber, handler) {
+    for (fiber = fiber.child; fiber; fiber = fiber.sibling) {
+        if (handler(fiber)) {
+            return;
+        }
+        if (fiber.child) {
+            fiberRecursive(fiber, handler);
+        }
+    }
+}
+
+function getTopFiber(fiber) {
+    while (fiber.return) {
+        fiber = fiber.return;
+    }
+    return fiber || null;
+}
+
+class XLabel extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleLabelClick = this.handleLabelClick.bind(this);
+    }
+
+    handleLabelClick(e) {
+        console.log('label click', e);
+        const fiber = this._reactInternalFiber;
+        let targetFiber = null;
+
+        // 获得目标控件
+        console.time('label target search');
+        if (this.props.for !== undefined) {
+            // for 方式
+            const topFiber = getTopFiber(fiber);
+            const targetFibers = getFibersById(topFiber, this.props.for);
+            targetFiber = targetFibers.pop();
+        } else {
+            // 子元素方式，只取第一个符合要求的控件
+            targetFiber = getFirstWidget(fiber);
+        }
+        console.timeEnd('label target search');
+
+        // 目标控件存在的话执行对应的 handleClick 方法
+        if (targetFiber) {
+            const fn = targetFiber.stateNode.handleClick;
+            fn && fn(e);
+        }
+    }
+
+    componentDidMount() {
+        // 如果子元素中有目标控件，设置 __InLabel=true
+        const targetFiber = getFirstWidget(this._reactInternalFiber);
+        if (targetFiber) {
+            targetFiber.props.__InLabel = true;
+        }
+    }
+
+    render() {
+        return (
+            <div class="label" onClick={this.handleLabelClick}>{this.props.children}</div>
+        );
+    }
+}
 
 export default XLabel;

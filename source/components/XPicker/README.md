@@ -25,7 +25,8 @@ class P extends React.Component {
       isOpen: false,
       picker_value: '',
       isTimeOpen: false,
-      time: new Date(),
+      date: '2018-10-10',
+      time: '09:09',
       picker_group: [
         {
           name: 'Item1'
@@ -115,7 +116,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div className="col">
+      <div className="anu-col">
         <button onClick={this.click.bind(this)}>点击</button>
         <button onClick={this.multiClick.bind(this)}>多列点击</button>
         <button onClick={this.dateClick.bind(this)}>日期点击</button>
@@ -135,10 +136,9 @@ class P extends React.Component {
         />
          <XPicker
           type="date"
-          value={this.state.time}
+          value={this.state.date}
           onChange={this.handleChange.bind(this)}
-          max={new Date()}
-          min={new Date('2017-1-1')}
+          start='2017-1-1'
           show={this.state.isOpen}
           onCancel={this.handelCanel.bind(this)}
         />
@@ -158,15 +158,16 @@ export default P;
 
 
 
+
 ```
 
 #### 普通选择器 type = date  | time
 
 | 属性     | 类型          | 默认值 | 说明                                             |
 | -------- | ------------- | ------ |------------------------------------------------ |
-| value     | Date        |    当前时间   |           time 格式： hh:mm ; date 格式： YYYY-MM-DD                  |
-| start    | Date |       | 开始| 
-|end  | Date     |      | 结束                         |
+| value     | String        |    当前时间   |           time 格式： hh:mm ; date 格式： YYYY-MM-DD                  |
+| start    | String |       | 开始| 
+|end  | String     |      | 结束                         |
 | onChange     | function      |        | selected 改变时触发 change 事件                           |
 | onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 

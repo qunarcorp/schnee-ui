@@ -67,7 +67,7 @@ class XPickerItem extends React.Component {
     if (this.props.type === 'date' || this.props.type === 'time') {
 
       this.setState({
-        selected: item.value
+        selected:item.disabled ? this.props.defaultSelect : item.value
       }, () => {
         if (this.props.onGroupChange)
         this.props.onGroupChange(item, i, groupIndex, this.state.selected, this);

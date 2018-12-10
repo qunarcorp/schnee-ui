@@ -48,8 +48,8 @@ class XDatePickerItem extends React.Component {
 
   componentWillMount() {
     this._iniDates(this.props.value);
-    // console.log('min', this.props.min);
-    // console.log('max', this.props.max);
+    console.log('min', this.props.start);
+    console.log('max', this.props.end);
   }
   componentDidMount() {
     // this.adjustPosition(this.props);
