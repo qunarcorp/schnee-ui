@@ -46,6 +46,9 @@ class XButton extends React.Component {
       textStyle,
       fontStyle
     };
+
+    this.handleClick = this.handleClick.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
 
@@ -59,7 +62,15 @@ class XButton extends React.Component {
       fontStyle
     });
   }
-  click(e) {
+
+  onClick(e) {
+      // 不在 label 里面的话响应 click 事件
+      if (!this.props.__InLabel) {
+          this.handleClick(e);
+      }
+  }
+
+  handleClick(e) {
     console.log(222);
 
     var fn = this.props.click;
@@ -79,7 +90,7 @@ class XButton extends React.Component {
       <div
         class={'center button ' + this.state.buttonStyle}
         disabled={this.props.disabled}
-        onClick={this.click.bind(this)}
+        onClick={this.onClick}
       >
         <image  show={this.props.loading} class='loading-style' src="https://s.qunarzz.com/flight_qzz/loading.gif" />
 

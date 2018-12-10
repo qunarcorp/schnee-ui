@@ -30,6 +30,9 @@ class XSwitch extends React.Component {
       innerStyle,
       wrapperStyle
     };
+
+    this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   computeState(props, checked) {
@@ -68,6 +71,13 @@ class XSwitch extends React.Component {
   }
 
   onClick(e) {
+      // 不在 XLabel 里的话响应 click 事件
+      if (!this.props.__InLabel) {
+          this.handleClick(e);
+      }
+  }
+
+  handleClick(e) {
     let fn = this.props.onChange;
 
     if (!this.props.disabled) {
@@ -75,6 +85,7 @@ class XSwitch extends React.Component {
       this.updateState(this.props, !this.state.checked);
     }
   }
+
   componentWillReceiveProps(nextProps) {
     console.log('nextProps', nextProps);
     this.updateState(nextProps, nextProps.checked);
@@ -120,7 +131,8 @@ XSwitch.defaultProps = {
     backgroundColor: '#C1C1C1'
   },
   color: '#2998F9',
-  checkColor: '#C1C1C1'
+  checkColor: '#C1C1C1',
+  __InLabel: false
 };
 
 export default XSwitch;

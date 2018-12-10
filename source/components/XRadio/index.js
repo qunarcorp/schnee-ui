@@ -54,7 +54,9 @@ class XRadio extends React.Component {
         };
 
         this.handleClick = this.handleClick.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
+
     switchState(checked) {
         if (!this.props.disabled) {
             this.setState({
@@ -62,6 +64,14 @@ class XRadio extends React.Component {
             });
         }
     }
+
+    onClick() {
+        // 不在 XLabel 里的话响应 click 事件
+        if (!this.props.__InLabel) {
+            this.handleClick();
+        }
+    }
+
     handleClick() {
         if (this.props.disabled) {
             return;
@@ -93,7 +103,7 @@ class XRadio extends React.Component {
         radioInstances.forEach(function(instance){
           instance.switchState(checked);
         });
-        parentInstance.emitEvent(this.props.value)
+        parentInstance && parentInstance.emitEvent(this.props.value)
 
     }
 
@@ -122,7 +132,7 @@ class XRadio extends React.Component {
                 {!this.props.isRight && <text>{this.props.text}</text>}
                 <div
                     class="anu-radio"
-                    onClick={this.handleClick}
+                    onClick={this.onClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
                         borderColor: this.props.disabled ? DISABLED_ENHANCE_COLOR : (this.state.checked ? this.props.color : UNCHECKED_COLOR),
@@ -163,7 +173,8 @@ XRadio.defaultProps = {
     checked: false,
     value: "",
     text: '',
-    isRight: true
+    isRight: true,
+    __InLabel: false
 };
 
 export default XRadio;

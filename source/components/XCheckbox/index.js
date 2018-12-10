@@ -52,7 +52,17 @@ class XCheckbox extends React.Component {
         fontSize
     };
 
+    this.onClick = this.onClick.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  onClick() {
+      console.log('checkbox click');
+      // 不在 XLabel 里响应本身 click 事件
+      if (!this.props.__InLabel) {
+          console.log('out label')
+          this.handleClick();
+      }
   }
 
   handleClick() {
@@ -61,6 +71,7 @@ class XCheckbox extends React.Component {
       }
 
       let fiber = this._reactInternalFiber;
+      console.log('fiber: ',fiber);
       const checkboxInstances = [];
       let parentInstance = null;
       while (fiber.return) {
@@ -109,7 +120,7 @@ class XCheckbox extends React.Component {
             {!this.props.isRight && <text>{this.props.text}</text>}
             <div
                 class="checkbox"
-                onClick={this.handleClick}
+                onClick={this.onClick}
                 style={{
                     backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
                     marginLeft: this.props.isRight ? '0px' : '10px',
@@ -145,7 +156,8 @@ XCheckbox.defaultProps = {
   text: '',
   isRight: true,
   color: DEFAULT_CHECKED_COLOR,
-  size: 'default'
+  size: 'default',
+  __InLabel: false
 };
 
 
