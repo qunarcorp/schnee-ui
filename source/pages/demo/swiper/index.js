@@ -6,7 +6,7 @@ import XSwiper from '@components/XSwiper/index';
 class SwiperDemo extends React.Component {
     render() {
         return (
-            <div className="col">
+            <div className="anu-col">
                 <XSwiper
                     indicatorDots={true}
                     autoPlay={true}

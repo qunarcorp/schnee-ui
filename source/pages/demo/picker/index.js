@@ -102,7 +102,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div className="col">
+      <div className="anu-col">
         <button onClick={this.click.bind(this)}>点击</button>
         <button onClick={this.multiClick.bind(this)}>多列点击</button>
         <button onClick={this.dateClick.bind(this)}>日期点击</button>

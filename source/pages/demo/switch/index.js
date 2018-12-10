@@ -24,7 +24,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div className="col">
+      <div className="anu-col">
         <div class="item-box">
           <text class="item-txt">选项</text>
           <XSwitch checked={false} onChange={this.change.bind(this)} />

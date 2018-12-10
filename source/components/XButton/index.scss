@@ -1,9 +1,4 @@
-.center {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-}
+@import '../../common/style/common.scss';
 
 .button {
   width: 100%;
@@ -15,12 +10,9 @@
   overflow: hidden;
   border: 1px solid #eee;
   background-color: #f8f8f8;
-  
-}
-
-.active {
-  // background-color: red;
-  opacity:0.6;
+  &:active {
+    opacity: .6;
+  }
 }
 
 .default {
@@ -53,7 +45,7 @@
 }
 
 .default-disabled-plain, .primary-disabled-plain, .warn-disabled-plain  {
- 
+
   border: 1px solid rgba(0, 0, 0, 0.2);
   background-color: transparent;
 }
