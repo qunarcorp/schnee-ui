@@ -57,16 +57,15 @@ class XCheckbox extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  onClick() {
-      console.log('checkbox click');
-      // 不在 XLabel 里响应本身 click 事件
-      if (!this.props.__InLabel) {
-          console.log('out label')
-          this.handleClick();
+  onClick(e) {
+      // 不在 XLabel 内部的时候，执行本身逻辑
+      // 在快应用下不支持事件冒泡，直接执行本身逻辑
+      if (process.env.ANU_ENV === 'quick' || !this.props.__InLabel) {
+          this.handleClick(e);
       }
   }
 
-  handleClick() {
+  handleClick(e) {
       if (this.props.disabled) {
           return;
       }
@@ -134,11 +133,13 @@ class XCheckbox extends React.Component {
             >
                 {
                     this.state.checked ?
-                    <XIcon
-                        content="&#xf078;"
-                        color={this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color}
-                        size={this.state.fontSize}
-                    /> :
+                    <span
+                        className="iconfont checkbox__check"
+                        style={{
+                            color: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
+                            fontSize: this.state.fontSize
+                        }}
+                    >&#xf078;</span>:
                     null
                 }
             </div>

@@ -1,7 +1,8 @@
+@import '../../common/style/iconfont.scss';
+
 .checkbox-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
 }
 
 .checkbox {
@@ -11,4 +12,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.checkbox__check {
+
 }

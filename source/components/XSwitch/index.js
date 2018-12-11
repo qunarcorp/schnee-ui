@@ -71,9 +71,9 @@ class XSwitch extends React.Component {
   }
 
   onClick(e) {
-      console.log('XSwitch onClick');
-      // 不在 XLabel 里的话响应 click 事件
-      if (!this.props.__InLabel) {
+      // 不在 XLabel 内部的时候，执行本身逻辑
+      // 在快应用下不支持事件冒泡，直接执行本身逻辑
+      if (process.env.ANU_ENV === 'quick' || !this.props.__InLabel) {
           this.handleClick(e);
       }
   }

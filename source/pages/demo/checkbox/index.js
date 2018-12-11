@@ -53,6 +53,7 @@ class P extends React.Component {
             <XCheckboxGroup onChange={this.checkboxChange}>
                 <checkbox />
                 <XCheckbox />
+                <XCheckbox size="small" checked={true} />
                 <XCheckbox value="USA" text="美国" />
                 <div><XCheckbox value="USA" text="美国" checked={true} /></div>
                 <div><XCheckbox value="USA" text="美国" size="large" /></div>
