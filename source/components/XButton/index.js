@@ -1,6 +1,5 @@
-/*eslint-disable*/
-import React from "@react";
-import "./index.scss";
+import React from '@react';
+import './index.scss';
 
 class XButton extends React.Component {
     constructor(props) {
@@ -16,17 +15,17 @@ class XButton extends React.Component {
         let buttonArray = [props.size];
         let textAray = [props.type];
         if (props.disabled) {
-            textAray.push("disabled");
+            textAray.push('disabled');
         } else {
             if (active) {
-                buttonArray.push(props.type + "-active");
+                buttonArray.push(props.type + '-active');
             }
         }
         if (props.plain) {
-            textAray.push("plain");
+            textAray.push('plain');
         }
-        var textStyle = colorStyleMap[textAray.join("-")];
-        var buttonStyle = buttonArray.concat(textAray.join("-")).join(" ");
+        var textStyle = colorStyleMap[textAray.join('-')];
+        var buttonStyle = buttonArray.concat(textAray.join('-')).join(' ');
         let fontStyle = fontStyleMap[props.size];
         return {
             value: props.children,
@@ -62,13 +61,13 @@ class XButton extends React.Component {
     }
     handleClick(e) {
         var props = this.props;
-        Array("onTap", "catchTap", "onClick", "catchClick").forEach(function(
+        Array('onTap', 'catchTap', 'onClick', 'catchClick').forEach(function(
             name
         ) {
             var fn = props[name];
             if (fn) {
                 fn(e);
-                if (name == "catchTap" || name == '"catchClick"') {
+                if (name == 'catchTap' || name == 'catchClick') {
                     e.stopPropagation();
                 }
             }
@@ -85,7 +84,7 @@ class XButton extends React.Component {
     render() {
         return (
             <stack
-                class={"anu-col anu-center anu-middle button " + this.state.buttonStyle}
+                class={'anu-col anu-center anu-middle button ' + this.state.buttonStyle}
                 disabled={this.props.disabled}
                 plain={this.props.plain}
                 type={this.props.type}

@@ -3,9 +3,6 @@
 .AppleDouble
 .LSOverride
 
-# Icon must end with two \r
-Icon
-
 
 # Thumbnails
 ._*
@@ -106,12 +103,10 @@ typings/
 #DynamoDB Local files
 .dynamodb/
 
+# nanachi
 dist/
-
 src/
-
 build/
-
 sign/
 
 source/ReactAli.js

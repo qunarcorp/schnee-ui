@@ -16,9 +16,10 @@ class P extends React.Component {
     }
 
     setDisabled() {
+        // eslint-disable-next-line
         console.log('disabled');
         this.setState({
-        disabled: !this.state.disabled
+            disabled: !this.state.disabled
         });
     }
 

@@ -1,6 +1,5 @@
 import React from '@react';
 import './index.scss';
-/*eslint-disable*/
 
 class P extends React.Component {
 
@@ -8,7 +7,7 @@ class P extends React.Component {
         super(props);
         const ROOT_PATH = '/pages/demo';
         this.state = {
-            list: 'button,checkbox,label,picker,progress,radio,slider,swiper,switch,icon'
+            list: 'button,checkbox,icon,label,picker,progress,radio,slider,swiper,switch'
                 .split(',')
                 .map(function(name) {
                     return {

@@ -54,7 +54,7 @@ class XSwiper extends React.Component {
         this.pageX = point.pageX;
         this.pageY = point.pageY;
         this.setState({
-           touching: true
+            touching: true
         });
     }
 
@@ -75,7 +75,7 @@ class XSwiper extends React.Component {
         this.pageY = point.pageY;
     }
 
-    handleTouchEnd(e) {
+    handleTouchEnd() {
         const deltaLength = this.props.vertical ? this.state.translateY : this.state.translateX
         let nextIndex = this.state.curIndex;
         if (deltaLength < -30) {
@@ -89,7 +89,7 @@ class XSwiper extends React.Component {
         }
         this.setState({
             touching: false
-         });
+        });
         this.goto(nextIndex);
     }
 
@@ -138,12 +138,12 @@ class XSwiper extends React.Component {
     componentWillMount() {
         this.count = this.props.children && this.props.children.length;
         this.setState({
-           arr: createArrayByLength(this.count)
+            arr: createArrayByLength(this.count)
         });
         this.props.autoPlay && this.autoPlay();
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps) {
         nextProps.autoPlay ?
             this.autoPlay() :
             (this.intervalId && clearInterval(this.intervalId));

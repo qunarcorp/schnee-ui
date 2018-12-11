@@ -1,6 +1,6 @@
 import React from '@react';
 import './index.scss';
-import XIcon from "@components/XIcon/index";
+import XIcon from '@components/XIcon/index';
 
 class P extends React.Component {
     render() {
