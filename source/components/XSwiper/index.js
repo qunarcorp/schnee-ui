@@ -123,9 +123,16 @@ class XSwiper extends React.Component {
     }
 
     calculateTransform(x, y) {
-        typeof x === 'number' && (x = `${x}PX`);
-        typeof y === 'number' && (y = `${y}PX`);
-        return `translate(${x}, ${y})`;
+        const ANU_ENV = process.env.ANU_ENV;//wx ali bu quick
+        if (ANU_ENV === 'quick') {
+            typeof x === 'number' && (x = `${x}px`);
+            typeof y === 'number' && (y = `${y}px`);
+            return `{"translateX":"${x}","translateY":"${y}"}`;
+        } else {
+            typeof x === 'number' && (x = `${x}PX`);
+            typeof y === 'number' && (y = `${y}PX`);
+            return `translate(${x}, ${y})`;
+        }
     }
 
     componentWillMount() {
