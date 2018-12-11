@@ -43,7 +43,7 @@ class P extends React.Component {
 
   render() {
     return (
-      <div className="anu-col">
+      <div className="anu-col demo-page">
         {/* <div class="section section_gap anu-block">
           <text class="section__title">设置step</text>
           <div class="body-div">
@@ -62,25 +62,23 @@ class P extends React.Component {
             <Slider class="slider" onChange={this.sliderChange} show-value={true}/>
           </div>
         </div> */}
-
-        <div class="section section_gap anu-block">
-          <text class="section__title">设置最小/最大值</text>
-          <div class="body-div">
-            <XSlider
-              class="slider"
-              onChange={this.sliderChange.bind(this)}
-              min={50}
-              max={200}
-              value={this.state.currentValue}
-            />
+          <span className="demo-header">设置最小/最大值</span>
+          <div class="demo-content">
+            <div class="anu-col">
+              <XSlider
+                onChange={this.sliderChange.bind(this)}
+                min={50}
+                max={200}
+                value={this.state.currentValue}
+              />
+              <div>{this.state.currentValue}</div>
+              <div>
+                <switch checked={true} onChange={this.switch1Change} />
+                <switch onChange={this.switch2Change} />
+              </div>
+            </div>
           </div>
-          <div>{this.state.currentValue}</div>
         </div>
-        <div class="section section_gap">
-          <switch checked={true} onChange={this.switch1Change} />
-          <switch onChange={this.switch2Change} />
-        </div>
-      </div>
     );
   }
 }
