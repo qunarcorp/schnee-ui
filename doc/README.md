@@ -5,7 +5,7 @@
 | CheckboxGroup|  |  |  |  |
 | DatePicker |  |  |  |  |
 | DatePickerItem |  |  |  |  |
-| Icon |  |  |  |  |
+| Icon | ✓ | ✓ | ✓ | ✓ |
 | Label |  |  |  |  |
 | Mask |  |  |  |  |
 | Picker |  |  |  |  |
