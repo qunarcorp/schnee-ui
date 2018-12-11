@@ -1,5 +1,5 @@
 import React from '@react';
-// import './index.scss';
+import './index.scss';
 import XLabel from '@components/XLabel/index';
 import XCheckbox from '@components/XCheckbox/index';
 import XRadio from '@components/XRadio/index';
@@ -13,8 +13,8 @@ class P extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
+            <div class="col">
+                <div class="col">
                     <text>微信原生 label</text>
                     <div>
                         <label for="wx_radio">wx radio</label>
@@ -33,26 +33,26 @@ class P extends React.Component {
                         <switch id="wx_switch"></switch>
                     </div>
                 </div>
-                <div>
+                <div class="col">
                     <text>for 方式</text>
                     <div>
-                        <XLabel for="checkbox_label">checkbox label</XLabel>
+                        <XLabel for="checkbox_label"><text>checkbox label</text></XLabel>
                         <XCheckbox id="checkbox_label" />
                     </div>
                     <div>
-                        <XLabel for="radio_label">radio label</XLabel>
+                        <XLabel for="radio_label"><text>radio label</text></XLabel>
                         <XRadio id="radio_label" />
                     </div>
                     <div>
-                        <XLabel for="button_label">button label</XLabel>
-                        <XButton id="button_label" />
+                        <XLabel for="button_label"><text>button label</text></XLabel>
+                        <XButton id="button_label">button test</XButton>
                     </div>
                     <div>
-                        <XLabel for="switch_label">switch label</XLabel>
+                        <XLabel for="switch_label"><text>switch label</text></XLabel>
                         <XSwitch id="switch_label" />
                     </div>
                 </div>
-                <div>
+                <div class="col">
                     <text>子元素方式</text>
                     <div>
                         <XLabel>
@@ -69,7 +69,7 @@ class P extends React.Component {
                     <div>
                         <XLabel>
                             <text>button label</text>
-                            <XButton />
+                            <XButton>button test</XButton>
                         </XLabel>
                     </div>
                     <div>

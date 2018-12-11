@@ -57,7 +57,6 @@ class XLabel extends React.Component {
     }
 
     handleLabelClick(e) {
-        console.log('label click', e);
         const fiber = this._reactInternalFiber;
         let targetFiber = null;
 
@@ -73,7 +72,7 @@ class XLabel extends React.Component {
             targetFiber = getFirstWidget(fiber);
         }
         console.timeEnd('label target search');
-
+        console.log('XLabel target: ', targetFiber);
         // 目标控件存在的话执行对应的 handleClick 方法
         if (targetFiber) {
             const fn = targetFiber.stateNode.handleClick;
@@ -91,7 +90,7 @@ class XLabel extends React.Component {
 
     render() {
         return (
-            <div class="label" onClick={this.handleLabelClick}>{this.props.children}</div>
+            <div class="col" onClick={this.handleLabelClick}>{this.props.children}</div>
         );
     }
 }

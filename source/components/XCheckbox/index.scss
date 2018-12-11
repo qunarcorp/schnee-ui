@@ -12,11 +12,3 @@
     justify-content: center;
     align-items: center;
 }
-
-.checkbox__check {
-    transform: scale(1.5, 1);
-}
-
-.checkbox__check::after {
-    content: '\2713';
-}

@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import React from '@react';
 import './index.scss';
+import XIcon from '../XIcon/index';
 
 function collectCheckboxInstances(fiber, ret, instance) {
     for (fiber = fiber.child; fiber; fiber = fiber.sibling) {
@@ -13,8 +14,8 @@ function collectCheckboxInstances(fiber, ret, instance) {
 }
 
 const styleConfig = {
-    width: 36,
-    fontSize: 30,
+    width: 40,
+    fontSize: 34,
     gap: 4
 };
 
@@ -133,13 +134,11 @@ class XCheckbox extends React.Component {
             >
                 {
                     this.state.checked ?
-                    <span
-                        class="checkbox__check"
-                        style={{
-                            color: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
-                            fontSize: this.state.fontSize
-                        }}
-                    ></span> :
+                    <XIcon
+                        content="&#xf078;"
+                        color={this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color}
+                        size={this.state.fontSize}
+                    /> :
                     null
                 }
             </div>

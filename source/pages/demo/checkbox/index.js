@@ -51,6 +51,7 @@ class P extends React.Component {
     render() {
         return (<div>
             <XCheckboxGroup onChange={this.checkboxChange}>
+                <checkbox />
                 <XCheckbox />
                 <XCheckbox value="USA" text="美国" />
                 <div><XCheckbox value="USA" text="美国" checked={true} /></div>
@@ -59,6 +60,7 @@ class P extends React.Component {
                 <div><XCheckbox value="USA" text="美国" isRight={false} /></div>
                 <div><XCheckbox value="USA" text="美国" color="red" /></div>
                 <div><XCheckbox value="USA" text="美国" color="red" disabled={true} /></div>
+                <XCheckbox value="USA" text="美国" color="red" disabled={true} checked={true} />
             </XCheckboxGroup>
         </div>);
     }

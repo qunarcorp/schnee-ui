@@ -7,6 +7,9 @@ class XButton extends React.Component {
         super(props);
         let newState = this.computeState(props, false);
         this.state = newState;
+
+        this.handleClick = this.handleClick.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     computeState(props, active) {
@@ -49,6 +52,12 @@ class XButton extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         this.updateState(nextProps, false);
+    }
+    onClick(e) {
+        // 不在 XLabel 内部的时候执行原有逻辑
+        if (!this.props.__InLabel) {
+            this.handleClick(e);
+        }
     }
     handleClick(e) {
         var props = this.props;
@@ -97,7 +106,7 @@ class XButton extends React.Component {
                         {this.state.value}
                     </text>
                 </div>
-                <input class="mask" type='button' onClick={this.handleClick.bind(this)} />
+                <input class="mask" type='button' onClick={this.onClick} />
             </stack>
         );
     }
@@ -108,7 +117,8 @@ XButton.defaultProps = {
     disabled: false,
     plain: false,
     size: 'default',
-    loading: false
+    loading: false,
+    __InLabel: false
 };
 
 const colorStyleMap = {

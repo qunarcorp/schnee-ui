@@ -71,6 +71,7 @@ class XSwitch extends React.Component {
   }
 
   onClick(e) {
+      console.log('XSwitch onClick');
       // 不在 XLabel 里的话响应 click 事件
       if (!this.props.__InLabel) {
           this.handleClick(e);
@@ -100,7 +101,7 @@ class XSwitch extends React.Component {
           }
           style={this.state.wrapperStyle}
           id="{{id}}"
-          onClick={this.onClick.bind(this)}
+          onClick={this.onClick}
         >
           <div
             class={
