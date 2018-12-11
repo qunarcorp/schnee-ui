@@ -2,68 +2,68 @@ import React from '@react';
 import './index.scss';
 import XCheckbox from '@components/XCheckbox/index';
 import XCheckboxGroup from '@components/XCheckboxGroup/index';
+
 class P extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.state = {
-            items: [
-                {
-                    name: 'USA',
-                    value: '美国'
-                }, {
-                    name: 'CHN',
-                    value: '中国',
-                    checked: 'true'
-                }, {
-                    name: 'BRA',
-                    value: '巴西'
-                }, {
-                    name: 'JPN',
-                    value: '日本'
-                }, {
-                    name: 'ENG',
-                    value: '英国'
-                }, {
-                    name: 'TUR',
-                    value: '法国'
-                }
-            ]
-        };
+            checkedValues: ''
+        }
+
+        this.checkboxChange = this.checkboxChange.bind(this);
     }
 
-    config = {
-        navigationBarTextStyle: '#fff',
-        navigationBarBackgroundColor: '#0088a4',
-        navigationBarTitleText: 'checkbox demo',
-        backgroundColor: '#eeeeee',
-        backgroundTextStyle: 'light'
-    };
-
     checkboxChange(e) {
-        // eslint-disable-next-line
-        console.log('checkbox发生change事件，携带value值为：', e.detail.value);
-        // React.api.showModal({
-        //     title: '提示',
-        //     content: JSON.stringify(e.target.value)
-        // });
+        console.log('XCheckbox 发生改变，触发 XCheckboxGroup onChange 事件，被选中的 XCheckbox 的 value 为: ', e.detail.value);
+        this.setState({ checkedValues: e.detail.value.toString() });
     }
 
     render() {
-        return (<div>
-            <XCheckboxGroup onChange={this.checkboxChange}>
-                <checkbox />
-                <XCheckbox />
-                <XCheckbox size="small" checked={true} />
-                <XCheckbox value="USA" text="美国" />
-                <div><XCheckbox value="USA" text="美国" checked={true} /></div>
-                <div><XCheckbox value="USA" text="美国" size="large" /></div>
-                <div><XCheckbox value="USA" text="美国" size="small" /></div>
-                <div><XCheckbox value="USA" text="美国" isRight={false} /></div>
-                <div><XCheckbox value="USA" text="美国" color="red" /></div>
-                <div><XCheckbox value="USA" text="美国" color="red" disabled={true} /></div>
-                <XCheckbox value="USA" text="美国" color="red" disabled={true} checked={true} />
-            </XCheckboxGroup>
-        </div>);
+        return (
+            <div class="anu-col demo-page">
+                <span class="demo-header">checked</span>
+                <div class="demo-content">
+                    <XCheckbox checked={true} />
+                    <XCheckbox checked={false} />
+                </div>
+                <span class="demo-header">disabled</span>
+                <div class="demo-content">
+                    <XCheckbox checked={true} disabled={true} />
+                    <XCheckbox checked={false} disabled={true} />
+                </div>
+                <span class="demo-header">text</span>
+                <div class="demo-content">
+                    <XCheckbox text="apple" />
+                </div>
+                <span class="demo-header">isRight</span>
+                <div class="demo-content">
+                    <XCheckbox isRight={false} text="left" />
+                    <XCheckbox isRight={true} text="right" />
+                </div>
+                <span class="demo-header">color</span>
+                <div class="demo-content">
+                    <XCheckbox checked={true} color="red" />
+                    <XCheckbox checked={true} color="orange" />
+                    <XCheckbox checked={true} color="blue" />
+                </div>
+                <span class="demo-header">size</span>
+                <div class="demo-content">
+                    <XCheckbox checked={true} size="small" />
+                    <XCheckbox checked={true} size="default" />
+                    <XCheckbox checked={true} size="large" />
+                </div>
+                <span class="demo-header">XCheckboxGroup</span>
+                <div class="demo-content">
+                    <XCheckboxGroup onChange={this.checkboxChange}>
+                        <XCheckbox checked={true} value="apple" text="apple" />
+                        <XCheckbox checked={false} value="house" text="house" />
+                        <XCheckbox checked={false} value="cookie" text="cookie" />
+                    </XCheckboxGroup>
+                    <text>被选中的 checkbox 的 value: \n{this.state.checkedValues}</text>
+                </div>
+            </div>
+        );
     }
 }
 
