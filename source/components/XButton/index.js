@@ -92,7 +92,7 @@ class XButton extends React.Component {
             >
                 <div>
                     <image
-                        show={this.props.loading}
+                        hidden={!this.props.loading}
                         class="loading-style"
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
