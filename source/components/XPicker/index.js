@@ -23,6 +23,7 @@ class XPicker extends React.Component {
     // 多列选择器
     const { range, dataMap, value, start, end, type } = props;
     const { groups, newselected } = this.parseData(range, dataMap.items, value);
+    console.log('-----', groups, value)
     this.state = {
       groups,
       selected: newselected,

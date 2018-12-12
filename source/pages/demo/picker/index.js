@@ -1,6 +1,7 @@
 import React from '@react';
 import XPicker from '@components/XPicker/index';
 import cnCity from '../../../common/utils/cnCity';
+import './index.scss'
 class P extends React.Component {
   constructor(props) {
     super(props);
@@ -30,51 +31,55 @@ class P extends React.Component {
         {
           name: 'Item5'
         }
-      ]
-      ,
+      ],
       multi_group: [
-          {
-            name: '北京',
-            sub: [
-              {
-                name: '北京市',
-                sub:[{
+        {
+          name: '北京',
+          sub: [
+            {
+              name: '北京市',
+              sub: [
+                {
                   name: '东城区'
-                },{
+                },
+                {
                   name: '西城区'
-                }]
-              }
-            ]
-          },
-          {
-            name: '天津',
-            sub: [
-              {
-                name: '天津市',
-                sub:[{
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: '天津',
+          sub: [
+            {
+              name: '天津市',
+              sub: [
+                {
                   name: '东城区1'
-                },{
+                },
+                {
                   name: '西城区1'
-                }]
-              }
-            ]
-          }
+                }
+              ]
+            }
+          ]
+        }
       ]
-
-
     };
   }
 
-  click(){
+  click() {
+    console.log('click')
     this.setState({
       picker_show: true
     });
-  };
+  }
 
   handleChange(selected) {
     let value = '';
-    console.log('==================',selected)
-   
+    console.log('==================', selected);
+
     this.setState({
       picker_value: value,
       picker_show: false,
@@ -85,56 +90,63 @@ class P extends React.Component {
   }
 
   handelCanel(e) {
-    this.setState({ picker_show: false, multi_picker_show: false, isOpen: false })
+    this.setState({ picker_show: false, multi_picker_show: false, isOpen: false });
   }
 
   multiClick() {
-    this.setState({ multi_picker_show: true })
+    this.setState({ multi_picker_show: true });
   }
 
   dateClick() {
-    this.setState({ isOpen: true})
+    this.setState({ isOpen: true });
   }
 
   timeClick() {
-    this.setState({ isTimeOpen: true})
+    this.setState({ isTimeOpen: true });
   }
 
   render() {
-    return (
-      <div className="anu-col">
-        <button onClick={this.click.bind(this)}>点击</button>
-        <button onClick={this.multiClick.bind(this)}>多列点击</button>
-        <button onClick={this.dateClick.bind(this)}>日期点击</button>
-        <button onClick={this.timeClick.bind(this)}>时间点击</button>
-        <XPicker
+    return ( 
+      <div >
+        <div className="anu-col" style="width: 100%">
+
+
+          <button class="anu-item" onClick={this.click.bind(this)}>点击</button>
+          <button  class="anu-item" onClick={this.multiClick.bind(this)}>多列点击</button>
+
+          <button  class="anu-item" onClick={this.dateClick.bind(this)}>日期点击</button>
+          <button  class="anu-item" onClick={this.timeClick.bind(this)}>时间点击</button>
+
+        </div>
+
+         <XPicker
           onChange={this.handleChange.bind(this)}
           range={this.state.picker_group}
           show={this.state.picker_show}
           onCancel={this.handelCanel.bind(this)}
         />
-        <XPicker
+        {/*<XPicker
           type="multiSelector"
           onChange={this.handleChange.bind(this)}
           range={cnCity}
           show={this.state.multi_picker_show}
           onCancel={this.handelCanel.bind(this)}
         />
-         <XPicker
+        <XPicker
           type="date"
           value={this.state.date}
           onChange={this.handleChange.bind(this)}
-          start='2017-1-1'
+          start="2017-1-1"
           show={this.state.isOpen}
           onCancel={this.handelCanel.bind(this)}
         />
-         <XPicker
+        <XPicker
           type="time"
           value={this.state.time}
           onChange={this.handleChange.bind(this)}
           show={this.state.isTimeOpen}
           onCancel={this.handelCanel.bind(this)}
-        />
+        /> */}
       </div>
     );
   }

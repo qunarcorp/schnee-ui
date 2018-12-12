@@ -12,7 +12,7 @@ import './pages/demo/slider/index';
 import './pages/demo/swiper/index';
 import './pages/demo/switch/index';
 import './pages/demo/icon/index';
-
+import './pages/demo/picker1/index';
 import './app.scss';
 
 class Global extends React.Component {

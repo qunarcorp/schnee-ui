@@ -182,8 +182,7 @@ class XPickerGroup extends React.Component {
         // const cls = classNames('weui-picker__group', className);
 
         return (
-
-            <div className={this.state.cls}
+            <stack className={this.state.cls}
                 onTouchStart={this.handleTouchStart}
                 catchTouchMove={this.handleTouchMove}
                 onTouchEnd={this.handleTouchEnd}
@@ -199,7 +198,7 @@ class XPickerGroup extends React.Component {
                         </div>;
                     }) }
                 </div>
-            </div>
+            </stack> 
 
 
         );

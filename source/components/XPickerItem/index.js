@@ -10,8 +10,6 @@ import XDatePickerItem from '../XDatePickerItem/index.js';
  *
  */
 class XPickerItem extends React.Component {
-  
-
   static defaultProps = {
     actions: [],
     groups: [],
@@ -65,16 +63,15 @@ class XPickerItem extends React.Component {
   handleChange(item, i, groupIndex) {
     console.log('handeChange', item);
     if (this.props.type === 'date' || this.props.type === 'time') {
-
-      this.setState({
-        selected:item.disabled ? this.props.defaultSelect : item.value
-      }, () => {
-        if (this.props.onGroupChange)
-        this.props.onGroupChange(item, i, groupIndex, this.state.selected, this);
-      })
-
-
-
+      this.setState(
+        {
+          selected: item.disabled ? this.props.defaultSelect : item.value
+        },
+        () => {
+          if (this.props.onGroupChange)
+            this.props.onGroupChange(item, i, groupIndex, this.state.selected, this);
+        }
+      );
     } else {
       let selected = this.state.selected;
       selected[groupIndex] = i;
@@ -143,55 +140,59 @@ class XPickerItem extends React.Component {
   }
 
   render() {
-    return this.props.show ? (
+    return ( 
       <div>
-        <XMask className={this.state.maskCls} click={this.handleCancel.bind(this)} />
-        <div class={this.state.cls}>
-          <div class="weui-picker__hd">
-            {this.state.actions.map(function(action, i) {
-              return (
-                <a
-                  onClick={action.onClick}
-                  key={i}
-                  class={'weui-picker__action ' + 'weui-picker__action_' + i}
-                >
-                  {action.label}
-                </a>
-              );
-            })}
+        {this.props.show && (
+          <div>
+            {/* <XMask className={this.state.maskCls} click={this.handleCancel.bind(this)} /> */}
+            <div class={this.state.cls}>
+              <div class="weui-picker__hd">
+                {this.state.actions.map(function(action, i) {
+                  return (
+                    <div
+                      onClick={action.onClick}
+                      key={i} 
+                      class={'weui-picker__action ' + 'weui-picker__action_' + i}
+                    > 
+                      {action.label}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="weui-picker__bd">
+                {this.props.groups.map(function(group, i) {
+                  return (
+                    <div style="display: flex; flex: 1; justify-content:center">
+                      {this.props.type === 'date' || this.props.type === 'time' ? (
+                        <XDatePickerItem
+                          key={i}
+                          value={this.props.defaultSelect}
+                          onChange={this.handleChange}
+                          step={group.step}
+                          type={group.type}
+                          format={group.format}
+                          start={this.props.start}
+                          end={this.props.end}
+                        />
+                      ) : (
+                        <XPickerGroup
+                          key={i}
+                          onChange={this.handleChange}
+                          items={group.items}
+                          mapKeys={group.mapKeys}
+                          groupIndex={i}
+                          defaultIndex={this.state.selected[i]}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-          <div className="weui-picker__bd">
-            {this.props.groups.map(function(group, i) {
-              return (
-                <div style="display: flex; flex: 1; justify-content:center">
-                  {this.props.type === 'date'  || this.props.type === 'time'? (
-                    <XDatePickerItem
-                      key={i}
-                      value={this.props.defaultSelect}
-                      onChange={this.handleChange}
-                      step={group.step}
-                      type={group.type}
-                      format={group.format}
-                      start={this.props.start}
-                      end={this.props.end}
-                    />
-                  ) : (
-                    <XPickerGroup
-                      key={i}
-                      onChange={this.handleChange}
-                      items={group.items}
-                      mapKeys={group.mapKeys}
-                      groupIndex={i}
-                      defaultIndex={this.state.selected[i]}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        )}
       </div>
-    ) : null;
+    );
   }
 }
 

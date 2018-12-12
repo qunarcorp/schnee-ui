@@ -5,28 +5,41 @@
   width: 100%;
   left: 0;
   bottom: 0;
+  right: 0;
   z-index: 5000;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translate(0, 100%);
-  -ms-transform: translate(0, 100%);
-  transform: translate(0, 100%);
-  -webkit-transition: -webkit-transform .3s;
-  transition: -webkit-transform .3s;
-  transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
+  flex-direction: column;
+  height: 450px;
+  // -webkit-backface-visibility: hidden;
+  // backface-visibility: hidden;
+  // -webkit-transform: translate(0, 100%);
+  // -ms-transform: translate(0, 100%);
+  // transform: translate(0, 100%);
+  // -webkit-transition: -webkit-transform .3s;
+  // transition: -webkit-transform .3s;
+  // transition: transform .3s;
+  // transition: transform .3s, -webkit-transform .3s;
+  // display: flex;
+  // flex-direction: column;
 }
 
 .weui-picker__hd {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  // display: -webkit-box;
+  // display: -webkit-flex;
+  // display: -ms-flexbox;
+  // display: flex;
+  // // position: fixed;
+  // // left: 0;
+
+  // flex: 1;
   padding: 9px 15px;
   background-color: #fff;
   position: relative;
-  text-align: center;
+  align-items: center;
   font-size: 17px;
+  height: 42px;
+  border-bottom: 1px solid #eeeeee;
+  width: 100%;
+    justify-content: space-between;
 }
 
 .weui-picker__bd {
@@ -34,21 +47,31 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  // position: fixed;
+  // left: 0;
+  // bottom: 0;
+
   position: relative;
   background-color: #fff;
   height: 238px;
+  width: 100%;
   overflow: hidden;
   justify-content: center;
 }
 
 .weui-picker__action_0 {
-  text-align: left;
+ text {
   color: #888;
+ }
+  
 }
 
 .weui-picker__action_1 {
-  text-align: right;
-  color: #1AAD19;
+  justify-content: flex-end;
+  text {
+    color: #1AAD19;
+  }
+  
 }
 
 .weui-picker__action {
