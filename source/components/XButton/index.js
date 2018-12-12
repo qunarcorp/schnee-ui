@@ -13,19 +13,19 @@ class XButton extends React.Component {
 
     computeState(props, active) {
         let buttonArray = [props.size];
-        let textAray = [props.type];
+        let textArray = [props.type];
         if (props.disabled) {
-            textAray.push('disabled');
+            textArray.push('disabled');
         } else {
             if (active) {
                 buttonArray.push(props.type + '-active');
             }
         }
         if (props.plain) {
-            textAray.push('plain');
+            textArray.push('plain');
         }
-        var textStyle = colorStyleMap[textAray.join('-')];
-        var buttonStyle = buttonArray.concat(textAray.join('-')).join(' ');
+        var textStyle = colorStyleMap[textArray.join('-')];
+        var buttonStyle = buttonArray.concat(textArray.join('-')).join(' ');
         let fontStyle = fontStyleMap[props.size];
         return {
             value: props.children,
@@ -84,7 +84,7 @@ class XButton extends React.Component {
     render() {
         return (
             <stack
-                class={'anu-col anu-center anu-middle button ' + this.state.buttonStyle}
+                class={'anu-col anu-center anu-middle anu-button ' + this.state.buttonStyle}
                 disabled={this.props.disabled}
                 plain={this.props.plain}
                 type={this.props.type}
@@ -93,7 +93,7 @@ class XButton extends React.Component {
                 <div>
                     <image
                         hidden={!this.props.loading}
-                        class="loading-style"
+                        class="anu-button__loading"
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
 
@@ -106,7 +106,7 @@ class XButton extends React.Component {
                         {this.state.value}
                     </text>
                 </div>
-                <input class="mask" type='button' onClick={this.onClick} />
+                <input class="anu-button__mask" type='button' onClick={this.onClick} />
             </stack>
         );
     }
