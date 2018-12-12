@@ -1,13 +1,2 @@
 @import '../../../common/style/common.scss';
-
-.progress-demo {
-  flex-direction: column;
-}
-.progress-title {
-  margin: 20px;
-}
-.progress-cell {
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 40px;
-}
+@import '../common/index.scss';

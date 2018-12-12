@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import React from "@react";
-import './index.scss'
+import './index.scss';
+
 class XRadioGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +12,7 @@ class XRadioGroup extends React.Component {
         fn({detail: {value}});
     }
     render() {
-        return <div class="col">{this.props.children}</div>;
+        return <div className="col">{this.props.children}</div>;
     }
 }
 

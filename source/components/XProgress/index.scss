@@ -1,7 +1,8 @@
 
 
 .anu-progress {
-	flex-direction: column;
+  flex-direction: column;
+  flex: 1;
 
   &-cell {
     flex-direction: row;

@@ -1,60 +1,82 @@
 import React from '@react';
-// import './index.scss';
+import './index.scss';
 import XLabel from '@components/XLabel/index';
+import XCheckbox from '@components/XCheckbox/index';
+import XRadio from '@components/XRadio/index';
+import XButton from '@components/XButton/index';
+import XSwitch from '@components/XSwitch/index';
+
+const labelStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+};
 
 class P extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      condition1: true,
-      condition2: true
-    };
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  toggleCondition2() {
-    console.log('Condition2');
-    this.setState({
-      condition2: !this.state.condition2
-    });
-  }
-
-  toggleCondition1() {
-    console.log('Condition1');
-    this.setState({
-      condition1: !this.state.condition1
-    });
-  }
-
-  render() {
-    return (
-      <div className="anu-col">
-        {this.state.condition2 ? (
-          <XLabel onTap={this.toggleCondition2.bind(this)} class="btn">Inactive Condition2</XLabel>
-        ) : (
-          <XLabel onTap={this.toggleCondition2.bind(this)} class="btn">Active Condition2</XLabel>
-        )}
-      </div>
-    );
-    // if (this.state.condition1) {
-    //   if (this.state.condition2) {
-    //     return (
-    //       <div class="anu-block">
-    //         <button onTap={this.toggleCondition1.bind(this)}>Inactive Condition1</button>
-    //         <button onTap={this.toggleCondition2.bind(this)}>Inactive Condition2</button>
-    //       </div>
-    //     );
-    //   } else {
-    //     return (
-    //       <div class="anu-block">
-    //         <button onTap={this.toggleCondition1.bind(this)}>Inactive Condition1</button>
-    //         <button onTap={this.toggleCondition2.bind(this)}>Active Condition2</button>
-    //       </div>
-    //     );
-    //   }
-    // } else {
-    //   return <div class="anu-block">124</div>;
-    // }
-  }
+    render() {
+        return (
+            <div className="anu-col demo-page">
+                <label for="wx_label">wx label for 方式</label>
+                <checkbox id="wx_label"></checkbox>
+                <label>
+                    <text>wx label 子元素</text>
+                    <checkbox></checkbox>
+                </label>
+                <span className="demo-header">for 方式</span>
+                <div className="demo-content">
+                    <div className="flex">
+                        <XLabel for="checkbox_label">checkbox label</XLabel>
+                        <XCheckbox id="checkbox_label" />
+                    </div>
+                    <div className="flex">
+                        <XLabel for="radio_label">radio label</XLabel>
+                        <XRadio id="radio_label" />
+                    </div>
+                    <div>
+                        <XLabel for="button_label"><text>button label</text></XLabel>
+                        <div>
+                            <XButton id="button_label">button test</XButton>
+                        </div>
+                    </div>
+                    <div className="flex red">
+                        <XLabel for="switch_label"><text>switch label</text></XLabel>
+                        <XSwitch id="switch_label" />
+                    </div>
+                </div>
+                <span className="demo-header">子元素方式</span>
+                <div className="demo-content">
+                    <div>
+                        <XLabel style={labelStyle}>
+                            <text>checkbox label</text>
+                            <XCheckbox />
+                        </XLabel>
+                    </div>
+                    <div>
+                        <XLabel style={labelStyle}>
+                            <text>radio label</text>
+                            <XRadio />
+                        </XLabel>
+                    </div>
+                    <div>
+                        <XLabel>
+                            <text>button label</text>
+                            <XButton>button test</XButton>
+                        </XLabel>
+                    </div>
+                    <div>
+                        <XLabel style={labelStyle}>
+                            <text>switch label</text>
+                            <XSwitch />
+                        </XLabel>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default P;

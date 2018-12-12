@@ -1,6 +1,5 @@
 import React from '@react';
 import './index.scss';
-/*eslint-disable*/
 
 class P extends React.Component {
 
@@ -33,10 +32,11 @@ class P extends React.Component {
 
     render() {
         return (
-            <div class="anu-col">
+            <div class="anu-col demo-page">
+                <span className="demo-header">Demo</span>
                 {this.state.list.map(function(item) {
-                    return (<div class="anu-item" onTap={this.goto.bind(this, item.url)}>
-                        <text className="anu-item">{item.name}</text>
+                    return (<div class="demo-list__item" onTap={this.goto.bind(this, item.url)}>
+                        <text>{item.name}</text>
                     </div>);
                 })}
             </div>

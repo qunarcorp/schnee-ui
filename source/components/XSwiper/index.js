@@ -54,7 +54,7 @@ class XSwiper extends React.Component {
         this.pageX = point.pageX;
         this.pageY = point.pageY;
         this.setState({
-           touching: true
+            touching: true
         });
     }
 
@@ -75,7 +75,7 @@ class XSwiper extends React.Component {
         this.pageY = point.pageY;
     }
 
-    handleTouchEnd(e) {
+    handleTouchEnd() {
         const deltaLength = this.props.vertical ? this.state.translateY : this.state.translateX
         let nextIndex = this.state.curIndex;
         if (deltaLength < -30) {
@@ -89,7 +89,7 @@ class XSwiper extends React.Component {
         }
         this.setState({
             touching: false
-         });
+        });
         this.goto(nextIndex);
     }
 
@@ -123,20 +123,27 @@ class XSwiper extends React.Component {
     }
 
     calculateTransform(x, y) {
-        typeof x === 'number' && (x = `${x}PX`);
-        typeof y === 'number' && (y = `${y}PX`);
-        return `translate(${x}, ${y})`;
+        const ANU_ENV = process.env.ANU_ENV;//wx ali bu quick
+        if (ANU_ENV === 'quick') {
+            typeof x === 'number' && (x = `${x}px`);
+            typeof y === 'number' && (y = `${y}px`);
+            return `{"translateX":"${x}","translateY":"${y}"}`;
+        } else {
+            typeof x === 'number' && (x = `${x}PX`);
+            typeof y === 'number' && (y = `${y}PX`);
+            return `translate(${x}, ${y})`;
+        }
     }
 
     componentWillMount() {
         this.count = this.props.children && this.props.children.length;
         this.setState({
-           arr: createArrayByLength(this.count)
+            arr: createArrayByLength(this.count)
         });
         this.props.autoPlay && this.autoPlay();
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentWillUpdate(nextProps) {
         nextProps.autoPlay ?
             this.autoPlay() :
             (this.intervalId && clearInterval(this.intervalId));

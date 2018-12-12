@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import React from '@react';
 import './index.scss';
+// import XIcon from '../XIcon/index';
 
 function collectCheckboxInstances(fiber, ret, instance) {
     for (fiber = fiber.child; fiber; fiber = fiber.sibling) {
@@ -13,8 +14,8 @@ function collectCheckboxInstances(fiber, ret, instance) {
 }
 
 const styleConfig = {
-    width: 36,
-    fontSize: 30,
+    width: 40,
+    fontSize: 34,
     gap: 4
 };
 
@@ -43,109 +44,118 @@ const DISABLED_ENHANCE_COLOR = '#b3b3b3'; // disabled 强调色
 const DEFAULT_CHECKED_COLOR = '#1aad16';
 
 class XCheckbox extends React.Component {
-  constructor(props) {
-    super(props);
-    const { width, fontSize } = getSizeStyle(props.size);
-    this.state = {
-        checked: props.checked,
-        width,
-        fontSize
-    };
+    constructor(props) {
+        super(props);
+        const {width, fontSize} = getSizeStyle(props.size);
+        this.state = {
+            checked: props.checked,
+            width,
+            fontSize
+        };
 
-    this.handleClick = this.handleClick.bind(this);
-  }
+        this.onClick = this.onClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
 
-  handleClick() {
-      if (this.props.disabled) {
-          return;
-      }
+    onClick(e) {
+        // 不在 XLabel 内部的时候，执行本身逻辑
+        // 在快应用下不支持事件冒泡，直接执行本身逻辑
+        if (process.env.ANU_ENV === 'quick' || !this.props.__InLabel) {
+            this.handleClick(e);
+        }
+    }
 
-      let fiber = this._reactInternalFiber;
-      const checkboxInstances = [];
-      let parentInstance = null;
-      while (fiber.return) {
-          fiber = fiber.return;
-          if (fiber.name === 'XCheckboxGroup') {
-              parentInstance = fiber.stateNode;
-              collectCheckboxInstances(fiber, checkboxInstances, this);
-          }
-      }
+    handleClick() {
+        if (this.props.disabled) {
+            return;
+        }
 
-      this.setState(
-          { checked: !this.state.checked },
-          () => {
-              const checkedCheckboxes = checkboxInstances.filter(checkboxInstance => checkboxInstance.state.checked)
-                                                         .map(checkboxInstance => checkboxInstance.props.value);
+        let fiber = this._reactInternalFiber;
+        console.log('fiber: ', fiber);
+        const checkboxInstances = [];
+        let parentInstance = null;
+        while (fiber.return) {
+            fiber = fiber.return;
+            if (fiber.name === 'XCheckboxGroup') {
+                parentInstance = fiber.stateNode;
+                collectCheckboxInstances(fiber, checkboxInstances, this);
+            }
+        }
 
-              parentInstance && parentInstance.emitEvent(checkedCheckboxes);
-          }
-      );
+        this.setState({
+            checked: !this.state.checked
+        }, () => {
+            const checkedCheckboxes = checkboxInstances.filter(checkboxInstance => checkboxInstance.state.checked).map(checkboxInstance => checkboxInstance.props.value);
 
-  }
+            parentInstance && parentInstance.emitEvent(checkedCheckboxes);
+        });
 
-  componentWillReceiveProps(nextProps) {
-      const updateProps = {};
-      let shouldUpdate = false;
-      ['checked', 'size'].forEach(key => {
-          if (nextProps[key] !== this.props[key]) {
-              shouldUpdate = true;
-              if (key === 'size') {
-                  const { width, fontSize } = getSizeStyle(nextProps.size);
-                  updateProps.width = width;
-                  updateProps.fontSize = fontSize;
-              } else {
-                  updateProps[key] = nextProps[key];
-              }
-          }
-      });
-      if (shouldUpdate) {
-          this.setState(updateProps);
-      }
-  }
+    }
 
-  render() {
-    return (
-        <div class="checkbox-container">
-            {!this.props.isRight && <text>{this.props.text}</text>}
-            <div
-                class="checkbox"
-                onClick={this.handleClick}
-                style={{
-                    backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
-                    marginLeft: this.props.isRight ? '0px' : '10px',
-                    marginRight: this.props.isRight ? '10px' : '0px',
-                    minWidth: this.state.width,
-                    minHeight: this.state.width,
-                    width: this.state.width,
-                    height: this.state.width
-                }}
-            >
-                {
-                    this.state.checked ?
-                    <span
-                        class="checkbox__check"
-                        style={{
-                            color: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
-                            fontSize: this.state.fontSize
-                        }}
-                    ></span> :
-                    null
+    componentWillReceiveProps(nextProps) {
+        const updateProps = {};
+        let shouldUpdate = false;
+        ['checked', 'size'].forEach(key => {
+            if (nextProps[key] !== this.props[key]) {
+                shouldUpdate = true;
+                if (key === 'size') {
+                    const {width, fontSize} = getSizeStyle(nextProps.size);
+                    updateProps.width = width;
+                    updateProps.fontSize = fontSize;
+                } else {
+                    updateProps[key] = nextProps[key];
                 }
+            }
+        });
+        if (shouldUpdate) {
+            this.setState(updateProps);
+        }
+    }
+
+    render() {
+        return (
+            <div className="checkbox-container">
+                {!this.props.isRight && <text>{this.props.text}</text>}
+                <div
+                    className="checkbox"
+                    onClick={this.onClick}
+                    style={{
+                        backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
+                        marginLeft: this.props.isRight ? '0px' : '10px',
+                        marginRight: this.props.isRight ? '10px' : '0px',
+                        minWidth: this.state.width,
+                        minHeight: this.state.width,
+                        width: this.state.width,
+                        height: this.state.width
+                    }}
+                >
+                    {
+                        this.state.checked ?
+                            <span
+                                className="iconfont checkbox__check"
+                                style={{
+                                    color: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
+                                    fontSize: this.state.fontSize
+                                }}
+                            >&#xf078;</span>:
+                            null
+                    }
+                </div>
+                {this.props.isRight && <text>{this.props.text}</text>}
             </div>
-            {this.props.isRight && <text>{this.props.text}</text>}
-        </div>
-    );
-  }
+        );
+    }
 }
 
 XCheckbox.defaultProps = {
-  disabled: false,
-  checked: false,
-  value: '',
-  text: '',
-  isRight: true,
-  color: DEFAULT_CHECKED_COLOR,
-  size: 'default'
+    disabled: false,
+    checked: false,
+    value: '',
+    text: '',
+    isRight: true,
+    color: DEFAULT_CHECKED_COLOR,
+    size: 'default',
+    __InLabel: false
 };
 
 

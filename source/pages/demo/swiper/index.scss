@@ -1,4 +1,5 @@
 @import '../../../common/style/common.scss';
+@import '../common/index.scss';
 
 .swiper-content {
     display: flex;
@@ -18,4 +19,11 @@
     flex-shrink:0;
     width: 100%;
     height: 100%;
+}
+
+.aaa {
+    background-color: blue;
+    width: 140px;
+    height: 90px;
+    transform: translate(100px, -100px);
 }

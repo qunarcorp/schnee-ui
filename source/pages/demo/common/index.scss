@@ -1,0 +1,48 @@
+page { // 微信小程序
+    background-color: #e8e8e8;
+}
+
+.demo-page {
+    background-color: #e8e8e8;
+}
+
+.demo-header {
+    padding: 0 10px;
+    margin: 10px 0px;
+    font-weight: bold;
+    text {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+}
+
+.demo-list__item {
+    padding: 10px;
+    background-color: #fff;
+    margin: 5px 0px;
+    text {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+}
+
+.demo-nav__item {
+    margin: 0 4px;
+}
+
+.demo-nav__item--vertical {
+    margin: 4px 0;
+}
+
+.demo-content {
+    background-color: #fff;
+    margin: 10px;
+    padding: 10px;
+}
+
+.demo-content--transparent {
+    margin: 10px;
+    padding: 10px;
+}

@@ -1,7 +1,8 @@
+@import '../../common/style/iconfont.scss';
+
 .checkbox-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
 }
 
 .checkbox {
@@ -14,9 +15,5 @@
 }
 
 .checkbox__check {
-    transform: scale(1.5, 1);
-}
 
-.checkbox__check::after {
-    content: '\2713';
 }
