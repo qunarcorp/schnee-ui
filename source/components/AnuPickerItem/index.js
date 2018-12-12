@@ -17,16 +17,17 @@ class AnuPickerItem extends React.Component {
   }
 
   handleTouchStart(e) {
+    console.log('start', e.touches[0].identifier);
 
-    console.log('start',e.touches[0].identifier);
-
-
-    this.setState({
-      touching: true,
-      touchId: e.touches[0].identifier
-    }, () => {
-      console.log('start=======',e.touches[0].identifier);
-    });
+    this.setState(
+      {
+        touching: true,
+        touchId: e.touches[0].identifier
+      },
+      () => {
+        console.log('start=======', e.touches[0].identifier);
+      }
+    );
   }
 
   handleTouchMove(e) {
@@ -38,12 +39,10 @@ class AnuPickerItem extends React.Component {
     const pageX = e.touches[0].pageX;
     const diffX = pageX - this.state.ogX;
     console.log('diffX', diffX);
-
-   
   }
 
   handleTouchEnd() {
-    console.log('end')
+    console.log('end');
     // if (!this.state.touching || this.props.disabled) return;
 
     // if (this.props.snapToValue) {
@@ -58,17 +57,33 @@ class AnuPickerItem extends React.Component {
     // });
   }
 
+  click() {
+    console.log('click');
+    this.setState(
+      {
+        click: true
+      },
+      () => {
+        console.log('>>>>>>>>>');
+      }
+    );
+  }
+
   render() {
     return (
       <div
-      catchTouchStart={this.handleTouchStart}
-      catchTouchMove={this.handleTouchMove}
-      onTouchEnd={this.handleTouchEnd}
-      style={{width: '100%'}}
+        catchTouchStart={this.handleTouchStart}
+        catchTouchMove={this.handleTouchMove}
+        onTouchEnd={this.handleTouchEnd}
+        onClick={this.click.bind(this)}
+        style={{ width: '100%', backgroundColor: this.state.click ? 'red': 'blue' }}
       >
-        <div class="anu-picker_content" style={{
-          transform: `translate(0, ${this.state.translate}px)`
-        }}>
+        <div
+          class="anu-picker_content"
+          style={{
+            transform: `translate(0, ${this.state.translate}px)`
+          }}
+        >
           {this.props.items.map(function(item, index) {
             return (
               <div
