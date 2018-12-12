@@ -61,6 +61,9 @@ class AnuPickerItem extends React.Component {
   render() {
     return (
       <div
+      catchTouchStart={this.handleTouchStart}
+      catchTouchMove={this.handleTouchMove}
+      onTouchEnd={this.handleTouchEnd}
       style={{width: '100%'}}
       >
         <div class="anu-picker_content" style={{
