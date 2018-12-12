@@ -2,13 +2,15 @@ import React from '@react';
 import './index.scss';
 import XCheckbox from '@components/XCheckbox/index';
 import XCheckboxGroup from '@components/XCheckboxGroup/index';
+import { configs, getValue } from './config';
 
 class P extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            checkedValues: 'apple'
+            checkedValues: 'apple',
+            configs
         };
 
         this.checkboxChange = this.checkboxChange.bind(this);
@@ -22,45 +24,48 @@ class P extends React.Component {
     render() {
         return (
             <div className="anu-col demo-page">
-                <span className="demo-header">checked</span>
-                <div className="demo-content">
-                    <XCheckbox checked={true} />
-                    <XCheckbox checked={false} />
-                </div>
-                <span className="demo-header">disabled</span>
-                <div className="demo-content">
-                    <XCheckbox checked={true} disabled={true} />
-                    <XCheckbox checked={false} disabled={true} />
-                </div>
-                <span className="demo-header">text</span>
-                <div className="demo-content">
-                    <XCheckbox text="apple" />
-                </div>
-                <span className="demo-header">isRight</span>
-                <div className="demo-content">
-                    <XCheckbox isRight={false} text="left" />
-                    <XCheckbox isRight={true} text="right" />
-                </div>
-                <span className="demo-header">color</span>
-                <div className="demo-content">
-                    <XCheckbox checked={true} color="red" />
-                    <XCheckbox checked={true} color="orange" />
-                    <XCheckbox checked={true} color="blue" />
-                </div>
-                <span className="demo-header">size</span>
-                <div className="demo-content">
-                    <XCheckbox checked={true} size="small" />
-                    <XCheckbox checked={true} size="default" />
-                    <XCheckbox checked={true} size="large" />
-                </div>
+                {
+                    this.state.configs.map(config => (
+                        <div key={config.type}>
+                            <span className="demo-header">{config.type}</span>
+                            <div className="demo-content checkbox-content">
+                                {
+                                    config.items.map((props, index) => (
+                                        <div className="demo-nav__item" key={index}>
+                                            <XCheckbox
+                                                checked={getValue(props.checked)}
+                                                disabled={getValue(props.disabled)}
+                                                value={getValue(props.value)}
+                                                text={getValue(props.text)}
+                                                isRight={getValue(props.isRight)}
+                                                color={getValue(props.color)}
+                                                size={getValue(props.size)}
+                                            />
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    ))
+                }
                 <span className="demo-header">XCheckboxGroup</span>
                 <div className="demo-content">
-                    <XCheckboxGroup onChange={this.checkboxChange}>
-                        <XCheckbox checked={true} value="apple" text="apple" />
-                        <XCheckbox checked={false} value="house" text="house" />
-                        <XCheckbox checked={false} value="cookie" text="cookie" />
+                    <XCheckboxGroup onChange={this.handleRadioChange}>
+                        <div className="checkbox-content">
+                            {
+                                ['apple', 'house', 'cookie'].map(text => (
+                                    <div key={text} className="demo-nav__item">
+                                        <XCheckbox
+                                            checked={text === 'apple' ? true : false}
+                                            value={text}
+                                            text={text}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </XCheckboxGroup>
-                    <text>被选中的 checkbox 的 value: \n{this.state.checkedValues}</text>
+                    <text>被选中的 checkbox 的 value: {`   ${this.state.checkedValues}`}</text>
                 </div>
             </div>
         );

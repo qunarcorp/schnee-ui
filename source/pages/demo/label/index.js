@@ -6,12 +6,6 @@ import XRadio from '@components/XRadio/index';
 import XButton from '@components/XButton/index';
 import XSwitch from '@components/XSwitch/index';
 
-const labelStyle = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-};
-
 class P extends React.Component {
     constructor(props) {
         super(props);
@@ -20,59 +14,71 @@ class P extends React.Component {
     render() {
         return (
             <div className="anu-col demo-page">
-                <label for="wx_label">wx label for 方式</label>
-                <checkbox id="wx_label"></checkbox>
-                <label>
-                    <text>wx label 子元素</text>
-                    <checkbox></checkbox>
-                </label>
                 <span className="demo-header">for 方式</span>
                 <div className="demo-content">
-                    <div className="flex">
-                        <XLabel for="checkbox_label">checkbox label</XLabel>
+                    <div className="label-item">
+                        <div className="label">
+                            <label for="wx_checkbox_label">wx下 checkbox</label>
+                        </div>
+                        <checkbox id="wx_checkbox_label"></checkbox>
+                    </div>
+                    <div className="label-item">
+                        <div className="label">
+                            <XLabel for="checkbox_label">checkbox label</XLabel>
+                        </div>
                         <XCheckbox id="checkbox_label" />
                     </div>
-                    <div className="flex">
-                        <XLabel for="radio_label">radio label</XLabel>
+                    <div className="label-item">
+                        <div className="label">
+                            <XLabel for="radio_label">radio label</XLabel>
+                        </div>
                         <XRadio id="radio_label" />
                     </div>
-                    <div>
-                        <XLabel for="button_label"><text>button label</text></XLabel>
-                        <div>
-                            <XButton id="button_label">button test</XButton>
+                    <div className="label-item">
+                        <div className="label">
+                            <XLabel for="button_label">button label</XLabel>
                         </div>
+                        <XButton id="button_label"></XButton>
                     </div>
-                    <div className="flex red">
-                        <XLabel for="switch_label"><text>switch label</text></XLabel>
+                    <div className="label-item">
+                        <div className="label">
+                            <XLabel for="switch_label">switch label</XLabel>
+                        </div>
                         <XSwitch id="switch_label" />
                     </div>
                 </div>
                 <span className="demo-header">子元素方式</span>
                 <div className="demo-content">
-                    <div>
-                        <XLabel style={labelStyle}>
-                            <text>checkbox label</text>
-                            <XCheckbox />
-                        </XLabel>
-                    </div>
-                    <div>
-                        <XLabel style={labelStyle}>
-                            <text>radio label</text>
+                    <label>
+                        <div className="label-item">
+                            <div className="label">wx下 checkbox</div>
+                            <checkbox></checkbox>
+                        </div>
+                    </label>
+                    <XLabel>
+                        <div className="label-item">
+                            <div className="label">checkbox label</div>
+                            <XCheckbox/>
+                        </div>
+                    </XLabel>
+                    <XLabel>
+                        <div className="label-item">
+                            <div className="label">radio label</div>
                             <XRadio />
-                        </XLabel>
-                    </div>
-                    <div>
-                        <XLabel>
-                            <text>button label</text>
-                            <XButton>button test</XButton>
-                        </XLabel>
-                    </div>
-                    <div>
-                        <XLabel style={labelStyle}>
-                            <text>switch label</text>
+                        </div>
+                    </XLabel>
+                    <XLabel>
+                        <div className="label-item">
+                            <div className="label">button label</div>
+                            <XButton></XButton>
+                        </div>
+                    </XLabel>
+                    <XLabel>
+                        <div className="label-item">
+                            <div className="label">switch label</div>
                             <XSwitch />
-                        </XLabel>
-                    </div>
+                        </div>
+                    </XLabel>
                 </div>
             </div>
         );
