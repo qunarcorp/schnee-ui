@@ -6,6 +6,12 @@ import XRadio from '@components/XRadio/index';
 import XButton from '@components/XButton/index';
 import XSwitch from '@components/XSwitch/index';
 
+const labelStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+};
+
 class P extends React.Component {
     constructor(props) {
         super(props);
@@ -13,55 +19,44 @@ class P extends React.Component {
 
     render() {
         return (
-            <div class="col">
-                <div class="col">
-                    <text>微信原生 label</text>
-                    <div>
-                        <label for="wx_radio">wx radio</label>
-                        <radio id="wx_radio"></radio>
-                    </div>
-                    <div>
-                        <label for="wx_checkbox">wx checkbox</label>
-                        <checkbox id="wx_checkbox"></checkbox>
-                    </div>
-                    <div>
-                        <label for="wx_button">wx button</label>
-                        <button id="wx_button">wx_button</button>
-                    </div>
-                    <div>
-                        <label for="wx_switch">wx switch</label>
-                        <switch id="wx_switch"></switch>
-                    </div>
-                </div>
-                <div class="col">
-                    <text>for 方式</text>
-                    <div>
-                        <XLabel for="checkbox_label"><text>checkbox label</text></XLabel>
+            <div className="anu-col demo-page">
+                <label for="wx_label">wx label for 方式</label>
+                <checkbox id="wx_label"></checkbox>
+                <label>
+                    <text>wx label 子元素</text>
+                    <checkbox></checkbox>
+                </label>
+                <span className="demo-header">for 方式</span>
+                <div className="demo-content">
+                    <div className="flex">
+                        <XLabel for="checkbox_label">checkbox label</XLabel>
                         <XCheckbox id="checkbox_label" />
                     </div>
-                    <div>
-                        <XLabel for="radio_label"><text>radio label</text></XLabel>
+                    <div className="flex">
+                        <XLabel for="radio_label">radio label</XLabel>
                         <XRadio id="radio_label" />
                     </div>
                     <div>
                         <XLabel for="button_label"><text>button label</text></XLabel>
-                        <XButton id="button_label">button test</XButton>
+                        <div>
+                            <XButton id="button_label">button test</XButton>
+                        </div>
                     </div>
-                    <div>
+                    <div className="flex red">
                         <XLabel for="switch_label"><text>switch label</text></XLabel>
                         <XSwitch id="switch_label" />
                     </div>
                 </div>
-                <div class="col">
-                    <text>子元素方式</text>
+                <span className="demo-header">子元素方式</span>
+                <div className="demo-content">
                     <div>
-                        <XLabel>
+                        <XLabel style={labelStyle}>
                             <text>checkbox label</text>
                             <XCheckbox />
                         </XLabel>
                     </div>
                     <div>
-                        <XLabel>
+                        <XLabel style={labelStyle}>
                             <text>radio label</text>
                             <XRadio />
                         </XLabel>
@@ -73,7 +68,7 @@ class P extends React.Component {
                         </XLabel>
                     </div>
                     <div>
-                        <XLabel>
+                        <XLabel style={labelStyle}>
                             <text>switch label</text>
                             <XSwitch />
                         </XLabel>

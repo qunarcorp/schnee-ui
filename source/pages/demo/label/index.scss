@@ -1,4 +1,9 @@
-.col {
+@import '../../../common/style/common.scss';
+@import '../common/index.scss';
+
+.flex {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }

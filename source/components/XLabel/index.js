@@ -18,17 +18,6 @@ function getFibersById(fiber, id) {
     return ret;
 }
 
-function getFirstWidget(fiber) {
-    let ret = null;
-    fiberRecursive(fiber, fiber => {
-        if (supportWidgets.indexOf(fiber.name) !== -1) {
-            ret = fiber;
-            return true;
-        }
-    });
-    return ret;
-}
-
 // 遍历 fiber 下所有节点
 // handler 返回 true 的话，停止遍历，提高性能
 function fiberRecursive(fiber, handler) {
@@ -40,6 +29,17 @@ function fiberRecursive(fiber, handler) {
             fiberRecursive(fiber, handler);
         }
     }
+}
+
+function getFirstWidget(fiber) {
+    let ret = null;
+    fiberRecursive(fiber, fiber => {
+        if (supportWidgets.indexOf(fiber.name) !== -1) {
+            ret = fiber;
+            return true;
+        }
+    });
+    return ret;
 }
 
 function getTopFiber(fiber) {
@@ -90,9 +90,17 @@ class XLabel extends React.Component {
 
     render() {
         return (
-            <div class="col" onClick={this.handleLabelClick}>{this.props.children}</div>
+            <div
+                className="col"
+                onClick={this.handleLabelClick}
+                style={this.props.style}
+            >{this.props.children}</div>
         );
     }
 }
+
+XLabel.defaultProps = {
+    style: {}
+};
 
 export default XLabel;

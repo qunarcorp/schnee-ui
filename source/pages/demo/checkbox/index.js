@@ -8,8 +8,8 @@ class P extends React.Component {
         super(props);
 
         this.state = {
-            checkedValues: ''
-        }
+            checkedValues: 'apple'
+        };
 
         this.checkboxChange = this.checkboxChange.bind(this);
     }
@@ -21,40 +21,40 @@ class P extends React.Component {
 
     render() {
         return (
-            <div class="anu-col demo-page">
-                <span class="demo-header">checked</span>
-                <div class="demo-content">
+            <div className="anu-col demo-page">
+                <span className="demo-header">checked</span>
+                <div className="demo-content">
                     <XCheckbox checked={true} />
                     <XCheckbox checked={false} />
                 </div>
-                <span class="demo-header">disabled</span>
-                <div class="demo-content">
+                <span className="demo-header">disabled</span>
+                <div className="demo-content">
                     <XCheckbox checked={true} disabled={true} />
                     <XCheckbox checked={false} disabled={true} />
                 </div>
-                <span class="demo-header">text</span>
-                <div class="demo-content">
+                <span className="demo-header">text</span>
+                <div className="demo-content">
                     <XCheckbox text="apple" />
                 </div>
-                <span class="demo-header">isRight</span>
-                <div class="demo-content">
+                <span className="demo-header">isRight</span>
+                <div className="demo-content">
                     <XCheckbox isRight={false} text="left" />
                     <XCheckbox isRight={true} text="right" />
                 </div>
-                <span class="demo-header">color</span>
-                <div class="demo-content">
+                <span className="demo-header">color</span>
+                <div className="demo-content">
                     <XCheckbox checked={true} color="red" />
                     <XCheckbox checked={true} color="orange" />
                     <XCheckbox checked={true} color="blue" />
                 </div>
-                <span class="demo-header">size</span>
-                <div class="demo-content">
+                <span className="demo-header">size</span>
+                <div className="demo-content">
                     <XCheckbox checked={true} size="small" />
                     <XCheckbox checked={true} size="default" />
                     <XCheckbox checked={true} size="large" />
                 </div>
-                <span class="demo-header">XCheckboxGroup</span>
-                <div class="demo-content">
+                <span className="demo-header">XCheckboxGroup</span>
+                <div className="demo-content">
                     <XCheckboxGroup onChange={this.checkboxChange}>
                         <XCheckbox checked={true} value="apple" text="apple" />
                         <XCheckbox checked={false} value="house" text="house" />

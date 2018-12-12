@@ -11,7 +11,9 @@ class XCheckboxGroup extends React.Component {
     }
 
     render() {
-        return <div class="col">{this.props.children}</div>
+        return (
+            <div className="col">{this.props.children}</div>
+        );
     }
 }
 
