@@ -15,7 +15,7 @@ class P extends React.Component {
         return (
             <div className="anu-col demo-page">
                 <span className="demo-header">for 方式</span>
-                <div className="demo-content">
+                <div className="demo-content label-content">
                     <div className="label-item">
                         <div className="label">
                             <label for="wx_checkbox_label">wx下 checkbox</label>
@@ -24,31 +24,31 @@ class P extends React.Component {
                     </div>
                     <div className="label-item">
                         <div className="label">
-                            <XLabel for="checkbox_label">checkbox label</XLabel>
+                            <XLabel for="checkbox_label"><text>checkbox label</text></XLabel>
                         </div>
                         <XCheckbox id="checkbox_label" />
                     </div>
                     <div className="label-item">
                         <div className="label">
-                            <XLabel for="radio_label">radio label</XLabel>
+                            <XLabel for="radio_label"><text>radio label</text></XLabel>
                         </div>
                         <XRadio id="radio_label" />
                     </div>
                     <div className="label-item">
                         <div className="label">
-                            <XLabel for="button_label">button label</XLabel>
+                            <XLabel for="button_label"><text>button label</text></XLabel>
                         </div>
-                        <XButton id="button_label"></XButton>
+                        <div className="label-control"><XButton id="button_label"></XButton></div>
                     </div>
                     <div className="label-item">
                         <div className="label">
-                            <XLabel for="switch_label">switch label</XLabel>
+                            <XLabel for="switch_label"><text>switch label</text></XLabel>
                         </div>
                         <XSwitch id="switch_label" />
                     </div>
                 </div>
                 <span className="demo-header">子元素方式</span>
-                <div className="demo-content">
+                <div className="demo-content label-content">
                     <label>
                         <div className="label-item">
                             <div className="label">wx下 checkbox</div>
@@ -70,7 +70,7 @@ class P extends React.Component {
                     <XLabel>
                         <div className="label-item">
                             <div className="label">button label</div>
-                            <XButton></XButton>
+                            <div className="label-control"><XButton></XButton></div>
                         </div>
                     </XLabel>
                     <XLabel>

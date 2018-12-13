@@ -2,7 +2,7 @@ import React from '@react';
 import './index.scss';
 import XRadio from '@components/XRadio/index';
 import XRadioGroup from '@components/XRadioGroup/index';
-import { configs, getValue } from '../checkbox/config';
+import { configs, getValue } from '../../../common/utils/config';
 
 
 class P extends React.Component {
@@ -27,7 +27,7 @@ class P extends React.Component {
             <div className="anu-col demo-page">
                 {
                     this.state.configs.map(config => (
-                        <div key={config.type}>
+                        <div className="radio-col" key={config.type}>
                             <span className="demo-header">{config.type}</span>
                             <div className="demo-content radio-content">
                                 {
@@ -50,7 +50,7 @@ class P extends React.Component {
                     ))
                 }
                 <span className="demo-header">XRadioGroup</span>
-                <div className="demo-content">
+                <div className="demo-content radio-col">
                     <XRadioGroup onChange={this.handleRadioChange}>
                         <div className="radio-content">
                             {
@@ -66,7 +66,7 @@ class P extends React.Component {
                             }
                         </div>
                     </XRadioGroup>
-                    <text>被选中的 radio 的 value: {`   ${this.state.checkedValue}`}</text>
+                    <text>被选中的 radio 的 value: {this.state.checkedValue}</text>
                 </div>
             </div>
         );

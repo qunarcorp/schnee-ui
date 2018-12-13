@@ -1,6 +1,11 @@
 @import '../../../common/style/common.scss';
 @import '../common/index.scss';
 
+.label-content {
+    display: flex;
+    flex-direction: column;
+}
+
 .label-item {
     height: 40px;
     display: flex;
@@ -10,5 +15,9 @@
 }
 
 .label {
+    width: 150px;
+}
+
+.label-control {
     width: 150px;
 }

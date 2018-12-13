@@ -2,7 +2,7 @@ import React from '@react';
 import './index.scss';
 import XCheckbox from '@components/XCheckbox/index';
 import XCheckboxGroup from '@components/XCheckboxGroup/index';
-import { configs, getValue } from './config';
+import { configs, getValue } from '../../../common/utils/config';
 
 class P extends React.Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class P extends React.Component {
             <div className="anu-col demo-page">
                 {
                     this.state.configs.map(config => (
-                        <div key={config.type}>
+                        <div className="checkbox-col" key={config.type}>
                             <span className="demo-header">{config.type}</span>
                             <div className="demo-content checkbox-content">
                                 {
@@ -49,8 +49,8 @@ class P extends React.Component {
                     ))
                 }
                 <span className="demo-header">XCheckboxGroup</span>
-                <div className="demo-content">
-                    <XCheckboxGroup onChange={this.handleRadioChange}>
+                <div className="demo-content checkbox-col">
+                    <XCheckboxGroup onChange={this.checkboxChange}>
                         <div className="checkbox-content">
                             {
                                 ['apple', 'house', 'cookie'].map(text => (
@@ -65,7 +65,8 @@ class P extends React.Component {
                             }
                         </div>
                     </XCheckboxGroup>
-                    <text>被选中的 checkbox 的 value: {`   ${this.state.checkedValues}`}</text>
+                    <text>被选中的 checkbox 的 values: </text>
+                    <text>{this.state.checkedValues}</text>
                 </div>
             </div>
         );
