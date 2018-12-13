@@ -1,73 +1,108 @@
+@import '../../common/style/variables.scss';
 @import '../../common/style/common.scss';
 
 .anu-button {
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
-  border: 1px solid transparent;
   border-radius: 6px;
 }
 
 .anu-button__mask {
   position:absolute;
-  flex-direction: row;
   width: 100%;
-  flex: 1;
-  display: flex;
   opacity: 0;
 }
 
+.anu-button__loading--hidden {
+  display: none;
+}
+
+.anu-button__label {
+  font-size: 16px;
+}
+.anu-button__label--mini {
+  font-size: 12px;
+}
+
 .anu-button__loading {
-  margin-right: 10px;
+  width: 14px;
+  height: 14px;
+  margin-right: 12px;
+}
+.anu-button__loading--mini {
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
 }
 
-.default {
-  background-color: #f8f8f8;
+.anu-button--default {
+  background-color: $main-gray-color;
+  border: 1px solid darken($main-gray-color, 3%);
 }
-.primary {
-  background-color: #1aad19;
-}
-.warn {
-  background-color: #e64340;
+.anu-button__label--default {
+  color: $text-color;
 }
 
-.default-active{
-  background-color: darken(#f8f8f8,50%);
+.anu-button--primary {
+  background-color: $main-primary-color;
+  border: 1px solid darken($main-primary-color, 3%);
 }
-.primary-active{
-  background-color: lighten(#1aad19,50%);
-}
-.warn-active{
-  background-color: saturate(#e64340,70%);
+.anu-button__label--primary {
+  color: $text-primary-color;
 }
 
-.default-disabled {
-  background-color: #f7f7f7;
+.anu-button--secondary {
+  background-color: $main-secondary-color;
+  border: 1px solid darken($main-secondary-color, 3%);
 }
-.primary-disabled {
-  background-color: #9ed99d;
-}
-.warn-disabled {
-  background-color: #ec8b89;
+.anu-button__label--secondary {
+  color: $text-secondary-color;
 }
 
-.default-plain {
-  border: 1px solid #353535;
+.anu-button--warn {
+  background-color: $main-error-color;
+  border: 1px solid darken($main-error-color, 3%);
+}
+.anu-button__label--warn {
+  color: $text-error-color;
+}
+
+.anu-button--default-plain {
+  border: 1px solid $text-color-xl;
   background-color: transparent;
 }
-.primary-plain {
-  border: 1px solid #1aad19;
-  background-color: transparent;
-}
-.warn-plain {
-  border: 1px solid #e64340;
-  background-color: transparent;
+.anu-button__label--default-plain {
+  color: $text-color-xl;
 }
 
-.default-disabled-plain, .primary-disabled-plain, .warn-disabled-plain  {
-  border: 1px solid rgba(0, 0, 0, 0.2);
+.anu-button--primary-plain {
+  border: 1px solid $main-primary-color;
   background-color: transparent;
 }
+.anu-button__label--primary-plain {
+  color: $main-primary-color;
+}
 
-.mini {
-  padding: 0 5px;
+.anu-button--secondary-plain {
+  border: 1px solid $main-secondary-color;
+  background-color: transparent;
+}
+.anu-button__label--secondary-plain {
+  color: $main-secondary-color;
+}
+
+.anu-button--warn-plain {
+  border: 1px solid $main-error-color;
+  background-color: transparent;
+}
+.anu-button__label--warn-plain {
+  color: $main-error-color;
+}
+
+.anu-button--active {
+  opacity: .6;
+}
+
+.anu-button--disabled {
+  opacity: .4;
 }

@@ -63,6 +63,16 @@ class P extends React.Component {
                         </div>
                         <div className="demo-nav__item--vertical">
                             <XButton
+                                type="secondary"
+                                loading={this.state.loading}
+                                disabled={this.state.disabled}
+                                plain={this.state.plain}
+                            >
+                                Secondary
+                            </XButton>
+                        </div>
+                        <div className="demo-nav__item--vertical">
+                            <XButton
                                 type="warn"
                                 loading={this.state.loading}
                                 disabled={this.state.disabled}
