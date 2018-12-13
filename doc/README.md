@@ -11,4 +11,4 @@
 | RadioGroup     | ✓/✓ | ✓   | ✓   | ✓/✓   | @codeArvin | |
 | Slider         |     |     |     | 快应用滚动距离有偏差 | @aweleey | |
 | Swiper         |     |     |     | 快应用 translate 百分比有些问题，给官方提了 BUG，预计 1032 版修复 | @kitian616 | |
-| Switch         | ✓/✓ | ✓   | ✓   | 没有过渡效果 | @kitian616 | |
+| Switch         | ✓/✓ | ✓   | ✓   | ✓ （快应用目前还没有支持过渡效果的计划，暂不考虑） | @kitian616 | |

@@ -31,21 +31,21 @@ class XSwiper extends React.Component {
         // onAnimationfinish: () => {} // 动画结束时会触发 animationfinish 事件，event.detail 同上
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             translateX: 0,
             translateY: 0,
             wrapperTranslateX: 0,
             wrapperTranslateY: 0,
             touching: false,
-            curIndex: this.props.current,
-            arr: []
+            curIndex: props.current,
+            bullets: [],
+            animation: true
         };
         this.count = 0;
         this.pageX = 0;
         this.pageY = 0;
-        this.arr = [];
         this.intervalId = null;
     }
 
@@ -79,11 +79,11 @@ class XSwiper extends React.Component {
         const deltaLength = this.props.vertical ? this.state.translateY : this.state.translateX
         let nextIndex = this.state.curIndex;
         if (deltaLength < -30) {
-            if (this.state.curIndex + 1 < this.count) {
+            if (this.state.curIndex + 1 < (this.props.circular ? this.count + 1 : this.count)) {
                 nextIndex++;
             }
         } else if (deltaLength > 30) {
-            if (this.state.curIndex - 1 >= 0) {
+            if (this.state.curIndex - 1 >= (this.props.circular ? -1 : 0)) {
                 nextIndex--;
             }
         }
@@ -98,31 +98,42 @@ class XSwiper extends React.Component {
             clearInterval(this.intervalId);
         }
         this.intervalId = setInterval(() => {
-            this.state.touching || this.goto((this.state.curIndex + 1) % this.count );
+            const curIndex = this.props.circular ?
+                (this.state.curIndex % this.count) + 1 :
+                (this.state.curIndex + 1) % this.count;
+            this.state.touching || this.goto(curIndex);
         }, this.props.interval);
     }
 
-    goto(index) {
+    goto(index, animation) {
         const { onChange, onAnimationfinish, duration } = this.props;
-        let state = {
-            curIndex: index,
-            translateX: 0
-        };
-        this.props.vertical ?
-            (state.translateY = 0, state.wrapperTranslateY = `-${100 * index}%`) :
-            (state.translateX = 0, state.wrapperTranslateX = `-${100 * index}%`);
-        this.setState(state);
+        this.setState(Object.assign({}, {
+            curIndex: (index + this.count) % this.count,
+            animation: animation === false ? false : true
+        }, this.calculateTransformFormIndex(index, this.props.vertical)));
         onChange && onChange({ detail: {
             current: index
         } });
+
         setTimeout(() => {
+            if (this.props.circular) {
+                if (index === -1) {
+                    this.setState(Object.assign({}, {
+                        animation: false
+                    }, this.calculateTransformFormIndex(this.count - 1, this.props.vertical)));
+                } else if (index === this.count) {
+                    this.setState(Object.assign({}, {
+                        animation: false
+                    }, this.calculateTransformFormIndex(0, this.props.vertical)));
+                }
+            }
             onAnimationfinish && onAnimationfinish({ detail: {
                 current: index
             } });
         }, duration);
     }
 
-    calculateTransform(x, y) {
+    calculateTouchmoveTransform(x, y) {
         const ANU_ENV = process.env.ANU_ENV;//wx ali bu quick
         if (ANU_ENV === 'quick') {
             typeof x === 'number' && (x = `${x}px`);
@@ -134,19 +145,34 @@ class XSwiper extends React.Component {
             return `translate(${x}, ${y})`;
         }
     }
+    calculateTransformFormIndex(index, vertical) {
+        return this.props.vertical ? {
+                translateY: 0,
+                wrapperTranslateY: `-${100 * (this.props.circular ? index + 1 : index)}%`
+            } : {
+                translateX: 0,
+                wrapperTranslateX: `-${100 * (this.props.circular ? index + 1 : index)}%`
+            };
+    }
 
     componentWillMount() {
         this.count = this.props.children && this.props.children.length;
+        this.props.circular && (this.count -= 2);
         this.setState({
-            arr: createArrayByLength(this.count)
+            bullets: createArrayByLength(this.count)
         });
+    }
+    componentDidMount() {
+        this.goto(this.props.current, false);
         this.props.autoPlay && this.autoPlay();
     }
 
     componentWillUpdate(nextProps) {
-        nextProps.autoPlay ?
-            this.autoPlay() :
-            (this.intervalId && clearInterval(this.intervalId));
+        if(nextProps.autoPlay !== this.props.autoPlay) {
+            nextProps.autoPlay ?
+                this.autoPlay() :
+                (this.intervalId && clearInterval(this.intervalId));
+        }
     }
 
     componentWillUnmount() {
@@ -157,20 +183,22 @@ class XSwiper extends React.Component {
         return (
             <div className={this.props.vertical ? 'anu-swiper anu-swiper--vertical' : 'anu-swiper'} style={this.props.style}>
                 <div className="anu-swiper__wrapper"
-                    style={{ transitionDuration: this.props.duration / 1000 + 's', transform: this.calculateTransform(this.state.wrapperTranslateX, this.state.wrapperTranslateY) }}
+                    style={{ transitionDuration: this.state.animation ? this.props.duration / 1000 + 's' : 0,
+                        transform: this.calculateTouchmoveTransform(this.state.wrapperTranslateX, this.state.wrapperTranslateY) }}
                 >
                     <div className={this.state.touching ? 'anu-swiper__content' : 'anu-swiper__content anu-swiper__content--transition'}
-                        style={{ transitionDuration: this.state.touching ? '0' : this.props.duration / 1000 + 's', transform: this.calculateTransform(this.state.translateX, this.state.translateY) }}
+                        style={{ transitionDuration: this.state.touching ? '0' : this.props.duration / 1000 + 's',
+                            transform: this.calculateTouchmoveTransform(this.state.translateX, this.state.translateY) }}
                         onTouchStart={this.handleTouchStart}
-                        onTouchMove={this.handleTouchMove}
-                        onTouchEnd={this.handleTouchEnd}
-                        onTouchCancel={this.handleTouchEnd}
+                        catchTouchMove={this.handleTouchMove}
+                        catchTouchEnd={this.handleTouchEnd}
+                        catchTouchCancel={this.handleTouchEnd}
                     >
                         {this.props.children}
                     </div>
                 </div>
                 {this.props.indicatorDots ? <div className="anu-swiper__pagination">
-                    {this.state.arr.map(function(item, index) {
+                    {this.state.bullets.map(function(item, index) {
                         return (index === this.state.curIndex ?
                             <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: this.props.indicatorActiveColor }}></div> :
                             <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: this.props.indicatorColor }}></div>);
