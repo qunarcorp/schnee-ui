@@ -1,18 +1,21 @@
 @import '../../common/style/common.scss';
 
-.button {
+.anu-button {
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
   border: 2px solid #eee;
   background-color: #f8f8f8;
 }
 
-.mask {
+.anu-button__mask {
   width: 100%;
   display: flex;
   opacity: 0.1;
 }
 
+.anu-button__loading {
+  margin-right: 10px;
+}
 
 .default {
   background-color: #f8f8f8;
@@ -23,6 +26,7 @@
 .warn {
   background-color: #e64340;
 }
+
 .default-active{
   background-color: darken(#f8f8f8,50%);
 }
@@ -33,28 +37,24 @@
   background-color: saturate(#e64340,70%);
 }
 
-
 .default-disabled {
   background-color: #f7f7f7;
 }
-
 .primary-disabled {
   background-color: #9ed99d;
 }
-
 .warn-disabled {
   background-color: #ec8b89;
 }
+
 .default-plain {
   border: 1px solid #353535;
   background-color: transparent;
 }
-
 .primary-plain {
   border: 1px solid #1aad19;
   background-color: transparent;
 }
-
 .warn-plain {
   border: 1px solid #e64340;
   background-color: transparent;
@@ -65,10 +65,6 @@
   background-color: transparent;
 }
 
-.loading-style {
-  margin-right: 10px;
-}
-
 .mini {
-  padding:0 5px;
+  padding: 0 5px;
 }
