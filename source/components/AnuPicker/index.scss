@@ -5,7 +5,7 @@
 }
 
 .pickerleave {
-	animation-name: pickerleave;
+  animation-name: pickerleave;
   animation-duration: 300ms;
   animation-timing-function: ease-in;
 }
@@ -13,24 +13,24 @@
 @keyframes pickerenter {
 	0% {
 		height: 0;
-		transform: translateY(100%);
+		transform: translateY(300px);
 	}
 
 	100% {
-		height: 100%;
+	
 		transform: translateY(0);
 	}
 }
 
 @keyframes pickerleave {
 	0% {
-		height: 100%;
+	
 		transform: translateY(0);
 	}
 
 	100% {
 		height: 0;
-		transform: translateY(100%);
+		transform: translateY(300px);
 	}
 }
 
@@ -41,27 +41,30 @@
 	right: 0;
 	width: 100%;
 	height: 300px;
-	animation-fill-mode: forwards;
+	// animation-fill-mode: forwards;
 	background-color: #ffffff;
   flex-direction: column;
+  z-index: 300
 }
 
 	.quist-picker-title {
 		width: 100%;
-    height: 63px;
+    height: 40px;
     justify-content: space-between;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #eeeeee;
 	}
 
 	.quist-picker-cancel {
 		padding: 0 15px;
-		height: 63px;
+		
   }
 
   .quist-picker-confirm {
 		padding: 0 15px;
-		height: 63px;
+		
   }
 
   .quist-picker-ul {
@@ -83,4 +86,9 @@
     display: flex; 
     flex: 1; 
     justify-content:center
+  }
+
+  .quist-picker-content {
+    height: 238px;
+    overflow: hidden;
   }
