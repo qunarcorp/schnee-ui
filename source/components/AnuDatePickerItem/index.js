@@ -150,7 +150,7 @@ class AnuDatePickerItem extends React.Component {
    * @return {undefined}
    */
   _moveToNext(direction) {
-    // const date = this.state.dates[MIDDLE_INDEX];
+     const date = this.state.dates[MIDDLE_INDEX];
     // const { start, end } = this.props;
 
     if (direction === -1 && this.moveDateCount) {
@@ -211,9 +211,8 @@ class AnuDatePickerItem extends React.Component {
   }
 
   updateSelected() {
-    const {onChange} = this.props;
-    console.log('currentIndex', this.currentIndex)
-    onChange(this.state.dates[this.currentIndex])
+    console.log('current', this.currentIndex)
+    console.log('select', this.state.dates[this.currentIndex], this.state.dates[7])
 
 
   }
