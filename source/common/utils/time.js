@@ -21,7 +21,6 @@ function daysInMonth(year, month) {
  */
 export function convertDate(date, format) {
   let str = format;
-  console.log('date', date);
   const o = {
     'M+': date.getMonth() + 1,
     'D+': date.getDate(),

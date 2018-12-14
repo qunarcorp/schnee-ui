@@ -31,6 +31,7 @@ class AnuDatePickerItem extends React.Component {
       translate: 0,
       totalHeight: 0,
       selected: 0,
+      marginTop: 0,
       totalHeight: DATE_LENGTH * calculate(props.indicatorHeight),
       dates
     };
@@ -53,6 +54,7 @@ class AnuDatePickerItem extends React.Component {
     if (this.state.touching) return;
     console.log('start');
     this.moveDateCount = 0;
+    this.currentIndex = MIDDLE_INDEX;
     this.translateY = this.state.translateY;
     this.setState({
       touching: true,
@@ -78,7 +80,7 @@ class AnuDatePickerItem extends React.Component {
     });
 
     // 这个地方需要加上如何进行视图更新的逻辑
-    if (this._checkIsUpdateDates(diffY)) {
+    if (this._checkIsUpdateDates(direction, diffY)) {
       console.log('================');
       this.moveDateCount = direction > 0 ? this.moveDateCount + 1 : this.moveDateCount - 1;
       this._updateDates(direction);
@@ -89,6 +91,7 @@ class AnuDatePickerItem extends React.Component {
     console.log('move>>>>>>');
     const typeName = this.props.type;
     let { dates } = this.state;
+    let itemHeight = calculate(this.props.itemHeight);
     if (direction === 1) {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
@@ -97,7 +100,8 @@ class AnuDatePickerItem extends React.Component {
       let disabled = value < this.props.start || value > this.props.end;
 
       this.setState({
-        dates: [...dates.slice(1), { key, date: value, disabled }]
+        dates: [...dates.slice(1), { key, date: value, disabled }],
+        marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
       });
     } else {
       this.currentIndex--;
@@ -105,23 +109,23 @@ class AnuDatePickerItem extends React.Component {
       let value = TimeUtil[`next${typeName}`](dates[0].date, -this.props.step);
       let key = TimeUtil.convertDate(value, this.props.format);
       let disabled = value < this.props.start || value > this.props.end;
+      console.log('key', key);
       this.setState({
-        dates: [{ key, date: value, disabled }, ...dates.slice(0, dates.length - 1)]
+        dates: [{ key, date: value, disabled }, ...dates.slice(0, dates.length - 1)],
+        marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
       });
     }
   }
 
   // 是否更新
-  _checkIsUpdateDates(translateY) {
+  _checkIsUpdateDates(direction, translateY) {
     let itemHeight = calculate(this.props.itemHeight);
-    console.log('update', this.currentIndex, translateY);
-    // let isUpdate =
-    //   direction === 1
-    //     ? this.currentIndex * itemHeight + itemHeight / 2 < -translateY
-    //     : this.currentIndex * itemHeight - itemHeight / 2 > -translateY;
+    // console.log('update', this.currentIndex, translateY);
+
     let isUpdate =
-      Math.abs(translateY) > Math.abs(this.currentIndex - MIDDLE_INDEX) * itemHeight * 0.51;
-    console.log('.........', isUpdate);
+      Math.abs(translateY) >
+      Math.abs(this.currentIndex - MIDDLE_INDEX) * itemHeight + itemHeight * 0.51;
+
     return isUpdate;
   }
 
@@ -133,8 +137,7 @@ class AnuDatePickerItem extends React.Component {
   _moveToNext(direction) {
     const date = this.state.dates[MIDDLE_INDEX];
     const { start, end } = this.props;
-    console.log('date', date);
-    console.log('start', start);
+
     if (direction === -1 && date.date.getTime() < start.getTime() && this.moveDateCount) {
       this._updateDates(1);
     } else if (direction === 1 && date.date.getTime() > end.getTime() && this.moveDateCount) {
@@ -151,14 +154,6 @@ class AnuDatePickerItem extends React.Component {
 
     let itemHeight = calculate(this.props.itemHeight);
     let translate = this.state.translate;
-    const direction = translate > 0 ? -1 : 1;
-
-    //  // 这个地方需要加上如何进行视图更新的逻辑
-    //  if (this._checkIsUpdateDates( translate)) {
-    //   console.log('================');
-    //   // this.moveDateCount = direction > 0 ? this.moveDateCount + 1 : this.moveDateCount - 1;
-    //   this._updateDates(direction);
-    // }
 
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
@@ -207,6 +202,8 @@ class AnuDatePickerItem extends React.Component {
             this.state.translate +
             'px); height: ' +
             this.state.totalHeight +
+            'px; margin-top:' +
+            this.state.marginTop +
             'px'
           }
         >
