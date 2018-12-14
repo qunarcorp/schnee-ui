@@ -1,9 +1,23 @@
 @import '../../../common/style/common.scss';
 @import '../common/index.scss';
 
-.flex {
+.label-content {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.label-item {
+    height: 40px;
+    display: flex;
     justify-content: flex-start;
+    flex-direction: row;
     align-items: center;
+}
+
+.label {
+    width: 150px;
+}
+
+.label-control {
+    width: 150px;
 }

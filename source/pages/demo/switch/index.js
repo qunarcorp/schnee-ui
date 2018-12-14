@@ -29,12 +29,12 @@ class P extends React.Component {
                     <XSwitch checked={false} onChange={this.change.bind(this)} />
                 </div>
                 <span className="demo-header">不可用</span>
-                <div class="demo-content anu-row">
+                <div className="demo-content anu-row">
                     <div className="demo-nav__item"><XSwitch checked={false} disabled={true} onChange={this.change.bind(this)} /></div>
                     <div className="demo-nav__item"><XSwitch checked={true} disabled={true} onChange={this.change.bind(this)} /></div>
                 </div>
                 <span className="demo-header">自定义</span>
-                <div class="demo-content">
+                <div className="demo-content">
                     <XSwitch checked={false} color="red" innerStyle={this.state.innerStyle} wrapperStyle={this.state.wrapperStyle} />
                 </div>
             </div>

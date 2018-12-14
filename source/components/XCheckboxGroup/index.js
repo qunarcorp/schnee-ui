@@ -12,7 +12,7 @@ class XCheckboxGroup extends React.Component {
 
     render() {
         return (
-            <div className="col">{this.props.children}</div>
+            <div>{this.props.children}</div>
         );
     }
 }

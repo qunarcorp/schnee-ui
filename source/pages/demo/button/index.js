@@ -63,6 +63,16 @@ class P extends React.Component {
                         </div>
                         <div className="demo-nav__item--vertical">
                             <XButton
+                                type="secondary"
+                                loading={this.state.loading}
+                                disabled={this.state.disabled}
+                                plain={this.state.plain}
+                            >
+                                Secondary
+                            </XButton>
+                        </div>
+                        <div className="demo-nav__item--vertical">
+                            <XButton
                                 type="warn"
                                 loading={this.state.loading}
                                 disabled={this.state.disabled}
@@ -75,24 +85,30 @@ class P extends React.Component {
                 </div>
                 <span className="demo-header">Size</span>
                 <div className="demo-content">
-                    <XButton
-                        type="primary"
-                        size="default"
-                        loading={this.state.loading}
-                        disabled={this.state.disabled}
-                        plain={this.state.plain}
-                    >
-                        Default
-                    </XButton>
-                    <XButton
-                        type="primary"
-                        size="mini"
-                        loading={this.state.loading}
-                        disabled={this.state.disabled}
-                        plain={this.state.plain}
-                    >
-                        Mini
-                    </XButton>
+                    <div className="anu-col">
+                        <div className="demo-nav__item--vertical">
+                            <XButton
+                                type="primary"
+                                size="default"
+                                loading={this.state.loading}
+                                disabled={this.state.disabled}
+                                plain={this.state.plain}
+                            >
+                                Default
+                            </XButton>
+                        </div>
+                        <div className="demo-nav__item--vertical">
+                            <XButton
+                                type="primary"
+                                size="mini"
+                                loading={this.state.loading}
+                                disabled={this.state.disabled}
+                                plain={this.state.plain}
+                            >
+                                Mini
+                            </XButton>
+                        </div>
+                    </div>
                 </div>
                 <span className="demo-header">Loading</span>
                 <div className="demo-content">
@@ -105,10 +121,10 @@ class P extends React.Component {
                         Loading
                     </XButton>
                 </div>
-                <div className="demo-content">
-                    <XButton onClick={this.setDisabled.bind(this)} >点击设置以上按钮disabled属性</XButton>
-                    <XButton onClick={this.setPlain.bind(this)}>点击设置以上按钮plain属性</XButton>
-                    <XButton onClick={this.setLoading.bind(this)}>点击设置以上按钮loading属性</XButton>
+                <div className="demo-content anu-row">
+                    <XButton onClick={this.setDisabled.bind(this)} >设为 Disabled</XButton>
+                    <XButton onClick={this.setPlain.bind(this)}>设为 Plain</XButton>
+                    <XButton onClick={this.setLoading.bind(this)}>设为 Loading</XButton>
                 </div>
             </div>
         );

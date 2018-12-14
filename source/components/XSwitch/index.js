@@ -36,13 +36,12 @@ class XSwitch extends React.Component {
 
     computeState(props, checked) {
         const { innerStyle, wrapperStyle } = props;
-        let backgroundColor = checked ? this.props.color : this.props.checkColor;
-        let newWrapperStyle = Object.assign({}, wrapperStyle, { backgroundColor });
-        let newInnerStyle = Object.assign({}, innerStyle, {
-            margin: ((parseFloat(wrapperStyle.height) - parseFloat(innerStyle.height)) / 2) + 'px',
-            transform: `translateX(${checked ?
-                (parseFloat(wrapperStyle.width) - parseFloat(innerStyle.width) - parseFloat(wrapperStyle.height) + parseFloat(innerStyle.height)) + 'px' : '0'})`
-        });
+        const backgroundColor = checked ? this.props.color : this.props.checkColor;
+        const newWrapperStyle = Object.assign({}, XSwitch.defaultProps.wrapperStyle, wrapperStyle, { backgroundColor });
+        let newInnerStyle = Object.assign({}, XSwitch.defaultProps.innerStyle, innerStyle);
+        newInnerStyle.margin = ((parseFloat(newWrapperStyle.height) - parseFloat(newInnerStyle.height)) / 2) + 'px';
+        newInnerStyle.transform = `translateX(${checked ?
+            (parseFloat(newWrapperStyle.width) - parseFloat(newInnerStyle.width) - parseFloat(newWrapperStyle.height) + parseFloat(newInnerStyle.height)) + 'px' : '0'})`;
         return {
             checked,
             innerStyle: newInnerStyle,

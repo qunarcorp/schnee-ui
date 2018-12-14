@@ -11,3 +11,5 @@
 1. 在快应用中，`class='radio'` 的 `div` 有概率会被转换成 `input`。(只在第一次编译的时候会有这个问题，之后代码保存更新后是正常的)
 2. `export default class P extends Component` 会报错，需要写成 `class P extends Component ... export default P` 的形式
 3. 对于 `@import`，第一次引入的时候，如果这样写 `@import <path>`，不带分号的话，不能成功引入；需要加上分号，`@import <path>;`，才能成功引入
+4. pages、components 下的文件都会被编译，所以不能把数据单独放在里面的一个文件中。应该放在 common 下
+5. 快应用中，在 `render` 中这样写会报错：`<text>{${this.state.value}}</text>`

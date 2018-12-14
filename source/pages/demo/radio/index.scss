@@ -1,2 +1,15 @@
 @import '../../../common/style/common.scss';
 @import '../common/index.scss';
+
+.radio-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.radio-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

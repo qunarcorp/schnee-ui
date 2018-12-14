@@ -4,36 +4,45 @@ import './index.scss';
 class XButton extends React.Component {
     constructor(props) {
         super(props);
-        let newState = this.computeState(props, false);
-        this.state = newState;
+        this.state = this.computeState(props, false);
 
         this.handleClick = this.handleClick.bind(this);
         this.onClick = this.onClick.bind(this);
     }
 
     computeState(props, active) {
-        let buttonArray = [props.size];
-        let textAray = [props.type];
-        if (props.disabled) {
-            textAray.push('disabled');
-        } else {
-            if (active) {
-                buttonArray.push(props.type + '-active');
-            }
+        const buttonClasses = ['anu-button'];
+        const labelClasses = ['anu-button__label'];
+        const loadingClasses = ['anu-button__loading'];
+        if(props.size === 'mini') {
+            buttonClasses.push('anu-button--mini');
+            labelClasses.push('anu-button__label--mini');
+            loadingClasses.push('anu-button__loading--mini');
         }
+        buttonClasses.push(`anu-button--${props.type}`);
+        labelClasses.push(`anu-button__label--${props.type}`);
         if (props.plain) {
-            textAray.push('plain');
+            buttonClasses.push(`anu-button--${props.type}-plain`);
+            labelClasses.push(`anu-button__label--${props.type}-plain`);
         }
-        var textStyle = colorStyleMap[textAray.join('-')];
-        var buttonStyle = buttonArray.concat(textAray.join('-')).join(' ');
-        let fontStyle = fontStyleMap[props.size];
+        if (props.disabled) {
+            buttonClasses.push('anu-button--disabled');
+            labelClasses.push('anu-button__label--disabled');
+        } else if (active) {
+            buttonClasses.push('anu-button--active');
+            labelClasses.push('anu-button__label--active');
+        }
+        if (!props.loading) {
+            loadingClasses.push('anu-button__loading--hidden');
+        }
         return {
             value: props.children,
-            textStyle,
-            buttonStyle,
-            fontStyle
+            loadingClasses: loadingClasses.join(' '),
+            buttonClasses: buttonClasses.join(' '),
+            labelClasses: labelClasses.join(' ')
         };
     }
+
     updateState(nextProps, active) {
         let newState = this.computeState(nextProps, active);
         let oldState = this.state;
@@ -53,9 +62,11 @@ class XButton extends React.Component {
         this.updateState(nextProps, false);
     }
     onClick(e) {
+        console.log('click');
         // 不在 XLabel 内部的时候，执行本身逻辑
         // 在快应用下不支持事件冒泡，直接执行本身逻辑
         if (process.env.ANU_ENV === 'quick' || !this.props.__InLabel) {
+            console.log(111);
             this.handleClick(e);
         }
     }
@@ -84,29 +95,19 @@ class XButton extends React.Component {
     render() {
         return (
             <stack
-                class={'anu-col anu-center anu-middle button ' + this.state.buttonStyle}
-                disabled={this.props.disabled}
-                plain={this.props.plain}
-                type={this.props.type}
-                size={this.props.size}
+                className={'anu-col anu-center anu-middle ' + this.state.buttonClasses}
             >
-                <div>
+                <div className="anu-row anu-middle">
                     <image
-                        hidden={!this.props.loading}
-                        class="loading-style"
+                        class={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
 
-                    <text
-                        style={{
-                            color: this.state.textStyle,
-                            fontSize: this.state.fontStyle
-                        }}
-                    >
+                    <text className={this.state.labelClasses}>
                         {this.state.value}
                     </text>
                 </div>
-                <input class="mask" type='button' onClick={this.onClick} />
+                <input class="anu-button__mask" type='button' onClick={this.onClick} />
             </stack>
         );
     }
@@ -119,26 +120,6 @@ XButton.defaultProps = {
     size: 'default',
     loading: false,
     __InLabel: false
-};
-
-const colorStyleMap = {
-    default: '#000000',
-    primary: '#ffffff',
-    warn: '#ffffff',
-    'default-disabled': 'rgba(0, 0, 0, 0.3)',
-    'primary-disabled': 'rgba(255, 255, 255, 0.6)',
-    'warn-disabled': 'rgba(255, 255, 255, 0.6)',
-    'default-disabled-plain': 'rgba(0, 0, 0, 0.2)',
-    'primary-disabled-plain': 'rgba(0, 0, 0, 0.2)',
-    'warn-disabled-plain': 'rgba(0, 0, 0, 0.2)',
-    'default-plain': '#353535',
-    'primary-plain': '#1aad19',
-    'warn-plain': '#e64340'
-};
-
-const fontStyleMap = {
-    default: '26px',
-    mini: '20px'
 };
 
 export default XButton;

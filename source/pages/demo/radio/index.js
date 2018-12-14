@@ -2,13 +2,16 @@ import React from '@react';
 import './index.scss';
 import XRadio from '@components/XRadio/index';
 import XRadioGroup from '@components/XRadioGroup/index';
+import { configs, getValue } from '../../../common/utils/config';
+
 
 class P extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            checkedValue: 'apple'
+            checkedValue: 'apple',
+            configs
         };
 
         this.handleRadioChange = this.handleRadioChange.bind(this);
@@ -22,43 +25,46 @@ class P extends React.Component {
     render() {
         return (
             <div className="anu-col demo-page">
-                <span className="demo-header">checked</span>
-                <div className="demo-content">
-                    <XRadio checked={true} />
-                    <XRadio checked={false} />
-                </div>
-                <span className="demo-header">disabled</span>
-                <div className="demo-content">
-                    <XRadio checked={true} disabled={true} />
-                    <XRadio checked={false} disabled={true} />
-                </div>
-                <span className="demo-header">text</span>
-                <div className="demo-content">
-                    <XRadio text="apple" />
-                </div>
-                <span className="demo-header">isRight</span>
-                <div className="demo-content">
-                    <XRadio isRight={false} text="left" />
-                    <XRadio isRight={true} text="right" />
-                </div>
-                <span className="demo-header">color</span>
-                <div className="demo-content">
-                    <XRadio checked={true} color="red" />
-                    <XRadio checked={true} color="orange" />
-                    <XRadio checked={true} color="blue" />
-                </div>
-                <span className="demo-header">size</span>
-                <div className="demo-content">
-                    <XRadio checked={true} size="small" />
-                    <XRadio checked={true} size="default" />
-                    <XRadio checked={true} size="large" />
-                </div>
+                {
+                    this.state.configs.map(config => (
+                        <div className="radio-col" key={config.type}>
+                            <span className="demo-header">{config.type}</span>
+                            <div className="demo-content radio-content">
+                                {
+                                    config.items.map((props, index) => (
+                                        <div className="demo-nav__item" key={index}>
+                                            <XRadio
+                                                checked={getValue(props.checked)}
+                                                disabled={getValue(props.disabled)}
+                                                value={getValue(props.value)}
+                                                text={getValue(props.text)}
+                                                isRight={getValue(props.isRight)}
+                                                color={getValue(props.color)}
+                                                size={getValue(props.size)}
+                                            />
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    ))
+                }
                 <span className="demo-header">XRadioGroup</span>
-                <div className="demo-content">
+                <div className="demo-content radio-col">
                     <XRadioGroup onChange={this.handleRadioChange}>
-                        <XRadio checked={true} value="apple" text="apple" />
-                        <XRadio checked={false} value="house" text="house" />
-                        <XRadio checked={false} value="cookie" text="cookie" />
+                        <div className="radio-content">
+                            {
+                                ['apple', 'house', 'cookie'].map(text => (
+                                    <div key={text} className="demo-nav__item">
+                                        <XRadio
+                                            checked={text === 'apple' ? true : false}
+                                            value={text}
+                                            text={text}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </XRadioGroup>
                     <text>被选中的 radio 的 value: {this.state.checkedValue}</text>
                 </div>

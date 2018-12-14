@@ -11,7 +11,6 @@ import './pages/demo/radio/index';
 import './pages/demo/slider/index';
 import './pages/demo/swiper/index';
 import './pages/demo/switch/index';
-import './pages/demo/icon/index';
 import './pages/demo/picker1/index';
 import './app.scss';
 
@@ -25,8 +24,15 @@ class Global extends React.Component {
         }
     };
     onLaunch() {
-        // eslint-disable-next-line
-        console.log('App launched');
+        //针对快应用的全局getApp补丁
+        if (this.$data && typeof global === 'object') {
+            var ref = Object.getPrototypeOf(global) || global;
+            var _this = this;
+            ref.getApp = function() {
+                return _this;
+            };
+        }
+        console.log('App launched'); //eslint-disable-line
     }
 }
 //这样写相当于为每一个页面组件的外面都加上一个<Provider />，如果你想在页面上用到store里的数据，
