@@ -29,6 +29,7 @@ class AnuDatePickerItem extends React.Component {
       ogY: 0,
       ogTranslate: 0, // 移动之前的起始位置
       translate: 0,
+      translateY: 0,
       totalHeight: 0,
       selected: 0,
       marginTop: 0,
@@ -55,7 +56,7 @@ class AnuDatePickerItem extends React.Component {
     console.log('start');
     this.moveDateCount = 0;
     this.currentIndex = MIDDLE_INDEX;
-    this.translateY = this.state.translateY;
+    this.translateY = this.state.translate;
     this.setState({
       touching: true,
       ogTranslate: this.state.translate,
@@ -72,6 +73,7 @@ class AnuDatePickerItem extends React.Component {
     if (e.touches[0].identifier !== this.state.touchId) return;
     const pageY = e.touches[0].pageY;
     const diffY = pageY - this.state.ogY;
+    // const translateY = this.translateY + diffY
 
     const direction = diffY > 0 ? -1 : 1;
 
@@ -96,7 +98,7 @@ class AnuDatePickerItem extends React.Component {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
       let key = TimeUtil.convertDate(value, this.props.format);
-      console.log('key', key);
+      console.log('key', direction, key);
       let disabled = value < this.props.start || value > this.props.end;
 
       this.setState({
@@ -109,7 +111,7 @@ class AnuDatePickerItem extends React.Component {
       let value = TimeUtil[`next${typeName}`](dates[0].date, -this.props.step);
       let key = TimeUtil.convertDate(value, this.props.format);
       let disabled = value < this.props.start || value > this.props.end;
-      console.log('key', key);
+      console.log('key', direction ,key);
       this.setState({
         dates: [{ key, date: value, disabled }, ...dates.slice(0, dates.length - 1)],
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
@@ -120,11 +122,12 @@ class AnuDatePickerItem extends React.Component {
   // 是否更新
   _checkIsUpdateDates(direction, translateY) {
     let itemHeight = calculate(this.props.itemHeight);
-    // console.log('update', this.currentIndex, translateY);
+    console.log('update', this.currentIndex, translateY);
 
     let isUpdate =
       Math.abs(translateY) >
       Math.abs(this.currentIndex - MIDDLE_INDEX) * itemHeight + itemHeight * 0.51;
+    
 
     return isUpdate;
   }
@@ -182,6 +185,7 @@ class AnuDatePickerItem extends React.Component {
       ogTranslate: 0,
       animating: true,
       translate,
+      translateY: -this.currentIndex * itemHeight,
       currentIndex: MIDDLE_INDEX
     });
   }
