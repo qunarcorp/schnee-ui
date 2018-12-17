@@ -30,7 +30,6 @@ class AnuDatePickerItem extends React.Component {
       touchId: undefined,
       ogY: 0,
       ogTranslate: 0, // 移动之前的起始位置
-      translate: -DEFAULT_INEDX * calculate(props.itemHeight),
       translateY:  -(MIDDLE_INDEX) * calculate(props.itemHeight)+ calculate(props.indicatorTop),
       totalHeight: 0,
       selected: 0,
@@ -42,6 +41,7 @@ class AnuDatePickerItem extends React.Component {
 
   _iniDates(props) {
     const { type, value } = props;
+    console.log('value=====', value)
     const dates = Array(...Array(DATE_LENGTH)).map((item, index) => {
       let date = TimeUtil[`next${type}`](value, (index - MIDDLE_INDEX) * this.props.step);
 
@@ -63,7 +63,7 @@ class AnuDatePickerItem extends React.Component {
 
     this.setState({
       touching: true,
-      ogTranslate: this.state.translate,
+      ogTranslate: this.state.translateY,
       touchId: e.touches[0].identifier,
       ogY: e.touches[0].pageY - this.state.translate,
       animating: false
@@ -81,7 +81,6 @@ class AnuDatePickerItem extends React.Component {
     const translateY = this.translateY + dir;  // 现在坐标应该在的位置
     console.log('move');
     this.setState({
-      translate: translateY,
       translateY
     });
 
@@ -132,9 +131,6 @@ class AnuDatePickerItem extends React.Component {
     let itemHeight = calculate(this.props.itemHeight);
     console.log('update', this.currentIndex , translateY);
 
-    // let isUpdate =
-    //   Math.abs(Math.abs(translateY) - Math.abs(this.currentIndex - 3) * itemHeight) >
-    //   itemHeight * 0.51;
 
     let isUpdate =
       direction === 1
@@ -146,31 +142,7 @@ class AnuDatePickerItem extends React.Component {
     return isUpdate;
   }
 
-  /**
-   * 滑动到下一日期
-   * @param  {number} direction 滑动方向
-   * @return {undefined}
-   */
-  // _moveToNext(direction) {
-  //    const date = this.state.dates[MIDDLE_INDEX];
-  //   // const { start, end } = this.props;
-
-  //   if (direction === -1 && this.moveDateCount) {
-  //     this._updateDates(1);
-  //   } else if (direction === 1 && this.moveDateCount) {
-  //     this._updateDates(-1);
-  //   }
-
-  //   // this._moveTo(this.currentIndex);
-  // }
-
-  // _moveTo(currentIndex) {
-  //   let itemHeight = calculate(this.props.itemHeight);
-  //   console.log('dates', currentIndex, this.state.dates);
-  //   this.setState({
-  //     translateY: -(currentIndex-DEFAULT_INEDX) * itemHeight
-  //   });
-  // }
+  
 
   handleTouchEnd() {
     console.log('end');
@@ -178,7 +150,7 @@ class AnuDatePickerItem extends React.Component {
     if (!this.state.touching) return;
 
     let itemHeight = calculate(this.props.itemHeight);
-    let translate = this.state.translate;
+    let translate = this.state.translateY;
 
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
@@ -197,25 +169,21 @@ class AnuDatePickerItem extends React.Component {
       translate = this.state.ogTranslate + step * itemHeight;
     }
 
-    // const direction = translate > 0 ? -1 : 1;
-    // this._moveToNext(direction);
-
     this.setState({
       touching: false,
       ogY: 0,
       touchId: undefined,
       ogTranslate: 0,
       animating: true,
-      translate,
       translateY: translate
-      // translateY: -this.currentIndex * itemHeight,
-      // currentIndex: MIDDLE_INDEX
     }, () => this.updateSelected());
   }
 
   updateSelected() {
     console.log('current', this.currentIndex)
-    console.log('select',  this.state.dates[7])
+    console.log('select',  this.state.dates[MIDDLE_INDEX])
+    this.props.onChange && this.props.onChange(this.state.dates[MIDDLE_INDEX])
+
 
 
   }
@@ -243,9 +211,9 @@ class AnuDatePickerItem extends React.Component {
         >
           {this.state.dates.map(function(item, index) {
             return (
-              <div class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}>
+              <text class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}>
                 {item.key}
-              </div>
+              </text>
             );
           })}
         </div>

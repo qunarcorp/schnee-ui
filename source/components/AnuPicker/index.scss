@@ -91,4 +91,7 @@
   .quist-picker-content {
     height: 238px;
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }

@@ -4,7 +4,7 @@ import './index.scss';
 class AnuOverlay extends React.Component {
   constructor(props) {
     super(props);
-    console.log('AnuOverlay')
+    console.log('AnuOverlay');
     this.state = {
       show: false,
       className: ''
@@ -24,7 +24,7 @@ class AnuOverlay extends React.Component {
 
   updateVisible(visible) {
     this.timeoutId && clearTimeout(this.timeoutId); //防止更改太快
-    console.log(visible);
+    console.log('over>>>>>>', visible);
     if (visible) {
       this.setState({
         show: true,
@@ -53,7 +53,6 @@ class AnuOverlay extends React.Component {
   render() {
     return (
       <div class="quist-overlay">
-      
         <div
           class={'quist-overlay-mask  ' + this.state.className}
           style={{ backgroundColor: this.props.background }}

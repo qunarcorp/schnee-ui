@@ -3,7 +3,7 @@ import './index.scss';
 import AnuOverlay from '@components/AnuOverlay/index';
 import AnuPickerItem from '@components/AnuPickerItem/index';
 import AnuDatePickerItem from '@components/AnuDatePickerItem/index';
-import { nextDate, timeStrToDate } from '../../common/utils/time';
+import { nextDate, timeStrToDate, getDate, nextMinute, getTime } from '../../common/utils/time';
 /* eslint-disable */
 function handleSelect(selected) {
   if (selected) {
@@ -16,7 +16,8 @@ function handleSelect(selected) {
 class AnuPicker extends React.Component {
   constructor(props) {
     super(props);
-    const { range, dataMap, value ,mode, start, end} = props;
+    this.selectedValue = props.value;
+    const { range, dataMap, value, mode, start, end } = props;
     const { groups, newselected } = this.parseData(range, dataMap.items, value);
     // console.log('groups', groups, newselected);
     this.state = {
@@ -29,6 +30,7 @@ class AnuPicker extends React.Component {
   }
 
   parseData(data, subKey, selected, group = [], newselected = []) {
+    console.log(data, subKey, selected)
     if (this.props.mode === 'date') {
       selected = selected ? new Date(selected) : new Date();
       let groups = [
@@ -38,6 +40,20 @@ class AnuPicker extends React.Component {
       ];
 
       let newselected = nextDate(selected);
+
+      return { groups, newselected };
+    }
+
+    if (this.props.mode === 'time') {
+      selected = selected ? timeStrToDate(selected, 'time') : new Date();
+
+      console.log('selected', selected);
+
+      let groups = [
+        { format: 'hh', caption: '时', step: 1, type: 'Hour' },
+        { format: 'mm', caption: '分', step: 1, type: 'Minute' }
+      ];
+      let newselected = nextMinute(selected);
 
       return { groups, newselected };
     }
@@ -97,7 +113,8 @@ class AnuPicker extends React.Component {
 
   confirmClick() {
     this.updateVisible(false);
-    this.props.onChange && this.props.onChange({ value: this.state.value });
+    this.props.onChange && this.props.onChange({ value: this.selectedValue });
+    // this.props.onChange && this.props.onChange({value: this.selectedDate});
   }
 
   click() {
@@ -113,26 +130,20 @@ class AnuPicker extends React.Component {
     const { groups, newselected } = this.parseData(range, dataMap.items, selected);
     console.log('updateDataBySelected', groups);
     let text = [];
-    try {
-      switch (mode) {
-        case 'multiSelector':
-          groups.forEach((group, _i) => {
-            text.push(group['items'][selected[_i]][this.props.dataMap.id]);
-          });
-          break;
-        case 'selector':
-          text = newselected[0];
-          break;
-      }
-      // 单列类型
-    } catch (err) {
-      //wait
-      text = this.state.text;
+    switch (mode) {
+      case 'multiSelector':
+        groups.forEach((group, _i) => {
+          text.push(group['items'][selected[_i]][this.props.dataMap.id]);
+        });
+        break;
+      case 'selector':
+        text = newselected[0];
+        break;
     }
+    // 单列类型
 
     this.setState({
       groups,
-      text,
       selected: newselected
     });
 
@@ -144,15 +155,21 @@ class AnuPicker extends React.Component {
     selectedArr[groupIndex] = selected;
     console.log('AnuPicker', selectedArr);
     this.updateDataBySelected(selectedArr, value => {
-      this.setState({
-        value
-      });
+      this.selectedValue = value;
       console.log('value', value);
     });
   }
 
   handleDateChange(date) {
-    console.log('date', date);
+    console.log('date', date, getDate(date.date));
+    if(!date.disabled) {
+      
+      this.selectedValue =this.props.mode === 'date' ?  getDate(date.date) : getTime(date.date);
+      console.log(this.selectedValue)
+    } else {
+      this.selectedValue = this.props.value
+    }
+    
   }
 
   render() {
@@ -165,7 +182,7 @@ class AnuPicker extends React.Component {
             <text class="quist-picker-cancel" catchTap={this.cancelClick.bind(this)}>
               {this.props.cancelText}
             </text>
-            <text class="quist-picker-confirm" catchTap={this.confirmClick.bind(this)}>
+            <text class="quist-picker-confirm" style={{color: this.props.okStyle}} catchTap={this.confirmClick.bind(this)}>
               {this.props.okText}
             </text>
           </div>
@@ -206,7 +223,8 @@ AnuPicker.defaultProps = {
   cancelText: '取消',
   okText: '确定',
   mode: 'selector',
-  dataMap: { id: 'name', items: 'sub' }
+  dataMap: { id: 'name', items: 'sub' },
+  okStyle: '#1AAD19'
 };
 
 export default AnuPicker;
