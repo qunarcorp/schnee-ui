@@ -14,9 +14,9 @@ function collectCheckboxInstances(fiber, ret, instance) {
 }
 
 const styleConfig = {
-    width: 40,
-    fontSize: 34,
-    gap: 4
+    width: 44,
+    fontSize: 38,
+    gap: 6
 };
 
 function getSizeStyle(size) {

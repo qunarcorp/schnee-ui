@@ -11,7 +11,8 @@ class P extends React.Component {
 
         this.state = {
             checkedValue: 'apple',
-            configs
+            configs,
+            env: process.env.ANU_ENV
         };
 
         this.handleRadioChange = this.handleRadioChange.bind(this);
@@ -25,6 +26,17 @@ class P extends React.Component {
     render() {
         return (
             <div className="anu-col demo-page">
+                {
+                    this.state.env === 'wx' ?
+                    <div className="radio-col">
+                        <span className="demo-header">与微信原生对比</span>
+                        <div className="demo-content radio-content">
+                            <XRadio />
+                            <radio />
+                        </div>
+                    </div> :
+                    null
+                }
                 {
                     this.state.configs.map(config => (
                         <div className="radio-col" key={config.type}>
