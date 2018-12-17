@@ -9,6 +9,7 @@
 | Progress       | 百分比换行了 | 同左 | 同左 | ✓   | ✓ | @aweleey | |
 | Radio          | ✓/✓ | ✓   | ✓   | ✓   | ✓ | @codeArvin | |
 | RadioGroup     | ✓/✓ | ✓   | ✓   | ✓   | js 问题 | @codeArvin | |
+| ScorllView     | -   | -   | -   | -   | ✓ | @kitian616 | |
 | Slider         |     |     |     | 快应用滚动距离有偏差 | - | @aweleey | |
 | Swiper         | ✓   | ✓ 竖直方向滚动体验不佳 | ✓ | 快应用 translate 百分比有些问题，给官方提了 BUG，预计 1032 版修复 | Nanachi For 循环回调只能用 `funcion(){ ... }` 函数，在 H5 中会出现 this 绑定问题，暂没找到代码层面的解决方法 | @kitian616 | |
 | Switch         | ✓/✓ | ✓   | ✓   | ✓ （快应用目前还没有支持过渡效果的计划，暂不考虑） | ✓ | @kitian616 | |
