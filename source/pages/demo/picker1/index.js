@@ -1,5 +1,6 @@
 import React from '@react';
 import AnuPicker from '@components/AnuPicker/index';
+import cnCity from '../../../common/utils/cnCity';
 /* eslint-disable */
 import './index.scss';
 
@@ -12,6 +13,7 @@ class P extends React.Component {
       multiIndex: ['无脊柱动物', '扁性动物', '猪肉绦虫'],
       date: '2016-09-01',
       time: '12:01',
+      region: ['广东省', '广州市', '海珠区'],
       multiArray: [
         {
           name: '无脊柱动物',
@@ -115,6 +117,12 @@ class P extends React.Component {
     })
   }
 
+  bindRegionChange(e) {
+    this.setState({
+      region: e.value
+    })
+  }
+
   render() {
     return (
       <div class="picker-demo">
@@ -171,6 +179,17 @@ class P extends React.Component {
             onChange={this.bindTimeChange.bind(this)}
           >
             <text>当前选择：{this.state.time}</text>
+          </AnuPicker>
+        </div>
+        <div class="item-li">
+          <text class="item-li-detail">省市区选择器</text>
+          <AnuPicker
+            mode="region"
+            value={this.state.region}
+            onCancel={this.close.bind(this)}
+            onChange={this.bindRegionChange.bind(this)}
+          >
+            <text>当前选择：{this.state.region[0]}, {this.state.region[1]},{this.state.region[2]}</text>
           </AnuPicker>
         </div>
       </div>
