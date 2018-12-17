@@ -4,6 +4,7 @@ import AnuOverlay from '@components/AnuOverlay/index';
 import AnuPickerItem from '@components/AnuPickerItem/index';
 import AnuDatePickerItem from '@components/AnuDatePickerItem/index';
 import { nextDate, timeStrToDate, getDate, nextMinute, getTime } from '../../common/utils/time';
+import cnCity from '../../common/utils/cnCity';
 /* eslint-disable */
 function handleSelect(selected) {
   if (selected) {
@@ -18,8 +19,9 @@ class AnuPicker extends React.Component {
     super(props);
     this.selectedValue = props.value;
     const { range, dataMap, value, mode, start, end } = props;
-    const { groups, newselected } = this.parseData(range, dataMap.items, value);
-    // console.log('groups', groups, newselected);
+    let rangeValue = mode === 'region' ? cnCity : range
+    const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
+    console.log('groups', newselected);
     this.state = {
       animationClass: '',
       groups,
@@ -57,6 +59,8 @@ class AnuPicker extends React.Component {
       return { groups, newselected };
     }
 
+
+
     selected = handleSelect(selected);
     let _selected = 0;
 
@@ -65,10 +69,20 @@ class AnuPicker extends React.Component {
       _selected = _selectedClone.shift();
       selected = _selectedClone;
     }
+    
+    
 
-    if (typeof data[_selected] === 'undefined') {
-      _selected = 0;
-    }
+    data.forEach((item,index)  => {
+      if(item[this.props.dataMap.id] === _selected) {
+        _selected = index
+      }
+    })
+
+    // if (typeof data[_selected] === 'undefined') {
+    //   _selected = 0;
+    // }
+   
+
 
     newselected.push(_selected);
 
@@ -111,8 +125,9 @@ class AnuPicker extends React.Component {
     if(this.props.mode !== nextProps.mode || this.props.value !== nextProps.value) {
       
       const { range, dataMap, value, mode, start, end } = nextProps;
+      let rangeValue = mode === 'region' ? cnCity : range;
       console.log('range', range)
-      const { groups, newselected } = this.parseData(range, dataMap.items, value);
+      const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
       this.state = {
         groups,
         selected: newselected,
@@ -141,11 +156,12 @@ class AnuPicker extends React.Component {
   updateDataBySelected(selected, cb) {
     const { range, dataMap, mode } = this.props;
     //validate if item exists
-
-    const { groups, newselected } = this.parseData(range, dataMap.items, selected);
+    let rangeValue = mode === 'region' ? cnCity : range;
+    const { groups, newselected } = this.parseData(rangeValue, dataMap.items, selected);
     // console.log('updateDataBySelected', groups);
     let text = [];
     switch (mode) {
+      case 'region':
       case 'multiSelector':
         groups.forEach((group, _i) => {
           text.push(group['items'][selected[_i]][this.props.dataMap.id]);
@@ -190,8 +206,8 @@ class AnuPicker extends React.Component {
       <div catchTap={this.click.bind(this)}>
         {this.props.children}
         <AnuOverlay visible={this.state.show} onClose={this.cancelClick.bind(this)} />
-        {this.state.show && (
-          <div class={'quist-picker  ' + this.state.animationClass}>
+        {/* {this.state.show && ( */}
+          <div class={'quist-picker  ' + this.state.animationClass} hidden={!this.state.show}>
             <div class="quist-picker-title">
               <text class="quist-picker-cancel" catchTap={this.cancelClick.bind(this)}>
                 {this.props.cancelText}
@@ -232,7 +248,7 @@ class AnuPicker extends React.Component {
               })}
             </div>
           </div>
-        )}
+        {/* )} */}
       </div>
     );
   }

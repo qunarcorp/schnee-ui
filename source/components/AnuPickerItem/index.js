@@ -31,6 +31,12 @@ class AnuPickerItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if(this.props.items.length !== nextProps.items.length) {
+      this.setState({
+        totalHeight: nextProps.items.length * calculate(this.props.indicatorHeight)
+      })
+    }
     // console.log('componentWillReceiveProps')
     // // 这里不知道需要不
     // this.adjustPosition(nextProps);
@@ -192,11 +198,11 @@ class AnuPickerItem extends React.Component {
         >
           {this.props.items.map(function(item, index) {
             return (
-              <div
+              <text
                 class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}
               >
                 {item[this.props.mapKeys.label] || item}
-              </div>
+              </text>
             );
           })}
         </div>
