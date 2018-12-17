@@ -10,7 +10,8 @@ class P extends React.Component {
 
         this.state = {
             checkedValues: 'apple',
-            configs
+            configs,
+            env: process.env.ANU_ENV
         };
 
         this.checkboxChange = this.checkboxChange.bind(this);
@@ -24,6 +25,17 @@ class P extends React.Component {
     render() {
         return (
             <div className="anu-col demo-page">
+                {
+                    this.state.env === 'wx' ?
+                    <div className="checkbox-col">
+                        <span className="demo-header">与微信原生对比</span>
+                        <div className="demo-content checkbox-content">
+                            <XCheckbox />
+                            <checkbox />
+                        </div>
+                    </div> :
+                    null
+                }
                 {
                     this.state.configs.map(config => (
                         <div className="checkbox-col" key={config.type}>
