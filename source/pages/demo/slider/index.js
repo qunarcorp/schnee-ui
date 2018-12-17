@@ -2,85 +2,110 @@ import React from '@react';
 import './index.scss';
 import XSlider from '@components/XSlider/index';
 class P extends React.Component {
-  constructor() {
-    super();
-    // this.bind();
-    this.state = {
-      step: 5,
-      currentValue: 100
-    };
-  }
+    constructor() {
+        super();
+        // this.bind();
+        this.state = {
+            slider0: 0,
+            slider1: 40,
+            slider2: 40,
+            slider3: 0,
+            slider4: 80,
+            slider5: 0
+        };
 
-  // bind() {
-  //     for (let i = 1; i < 6; i++) {
-  //         let index = i + 1;
-  //         this['slider' + index + 'change'] = function(e) {
-  //             // eslint-disable-next-line
-  //             console.log(
-  //                 'slider' + 'index' + '发生 change 事件，携带值为',
-  //                 e.value
-  //             );
-  //         };
-  //     }
-  // }
+        this.sliderChange = this.sliderChange.bind(this)
+    }
 
-  sliderChange(e) {
-    console.log('slider 发生 change 事件，携带值为', e);
-    this.setState({
-      currentValue: e
-    });
-  }
+    sliderChange(idx, value) {
+        // eslint-disable-next-line no-console
+        console.log('slider 发生 change 事件，携带值为', value, 'idx:', idx);
+        this.setState({
+            [`slider${idx}`]: value,
+        });
+    }
 
-  switch1Change(e) {
-    // eslint-disable-next-line
-    console.log('switch1 发生 change 事件，携带值为', e.value);
-  }
-
-  switch2Change(e) {
-    // eslint-disable-next-line
-    console.log('switch2 发生 change 事件，携带值为', e.value);
-  }
-
-  render() {
-    return (
-      <div className="anu-col demo-page">
-        {/* <div class="section section_gap anu-block">
-          <text class="section__title">设置step</text>
-          <div class="body-div">
-            <Slider class="slider" />
-          </div>
-        </div> */}
-        {/* <div class="section section_gap anu-block">
-          <text class="section__title">初始化：value = 50</text>
-          <div class="body-div">
-            <Slider class="slider" onChange={this.sliderChange} value={this.state.currentValue} />
-          </div>
-        </div> */}
-        {/* <div class="section section_gap anu-block">
-          <text class="section__title">显示当前value</text>
-          <div class="body-div">
-            <Slider class="slider" onChange={this.sliderChange} show-value={true}/>
-          </div>
-        </div> */}
-          <span className="demo-header">设置最小/最大值</span>
-          <div class="demo-content">
-            <div class="anu-col">
-              <XSlider
-                onChange={this.sliderChange.bind(this)}
-                min={50}
-                max={200}
-                value={this.state.currentValue}
-              />
-              <div>{this.state.currentValue}</div>
-              <div>
-                <switch checked={true} onChange={this.switch1Change} />
-                <switch onChange={this.switch2Change} />
-              </div>
+    render() {
+        return (
+            <div className="anu-col demo-page">
+                <span className="demo-header">目前快应用计算不出dom的宽高(2018-12-12), 写死270</span>
+                <span className="demo-header">default</span>
+                <div className="demo-content">
+                    <div className="anu-col">
+                        <XSlider
+                            className="slider"
+                            onChange={this.sliderChange.bind(this, 0)}
+                            value={this.state.slider0}
+                        />
+                    </div>
+                </div>
+                <span className="demo-header">step(20)/block-size(16)/value(40)</span>
+                <div className="demo-content">
+                    <div className="anu-col">
+                        <XSlider
+                            className="slider"
+                            onChange={this.sliderChange.bind(this, 1)}
+                            value={this.state.slider1}
+                            step={20}
+                            block-size={16}
+                        />
+                    </div>
+                </div>
+                <span className="demo-header">disabled(true)</span>
+                <div className="demo-content">
+                    <div className="anu-col">
+                        <XSlider
+                            className="slider"
+                            onChange={this.sliderChange.bind(this, 2)}
+                            value={this.state.slider2}
+                            step={20}
+                            disabled={true}
+                        />
+                    </div>
+                </div>
+                <span className="demo-header">不显示当前value</span>
+                <div className="demo-content">
+                    <div className="anu-col">
+                        <XSlider
+                            className="slider"
+                            onChange={this.sliderChange.bind(this, 3)}
+                            value={this.state.slider3}
+                            show-value={true}
+                            block-size={24}
+                            showValue={false}
+                        />
+                    </div>
+                </div>
+                <span className="demo-header">min(0)/max(120)/step(40)</span>
+                <div className="demo-content">
+                    <div className="anu-col">
+                        <XSlider
+                            onChange={this.sliderChange.bind(this, 4)}
+                            max={120}
+                            step={40}
+                            value={this.state.slider4}
+                        />
+                    </div>
+                </div>
+                <div className="demo-header" style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <span style={{color: '#dadb1a'}}>activeColor</span>
+                    <span style={{color: '#f00'}}>block-color</span>
+                    <span style={{color: '#00BCD4'}}>backgroundColor</span>
+                </div>
+                <div className="demo-content">
+                    <div className="anu-col">
+                        <XSlider
+                            onChange={this.sliderChange.bind(this, 5)}
+                            value={this.state.slider5}
+                            backgroundColor="#00BCD4"
+                            block-color="#f00"
+                            activeColor="#dadb1a"
+                        />
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-    );
-  }
+        );
+    }
 }
 
 export default P;
