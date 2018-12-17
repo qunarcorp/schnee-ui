@@ -5,10 +5,15 @@
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
   border-radius: 6px;
+  position: relative;
 }
 
 .anu-button__mask {
   position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   opacity: 0;
 }

@@ -33,10 +33,10 @@ class P extends React.Component {
     render() {
         var self = this;
         return (
-            <div class="anu-col demo-page">
+            <div className="anu-col demo-page">
                 <span className="demo-header">Demo</span>
                 {this.state.list.map(function(item) {
-                    return (<div class="demo-list__item" onClick={self.goto.bind(self, item.url)}>
+                    return (<div className="demo-list__item" onClick={self.goto.bind(self, item.url)}>
                         <text>{item.name}</text>
                     </div>);
                 })}

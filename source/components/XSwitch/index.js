@@ -91,7 +91,7 @@ class XSwitch extends React.Component {
         return (
             <div class="anu-switch">
                 <stack
-                    class={
+                    className={
                         'anu-switch__checkbox ' + (this.props.disabled ? 'anu-switch__checkbox--disabled' : '')
                     }
                     style={this.state.wrapperStyle}
@@ -99,7 +99,7 @@ class XSwitch extends React.Component {
                     onClick={this.onClick}
                 >
                     <div
-                        class={
+                        className={
                             'anu-switch__thumb ' +
                             (this.state.checked ? 'anu-switch__thumb--open' : ' anu-switch__thumb--close')
                         }

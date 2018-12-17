@@ -4,7 +4,7 @@ import XIcon from '@components/XIcon/index';
 
 class P extends React.Component {
     render() {
-        return <div class="anu-col demo-page">
+        return <div className="anu-col demo-page">
             <span className="demo-header">普通</span>
             <div className="demo-content">
                 <XIcon content="&#xf077;"></XIcon>
