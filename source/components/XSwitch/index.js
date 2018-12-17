@@ -118,16 +118,15 @@ XSwitch.defaultProps = {
         width: '68px',
         height: '68px',
         borderRadius: '34px',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#fff'
     },
     wrapperStyle: {
         width: '140px',
         height: '76px',
         borderRadius: '38px',
-        backgroundColor: '#C1C1C1'
     },
-    color: '#2998F9',
-    checkColor: '#C1C1C1',
+    color: '#00bcd4',
+    checkColor: '#c1c1c1',
     __InLabel: false
 };
 

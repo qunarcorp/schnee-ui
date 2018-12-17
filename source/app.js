@@ -4,6 +4,7 @@ import './pages/index/index';
 
 import './pages/demo/button/index';
 import './pages/demo/checkbox/index';
+import './pages/demo/icon/index';
 import './pages/demo/label/index';
 import './pages/demo/picker/index';
 import './pages/demo/progress/index';
