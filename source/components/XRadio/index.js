@@ -15,9 +15,9 @@ function collectRadioInstances(p, ret, instance) {
 }
 
 const styleConfig = {
-    check_width: 34,
-    thumb_width: 24,
-    gap: 4
+    check_width: 40,
+    thumb_width: 30,
+    gap: 6
 };
 
 function getSizeWidth(type, size) {
