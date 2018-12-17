@@ -112,14 +112,18 @@ export function nextSecond(now, index = 0) {
   return date;
 }
 
+// 时间
+const convert2Decimal = num => (num > 9 ? num : `0${num}`)// 时间
+
+
 export function getDate(date) {
   throwIfInvalidDate(date);
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  return `${date.getFullYear()}-${convert2Decimal(date.getMonth() + 1)}-${convert2Decimal(date.getDate())}`;
 }
 
 export function getTime(time) {
   throwIfInvalidDate(time);
-  return `${time.getHours()}: ${time.getMinutes()}`;
+  return `${convert2Decimal(time.getHours())}: ${convert2Decimal(time.getMinutes())}`;
 }
 
 /**

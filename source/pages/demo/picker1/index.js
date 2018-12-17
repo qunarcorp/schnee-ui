@@ -11,6 +11,7 @@ class P extends React.Component {
       index: 0,
       multiIndex: ['无脊柱动物', '扁性动物', '猪肉绦虫'],
       date: '2016-09-01',
+      time: '12:01',
       multiArray: [
         {
           name: '无脊柱动物',
@@ -101,8 +102,17 @@ class P extends React.Component {
     });
   }
 
-  bindDateChange() {
-    
+  bindDateChange(e) {
+    console.log('...bindDateChange', e);
+    this.setState({
+      date: e.value
+    });
+  }
+
+  bindTimeChange(e) {
+    this.setState({
+      time: e.value
+    })
   }
 
   render() {
@@ -148,6 +158,19 @@ class P extends React.Component {
             onChange={this.bindDateChange.bind(this)}
           >
             <text>当前选择：{this.state.date}</text>
+          </AnuPicker>
+        </div>
+        <div class="item-li">
+          <text class="item-li-detail">时间选择器</text>
+          <AnuPicker
+            mode="time"
+            value={this.state.time}
+            start="09:01"
+            end="21:01"
+            onCancel={this.close.bind(this)}
+            onChange={this.bindTimeChange.bind(this)}
+          >
+            <text>当前选择：{this.state.time}</text>
           </AnuPicker>
         </div>
       </div>

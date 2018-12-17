@@ -44,8 +44,14 @@
 .anu-stack {
   position: relative;
   overflow: hidden;
+  height:100%;
+
 }
 
 .anu-picker__mask_center {
   height: 34px;
+}
+
+.anu-picker__item_disabled {
+  color: #999999;
 }
