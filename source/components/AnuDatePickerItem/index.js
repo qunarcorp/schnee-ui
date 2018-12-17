@@ -2,9 +2,9 @@ import React from '@react';
 import './index.scss';
 import * as TimeUtil from '../../common/utils/time.js';
 /* eslint-disable */
-const DATE_LENGTH = 15; // 日期的个数
+const DATE_LENGTH = 14; // 日期的个数
 const MIDDLE_INDEX = Math.floor(DATE_LENGTH / 2); // 日期数组中间值的索引
-const DEFAULT_INEDX = Math.ceil(MIDDLE_INDEX / 2); // 中间日期的默认索引
+const DEFAULT_INEDX = 3; // 中间索引距离顶部的索引差
 
 function calculate(value) {
   const ANU_ENV = process.env.ANU_ENV; //wx ali bu quick
@@ -30,8 +30,7 @@ class AnuDatePickerItem extends React.Component {
       touchId: undefined,
       ogY: 0,
       ogTranslate: 0, // 移动之前的起始位置
-      translate: 0,
-      translateY: -DEFAULT_INEDX * calculate(props.itemHeight),
+      translateY:  -(MIDDLE_INDEX) * calculate(props.itemHeight)+ calculate(props.indicatorTop),
       totalHeight: 0,
       selected: 0,
       marginTop: 0,
@@ -55,47 +54,35 @@ class AnuDatePickerItem extends React.Component {
 
   handleTouchStart(e) {
     if (this.state.touching) return;
-    console.log('start');
+    console.log('start', e.touches[0].pageY);
     this.moveDateCount = 0;
-    this.currentIndex = MIDDLE_INDEX;
 
-    this.touchY = e.touches[0].pageY;
-    this.translateY = this.state.translateY;
+    this.touchY = e.touches[0].pageY;        // 移动开始的位置
+    this.translateY = this.state.translateY; 
 
     this.setState({
       touching: true,
       ogTranslate: this.state.translate,
       touchId: e.touches[0].identifier,
-      ogY:
-        this.state.translate === 0 ? e.touches[0].pageY : e.touches[0].pageY - this.state.translate,
+      ogY: e.touches[0].pageY - this.state.translate,
       animating: false
     });
   }
 
   handleTouchMove(e) {
-    console.log('move');
+    
     if (!this.state.touching) return;
-    // if (e.touches[0].identifier !== this.state.touchId) return;
-    // const pageY = e.touches[0].pageY;
-    // const diffY = pageY - this.state.ogY;
-    // // const translateY = this.translateY + diffY
+    if (e.touches[0].identifier !== this.state.touchId) return;
 
-    // const direction = diffY > 0 ? -1 : 1;
 
-    // this.setState({
-    //   translate: diffY
-    // });
+    const touchY = e.touches[0].pageY;  // 当前的位置
+    const dir = touchY - this.touchY;   // 移动的位置差
+    const translateY = this.translateY + dir;  // 现在坐标应该在的位置
+    console.log('move');
+    this.setState({
+      translateY
+    });
 
-    // // 这个地方需要加上如何进行视图更新的逻辑
-    // if (this._checkIsUpdateDates(direction, diffY)) {
-    //   console.log('================');
-    //   this.moveDateCount = direction > 0 ? this.moveDateCount + 1 : this.moveDateCount - 1;
-    //   this._updateDates(direction);
-    // }
-
-    const touchY = e.touches[0].pageY;
-    const dir = touchY - this.touchY;
-    const translateY = this.translateY + dir;
     const direction = dir > 0 ? -1 : 1;
     // 这个地方需要加上如何进行视图更新的逻辑
     if (this._checkIsUpdateDates(direction, translateY)) {
@@ -141,44 +128,23 @@ class AnuDatePickerItem extends React.Component {
   // // 是否更新
   _checkIsUpdateDates(direction, translateY) {
     let itemHeight = calculate(this.props.itemHeight);
-    console.log('update', this.currentIndex, translateY);
+    console.log('update', this.currentIndex , translateY);
 
     // let isUpdate =
-    //   Math.abs(translateY) >
-    //   Math.abs(this.currentIndex - MIDDLE_INDEX) * itemHeight + itemHeight * 0.51;
+    //   Math.abs(Math.abs(translateY) - Math.abs(this.currentIndex - 3) * itemHeight) >
+    //   itemHeight * 0.51;
 
     let isUpdate =
       direction === 1
-        ? this.currentIndex * itemHeight + itemHeight / 2 < -translateY
-        : this.currentIndex * itemHeight - itemHeight / 2 > -translateY;
-
+        ? (this.currentIndex -DEFAULT_INEDX ) * itemHeight + itemHeight / 2 < -translateY
+        : (this.currentIndex - DEFAULT_INEDX) * itemHeight - itemHeight / 2 > -translateY;
+    // let isUpdate =
+    //   Math.abs(this.currentIndex * itemHeight - Math.abs(translateY)) > itemHeight * 0.51;
+    console.log('isUpdate', isUpdate);
     return isUpdate;
   }
 
-  /**
-   * 滑动到下一日期
-   * @param  {number} direction 滑动方向
-   * @return {undefined}
-   */
-  _moveToNext(direction) {
-    const date = this.state.dates[MIDDLE_INDEX];
-    const { start, end } = this.props;
-
-    if (direction === -1 && date.date.getTime() < start.getTime() && this.moveDateCount) {
-      this._updateDates(1);
-    } else if (direction === 1 && date.date.getTime() > end.getTime() && this.moveDateCount) {
-      this._updateDates(-1);
-    }
-
-    this._moveTo(this.currentIndex)
-  }
-
-  _moveTo(currentIndex) {
-    let itemHeight = calculate(this.props.itemHeight);
-    this.setState({
-      translateY: -currentIndex * itemHeight,
-  });
-  }
+  
 
   handleTouchEnd() {
     console.log('end');
@@ -205,8 +171,8 @@ class AnuDatePickerItem extends React.Component {
       translate = this.state.ogTranslate + step * itemHeight;
     }
 
-    const direction = translate > 0 ? -1 : 1;
-    this._moveToNext(direction);
+    // const direction = translate > 0 ? -1 : 1;
+    // this._moveToNext(direction);
 
     this.setState({
       touching: false,
@@ -214,10 +180,15 @@ class AnuDatePickerItem extends React.Component {
       touchId: undefined,
       ogTranslate: 0,
       animating: true,
-      translate,
-      translateY: -this.currentIndex * itemHeight,
-      currentIndex: MIDDLE_INDEX
-    });
+      translateY: translate
+    }, () => this.updateSelected());
+  }
+
+  updateSelected() {
+    console.log('current', this.currentIndex)
+    console.log('select',  this.state.dates[MIDDLE_INDEX])
+
+
   }
 
   render() {

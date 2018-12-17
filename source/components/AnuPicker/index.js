@@ -151,6 +151,10 @@ class AnuPicker extends React.Component {
     });
   }
 
+  handleDateChange(date) {
+    console.log('date', date);
+  }
+
   render() {
     return (
       <div catchTap={this.click.bind(this)}>
@@ -172,7 +176,7 @@ class AnuPicker extends React.Component {
                   {this.props.mode === 'date' || this.props.mode === 'time' ? (
                     <AnuDatePickerItem
                       value={this.state.selected}
-                      onChange={this.handleChange}
+                      onChange={this.handleDateChange.bind(this)}
                       step={group.step}
                       type={group.type}
                       format={group.format}
