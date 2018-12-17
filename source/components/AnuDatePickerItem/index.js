@@ -82,7 +82,6 @@ class AnuDatePickerItem extends React.Component {
     const direction = dir > 0 ? -1 : 1;
     // 这个地方需要加上如何进行视图更新的逻辑
     if (this._checkIsUpdateDates(direction, translateY)) {
-      
       this._updateDates(direction);
     }
   }
@@ -124,12 +123,12 @@ class AnuDatePickerItem extends React.Component {
   _checkIsUpdateDates(direction, translateY) {
     let itemHeight = calculate(this.props.itemHeight);
 
-
     let isUpdate =
       direction === 1
         ? (this.currentIndex - DEFAULT_INEDX) * itemHeight + itemHeight / 2 < -translateY
         : (this.currentIndex - DEFAULT_INEDX) * itemHeight - itemHeight / 2 > -translateY;
- 
+    console.log('isUpdate', isUpdate, translateY);
+
     return isUpdate;
   }
 
@@ -143,37 +142,18 @@ class AnuDatePickerItem extends React.Component {
     let indicatorHeight = calculate(this.props.indicatorHeight);
 
     let translate = this.state.translateY;
-
-    if(translate > indicatorTop) {
-      console.log('top', translate, indicatorTop)
-
-    } else if(translate + this.state.totalHeight < indicatorTop + indicatorHeight) {
-      console.log('bottom', translate+indicatorTop )
+    console.log('end', translate);
+    if (translate > indicatorTop) {
+      console.log('top', translate, indicatorTop);
+    } else if (translate + this.state.totalHeight < indicatorTop + indicatorHeight) {
+      console.log('bottom', translate + indicatorTop);
     }
 
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
-    } 
-    // else if (translate > indicatorTop) {
-    //   console.log('top', indicatorTop);
-    // } else if (translate + this.state.totalHeight < indicatorTop + indicatorHeight) {
-    //   // translate = indicatorTop + indicatorHeight - this.state.totalHeight;
-    //   // translate = -748;
-    //   console.log('bottom', translate)
-    // } 
-    else {
-      let diff = (translate - this.state.ogTranslate) / itemHeight;
-
-      let step = 0,
-        adjust = 0;
-      if (Math.abs(diff) < 1) {
-        step = diff > 0 ? 1 : -1;
-      } else {
-        adjust = Math.abs((diff % 1) * 100) > 50 ? 1 : 0;
-        step = diff > 0 ? Math.floor(diff) + adjust : Math.ceil(diff) - adjust;
-      }
-
-      translate = this.state.ogTranslate + step * itemHeight;
+    } else {
+      
+      translate = -(this.currentIndex - DEFAULT_INEDX) * itemHeight;
     }
 
     this.setState(
