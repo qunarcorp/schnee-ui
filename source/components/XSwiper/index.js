@@ -47,6 +47,13 @@ class XSwiper extends React.Component {
         this.pageX = 0;
         this.pageY = 0;
         this.intervalId = null;
+        this.handleTouchStart = this.handleTouchStart.bind(this);
+        this.handleTouchMove = this.handleTouchMove.bind(this);
+        this.handleTouchEnd = this.handleTouchEnd.bind(this);
+        this.autoPlay = this.autoPlay.bind(this);
+        this.goto = this.goto.bind(this);
+        this.calculateTouchmoveTransform = this.calculateTouchmoveTransform.bind(this);
+        this.calculateTransformFormIndex = this.calculateTransformFormIndex.bind(this);
     }
 
     handleTouchStart(e) {
@@ -180,10 +187,12 @@ class XSwiper extends React.Component {
     }
 
     render() {
+        const { indicatorActiveColor, indicatorColor } = this.props;
         return (
             <div className={this.props.vertical ? 'anu-swiper anu-swiper--vertical' : 'anu-swiper'} style={this.props.style}>
                 <div className="anu-swiper__wrapper"
-                    style={{ transitionDuration: this.state.animation ? this.props.duration / 1000 + 's' : 0,
+                    style={{ transitionDuration: this.props.duration / 1000 + 's',
+                        transitionProperty: this.state.animation ? 'transform' : 'none',
                         transform: this.calculateTouchmoveTransform(this.state.wrapperTranslateX, this.state.wrapperTranslateY) }}
                 >
                     <div className={this.state.touching ? 'anu-swiper__content' : 'anu-swiper__content anu-swiper__content--transition'}
@@ -200,8 +209,8 @@ class XSwiper extends React.Component {
                 {this.props.indicatorDots ? <div className="anu-swiper__pagination">
                     {this.state.bullets.map(function(item, index) {
                         return (index === this.state.curIndex ?
-                            <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: this.props.indicatorActiveColor }}></div> :
-                            <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: this.props.indicatorColor }}></div>);
+                            <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: indicatorActiveColor }}></div> :
+                            <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: indicatorColor }}></div>);
                     })}
                 </div> : null}
             </div>
