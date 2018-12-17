@@ -30,7 +30,7 @@ class AnuPicker extends React.Component {
   }
 
   parseData(data, subKey, selected, group = [], newselected = []) {
-    console.log(data, subKey, selected)
+    console.log(data, subKey, selected);
     if (this.props.mode === 'date') {
       selected = selected ? new Date(selected) : new Date();
       let groups = [
@@ -47,7 +47,7 @@ class AnuPicker extends React.Component {
     if (this.props.mode === 'time') {
       selected = selected ? timeStrToDate(selected, 'time') : new Date();
 
-      console.log('selected', selected);
+      // console.log('selected', selected);
 
       let groups = [
         { format: 'hh', caption: '时', step: 1, type: 'Hour' },
@@ -118,7 +118,7 @@ class AnuPicker extends React.Component {
   }
 
   click() {
-    console.log('anupickerClick');
+    // console.log('anupickerClick');
     this.updateVisible(true);
   }
 
@@ -128,7 +128,7 @@ class AnuPicker extends React.Component {
     //validate if item exists
 
     const { groups, newselected } = this.parseData(range, dataMap.items, selected);
-    console.log('updateDataBySelected', groups);
+    // console.log('updateDataBySelected', groups);
     let text = [];
     switch (mode) {
       case 'multiSelector':
@@ -153,23 +153,21 @@ class AnuPicker extends React.Component {
   handleItemChange(selected, groupIndex) {
     let selectedArr = this.state.selected;
     selectedArr[groupIndex] = selected;
-    console.log('AnuPicker', selectedArr);
+    // console.log('AnuPicker', selectedArr);
     this.updateDataBySelected(selectedArr, value => {
       this.selectedValue = value;
-      console.log('value', value);
+      // console.log('value', value);
     });
   }
 
   handleDateChange(date) {
     console.log('date', date, getDate(date.date));
-    if(!date.disabled) {
-      
-      this.selectedValue =this.props.mode === 'date' ?  getDate(date.date) : getTime(date.date);
-      console.log(this.selectedValue)
+    if (!date.disabled) {
+      this.selectedValue = this.props.mode === 'date' ? getDate(date.date) : getTime(date.date);
+      console.log(this.selectedValue);
     } else {
-      this.selectedValue = this.props.value
+      this.selectedValue = this.props.value;
     }
-    
   }
 
   render() {
@@ -177,43 +175,49 @@ class AnuPicker extends React.Component {
       <div catchTap={this.click.bind(this)}>
         {this.props.children}
         <AnuOverlay visible={this.state.show} onClose={this.cancelClick.bind(this)} />
-        <div class={'quist-picker  ' + this.state.animationClass} hidden={!this.state.show}>
-          <div class="quist-picker-title">
-            <text class="quist-picker-cancel" catchTap={this.cancelClick.bind(this)}>
-              {this.props.cancelText}
-            </text>
-            <text class="quist-picker-confirm" style={{color: this.props.okStyle}} catchTap={this.confirmClick.bind(this)}>
-              {this.props.okText}
-            </text>
+        {this.state.show && (
+          <div class={'quist-picker  ' + this.state.animationClass}>
+            <div class="quist-picker-title">
+              <text class="quist-picker-cancel" catchTap={this.cancelClick.bind(this)}>
+                {this.props.cancelText}
+              </text>
+              <text
+                class="quist-picker-confirm"
+                style={{ color: this.props.okStyle }}
+                catchTap={this.confirmClick.bind(this)}
+              >
+                {this.props.okText}
+              </text>
+            </div>
+            <div class="quist-picker-content">
+              {this.state.groups.map(function(group, index) {
+                return (
+                  <div class="anu-picker-item">
+                    {this.props.mode === 'date' || this.props.mode === 'time' ? (
+                      <AnuDatePickerItem
+                        value={this.state.selected}
+                        onChange={this.handleDateChange.bind(this)}
+                        step={group.step}
+                        type={group.type}
+                        format={group.format}
+                        start={this.state.start}
+                        end={this.state.end}
+                      />
+                    ) : (
+                      <AnuPickerItem
+                        items={group.items}
+                        mapKeys={group.mapKeys}
+                        groupIndex={index}
+                        onChange={this.handleItemChange.bind(this)}
+                        defaultIndex={this.state.selected[index]}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div class="quist-picker-content">
-            {this.state.groups.map(function(group, index) {
-              return (
-                <div class="anu-picker-item">
-                  {this.props.mode === 'date' || this.props.mode === 'time' ? (
-                    <AnuDatePickerItem
-                      value={this.state.selected}
-                      onChange={this.handleDateChange.bind(this)}
-                      step={group.step}
-                      type={group.type}
-                      format={group.format}
-                      start={this.state.start}
-                      end={this.state.end}
-                    />
-                  ) : (
-                    <AnuPickerItem
-                      items={group.items}
-                      mapKeys={group.mapKeys}
-                      groupIndex={index}
-                      onChange={this.handleItemChange.bind(this)}
-                      defaultIndex={this.state.selected[index]}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        )}
       </div>
     );
   }
