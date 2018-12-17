@@ -99,7 +99,7 @@ class XButton extends React.Component {
             >
                 <div className="anu-row anu-middle">
                     <image
-                        class={this.state.loadingClasses}
+                        className={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
 
@@ -107,7 +107,7 @@ class XButton extends React.Component {
                         {this.state.value}
                     </text>
                 </div>
-                <input class="anu-button__mask" type='button' onClick={this.onClick} />
+                <input className="anu-button__mask" type='button' onClick={this.onClick} />
             </stack>
         );
     }
