@@ -31,13 +31,13 @@ class AnuPickerItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps')
-    // 这里不知道需要不
-    this.adjustPosition(nextProps);
+    // console.log('componentWillReceiveProps')
+    // // 这里不知道需要不
+    // this.adjustPosition(nextProps);
   }
 
   adjustPosition(props) {
-    console.log('adjustPosition')
+    
     let { items, itemHeight, indicatorTop, defaultIndex } = props;
     itemHeight = calculate(itemHeight);
     indicatorTop = calculate(indicatorTop);
@@ -62,7 +62,7 @@ class AnuPickerItem extends React.Component {
       }
     }
 
-    console.log('translate', translate);
+    
     this.setState({
       selected: defaultIndex,
       ogTranslate: translate,
@@ -79,7 +79,7 @@ class AnuPickerItem extends React.Component {
 
   handleTouchStart(e) {
     if (this.state.touching || this.props.items.length <= 1) return;
-    console.log('start');
+    
     this.setState({
       touching: true,
       ogTranslate: this.state.translate,
@@ -91,13 +91,13 @@ class AnuPickerItem extends React.Component {
   }
 
   handleTouchMove(e) {
-    console.log('move');
+    
     if (!this.state.touching || this.props.items.length <= 1) return;
     if (e.touches[0].identifier !== this.state.touchId) return;
 
     const pageY = e.touches[0].pageY;
     const diffY = pageY - this.state.ogY;
-    console.log('diffY', diffY);
+   
 
     this.setState({
       translate: diffY
@@ -105,7 +105,7 @@ class AnuPickerItem extends React.Component {
   }
 
   handleTouchEnd() {
-    console.log('end');
+    
     if (!this.state.touching || this.props.items.length <= 1) return;
 
     let { indicatorTop, indicatorHeight, itemHeight } = this.props;

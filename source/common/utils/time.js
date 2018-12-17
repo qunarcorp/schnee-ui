@@ -133,7 +133,7 @@ export function getTime(time) {
  * @return {Date}     日期对象
  */
 export const timeStrToDate = (str = '', type) => {
-  console.log('str', str);
+  
   if (typeof str === 'string') {
     const d = new Date();
     if (type === 'time') {
@@ -143,7 +143,7 @@ export const timeStrToDate = (str = '', type) => {
       const arr = str.split('-');
       d.setFullYear(arr[0], arr[1] - 1, arr[2]);
     }
-    console.log('d', d);
+    
     return d;
   } else {
     return str;

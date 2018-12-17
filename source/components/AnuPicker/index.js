@@ -30,7 +30,6 @@ class AnuPicker extends React.Component {
   }
 
   parseData(data, subKey, selected, group = [], newselected = []) {
-    console.log(data, subKey, selected);
     if (this.props.mode === 'date') {
       selected = selected ? new Date(selected) : new Date();
       let groups = [
@@ -104,6 +103,22 @@ class AnuPicker extends React.Component {
           show: false
         });
       }, 300);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps>>>>>>', this.props.mode,  nextProps.mode)
+    if(this.props.mode !== nextProps.mode || this.props.value !== nextProps.value) {
+      
+      const { range, dataMap, value, mode, start, end } = nextProps;
+      console.log('range', range)
+      const { groups, newselected } = this.parseData(range, dataMap.items, value);
+      this.state = {
+        groups,
+        selected: newselected,
+        start: timeStrToDate(start, mode),
+        end: timeStrToDate(end, mode)
+      };
     }
   }
 

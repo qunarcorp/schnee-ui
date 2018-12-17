@@ -24,7 +24,7 @@ class AnuDatePickerItem extends React.Component {
     this.moveDateCount = 0; // 一次滑动移动了多少个时间
     this.translateY = 0; // 容器偏移的距离
     this.touchY = 0; // 保存touchstart的pageY
-
+    console.log('AnuDatePickerItem>>>>>', props);
     this.state = {
       touching: false,
       touchId: undefined,
