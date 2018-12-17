@@ -1,20 +1,4 @@
-@keyframes open {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(39px);
-  }
-}
-
-@keyframes close {
-  from {
-    transform: translateX(39px);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
+@import '../../common/style/variables.scss';
 
 .anu-switch {
   align-items: center;
@@ -25,7 +9,7 @@
     position: relative;
   }
   &__checkbox--disabled {
-    opacity: 0.5;
+    opacity: 0.4;
   }
   &__thumb {
     position: absolute;
