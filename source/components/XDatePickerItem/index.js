@@ -5,7 +5,7 @@ import * as TimeUtil from '../../common/utils/time.js';
 const DATE_LENGTH = 14; // 日期的个数
 const MIDDLE_INDEX = Math.floor(DATE_LENGTH / 2); // 日期数组中间值的索引
 const DEFAULT_INEDX = 3; // 中间索引距离顶部的索引差
-
+var gid = 0;
 
 function calculate(value) {
   const ANU_ENV = process.env.ANU_ENV; //wx ali bu quick
@@ -180,9 +180,9 @@ class XDatePickerItem extends React.Component {
         <div
           class="anu-picker_content"
           style={{
-            marginTop: this.state.marginTop + 'px',
-            height: this.state.totalHeight + 'px',
-            transform: 'translateY(' + this.state.translateY + 'px)'
+            marginTop: this.state.marginTop + 'PX',
+            height: this.state.totalHeight + 'PX',
+            transform: 'translateY(' + this.state.translateY + 'PX)'
           }}
         >
           {this.state.dates.map(function(item, index) {

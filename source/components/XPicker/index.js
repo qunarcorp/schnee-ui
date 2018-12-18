@@ -32,6 +32,7 @@ class XPicker extends React.Component {
   }
 
   parseData(data, subKey, selected, group = [], newselected = []) {
+
     if (this.props.mode === 'date') {
       selected = selected ? new Date(selected) : new Date();
       let groups = [
@@ -61,10 +62,16 @@ class XPicker extends React.Component {
     selected = handleSelect(selected);
     let _selected = 0;
 
+    console.log(data, subKey, selected)
+
     if (Array.isArray(selected) && selected.length > 0) {
       let _selectedClone = selected.slice(0);
       _selected = _selectedClone.shift();
       selected = _selectedClone;
+    }
+    
+    if (typeof data[_selected] === 'undefined') {
+      _selected = 0;
     }
 
     data.forEach((item, index) => {
@@ -76,6 +83,7 @@ class XPicker extends React.Component {
     
 
     newselected.push(_selected);
+    console.log('data', data, _selected);
 
     let item = data[_selected];
 
@@ -83,6 +91,8 @@ class XPicker extends React.Component {
     _group.forEach(g => delete g[subKey]);
 
     group.push({ items: _group, mapKeys: { label: this.props.dataMap.id } });
+
+    console.log('item', item)
 
     if (typeof item[subKey] !== 'undefined' && Array.isArray(item[subKey])) {
       return this.parseData(item[subKey], subKey, selected, group, newselected);

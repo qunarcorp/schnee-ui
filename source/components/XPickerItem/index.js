@@ -187,13 +187,14 @@ class XPickerItem extends React.Component {
         <div
           class="anu-picker_content"
           style = {{
-            height: this.state.totalHeight + 'px',
-            transform: 'translateY('+this.state.translate +'px)'
+            height: this.state.totalHeight + 'PX',
+            transform: 'translateY('+this.state.translate +'PX)'
           }}
         >
           {this.props.items.map(function(item, index) {
             return (
               <text
+                key={item[this.props.mapKeys.label] || item}
                 class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}
               >
                 {item[this.props.mapKeys.label] || item}
