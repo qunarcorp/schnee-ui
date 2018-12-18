@@ -1,227 +1,148 @@
 import React from '@react';
-// import PropTypes from 'prop-types';
-import classNames from '../../common/utils/classnames';
 import './index.scss';
-import * as TimeUtil from '../XDatePicker/time';
-
-const DATE_HEIGHT = 34;
-const DATE_LENGTH = 7; // 日期的个数
+import * as TimeUtil from '../../common/utils/time.js';
+/* eslint-disable */
+const DATE_LENGTH = 14; // 日期的个数
 const MIDDLE_INDEX = Math.floor(DATE_LENGTH / 2); // 日期数组中间值的索引
-const MIDDLE_Y = -DATE_HEIGHT * MIDDLE_INDEX; // translate值
+const DEFAULT_INEDX = 3; // 中间索引距离顶部的索引差
+
+function calculate(value) {
+  const ANU_ENV = process.env.ANU_ENV; //wx ali bu quick
+  if (ANU_ENV === 'quick') {
+    return value * 2;
+  } else {
+    return value;
+  }
+}
 
 class XDatePickerItem extends React.Component {
-  static defaultProps = {
-    height: 238,
-    itemHeight: 25 + 9, //content + padding
-    indicatorTop: 102,
-    indicatorHeight: 34,
-    aniamtion: true,
-    groupIndex: -1,
-    defaultIndex: -1,
-    mapKeys: {
-      label: 'label'
-    }
-  };
-
   constructor(props) {
     super(props);
-    const cls = classNames('weui-picker__group', props.className);
+
+    const dates = this._iniDates(props);
+    this.currentIndex = MIDDLE_INDEX; // 滑动中当前日期的索引
+    this.moveDateCount = 0; // 一次滑动移动了多少个时间
+    this.translateY = 0; // 容器偏移的距离
+    this.touchY = 0; // 保存touchstart的pageY
     this.state = {
       touching: false,
-      ogY: 0,
-      ogTranslate: 0,
       touchId: undefined,
-      translate: 0,
+      ogY: 0,
+      ogTranslate: 0, // 移动之前的起始位置
+      translateY: -MIDDLE_INDEX * calculate(props.itemHeight) + calculate(props.indicatorTop),
       totalHeight: 0,
       selected: 0,
-      animating: this.props.animation,
-      cls,
-      currentIndex: MIDDLE_INDEX // // 滑动中当前日期的索引
+      marginTop: 0,
+      totalHeight: DATE_LENGTH * calculate(props.indicatorHeight),
+      dates
     };
-
-    this.handleTouchStart = this.handleTouchStart.bind(this);
-    this.handleTouchMove = this.handleTouchMove.bind(this);
-    this.handleTouchEnd = this.handleTouchEnd.bind(this);
-    this.updateSelected = this.updateSelected.bind(this);
-    this._checkIsUpdateDates = this._checkIsUpdateDates.bind(this);
   }
 
-  componentWillMount() {
-    this._iniDates(this.props.value);
-    console.log('min', this.props.start);
-    console.log('max', this.props.end);
-  }
-  componentDidMount() {
-    // this.adjustPosition(this.props);
-  }
-
-  _iniDates(date) {
-    const typeName = this.props.type;
-    console.log('typeName', typeName);
+  _iniDates(props) {
+    const { type, value } = props;
     const dates = Array(...Array(DATE_LENGTH)).map((item, index) => {
-      let value = TimeUtil[`next${typeName}`](date, (index - MIDDLE_INDEX) * this.props.step);
-      // return TimeUtil.convertDate(value, this.props.format);
-      let disabled = value < this.props.start || value > this.props.end;
+      let date = TimeUtil[`next${type}`](value, (index - MIDDLE_INDEX) * this.props.step);
 
-      return { key: TimeUtil.convertDate(value, this.props.format), value, disabled };
-    });
-    console.log('dates', dates);
-    this.setState({ dates });
-  }
+      let disabled = date < this.props.start || date > this.props.end;
 
-  componentWillReceiveProps(nextProps) {
-    // this.adjustPosition(nextProps);
-    if (this.props.className !== nextProps.className) {
-      const cls = classNames('weui-picker__group', nextProps.className);
-      this.setState({
-        cls
-      });
-    }
-    // if (nextProps.value.getTime() !== this.props.value.getTime()) {
-    //   this._iniDates(nextProps.value);
-    //   this.setState({
-    //     currentIndex: MIDDLE_INDEX,
-
-    //   })
-    // }
-  }
-
-  updateSelected(propagate = true) {
-    const { itemHeight, indicatorHeight, onChange } = this.props;
-    let selected = MIDDLE_INDEX;
-    console.log('this.state.translate', this.state.translate);
-    console.log('dates', this.state.dates);
-    this.state.dates.forEach((item, i) => {
-      if (
-        itemHeight * i - Math.abs(this.state.translate) >= 0 &&
-        itemHeight * i - Math.abs(this.state.translate) < indicatorHeight
-      ) {
-        console.log('i', i);
-        let step = this.state.translate > 0 ? -1 : 1;
-        selected = Math.abs(i + selected * step);
-      }
+      return { key: TimeUtil.convertDate(date, this.props.format), date, disabled };
     });
 
-    console.log('selected', selected);
-    if (onChange && propagate) {
-      console.log('=======', selected);
-      // let date = this.state.dates[selected]
-      // if(date.disabled) {
-
-      // }
-      onChange(this.state.dates[selected], selected);
-    }
+    return dates;
   }
 
-  _isMove(direction) {
-    const date = this.state.dates[MIDDLE_INDEX];
-    const { end, start } = this.props;
-    // console.log(date.value.getTime() > max.getTime)
-
-    if (direction === 1 && date.value.getTime() < start.getTime()) {
-      return false;
-    } else if (direction === -1 && date.value.getTime() > end.getTime()) {
-      return false;
-    }
-    return true;
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('nextPorps',this.props.value, nextProps.value)
+  // }
 
   handleTouchStart(e) {
-    // if (this.state.touching || this.props.items.length <= 1) return;
-    console.log('start');
+    if (this.state.touching) return;
+    this.moveDateCount = 0;
+
+    this.touchY = e.touches[0].pageY; // 移动开始的位置
+    this.translateY = this.state.translateY;
+
     this.setState({
       touching: true,
-      ogTranslate: this.state.translate,
+      ogTranslate: this.state.translateY,
       touchId: e.touches[0].identifier,
-      ogY:
-        this.state.translate === 0 ? e.touches[0].pageY : e.touches[0].pageY - this.state.translate,
+      ogY: e.touches[0].pageY - this.state.translate,
       animating: false
     });
   }
 
   handleTouchMove(e) {
-    console.log('move');
     if (!this.state.touching) return;
     if (e.touches[0].identifier !== this.state.touchId) return;
 
-    //prevent move background
-    e.preventDefault();
-
-    const pageY = e.touches[0].pageY;
-    const diffY = pageY - this.state.ogY;
-    console.log('diffy', diffY);
-    const direction = diffY > 0 ? -1 : 1;
-
+    const touchY = e.touches[0].pageY; // 当前的位置
+    const dir = touchY - this.touchY; // 移动的位置差
+    const translateY = this.translateY + dir; // 现在坐标应该在的位置
     this.setState({
-      translate: diffY
+      translateY
     });
 
-    // 更新数据视图
-    if (this._checkIsUpdateDates(direction, diffY)) {
-      console.log('updateDates');
+    const direction = dir > 0 ? -1 : 1;
+    // 这个地方需要加上如何进行视图更新的逻辑
+    if (this._checkIsUpdateDates(direction, translateY)) {
       this._updateDates(direction);
     }
   }
 
-  _checkIsUpdateDates(direction, translateY) {
-    console.log('_checkIsUpdateDates',direction,  this.state.currentIndex, translateY);
-
-    let isUpdate = direction === 1
-      ? (this.state.currentIndex - MIDDLE_INDEX) * DATE_HEIGHT + DATE_HEIGHT / 2 < -translateY
-      : (this.state.currentIndex - MIDDLE_INDEX) * DATE_HEIGHT - DATE_HEIGHT / 2 > -translateY;
-    console.log('isUpdate', isUpdate);
-    return isUpdate;
-  }
-
+  // 往上为正，往下为负
   _updateDates(direction) {
     const typeName = this.props.type;
     let { dates } = this.state;
-
+    let itemHeight = calculate(this.props.itemHeight);
     if (direction === 1) {
-      //
-      //  let dateItem = TimeUtil.convertDate(dateItem, this.props.format);
-
-      let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].value, this.props.step);
+      let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
+      this.currentIndex++;
       let key = TimeUtil.convertDate(value, this.props.format);
       let disabled = value < this.props.start || value > this.props.end;
+
       this.setState({
-        dates: [...dates.slice(1), { key, value, disabled }],
-        currentIndex: ++this.state.currentIndex
+        dates: [...dates.slice(1), { key, date: value, disabled }],
+        marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
       });
     } else {
-      let value = TimeUtil[`next${typeName}`](dates[0].value, -this.props.step);
+      this.currentIndex--;
+      // 向下滑动机制
+      let value = TimeUtil[`next${typeName}`](dates[0].date, -this.props.step);
       let key = TimeUtil.convertDate(value, this.props.format);
-      // dateItem = TimeUtil.convertDate(dateItem, this.props.format);
       let disabled = value < this.props.start || value > this.props.end;
       this.setState({
-        dates: [{ key, value, disabled }, ...dates.slice(0, dates.length - 1)],
-        currentIndex: --this.state.currentIndex
+        dates: [{ key, date: value, disabled }, ...dates.slice(0, dates.length - 1)],
+        marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
       });
     }
   }
 
-  handleTouchEnd(e) {
-    console.log('end', e);
+  // // 是否更新
+  _checkIsUpdateDates(direction, translateY) {
+    let itemHeight = calculate(this.props.itemHeight);
+
+    let isUpdate =
+      direction === 1
+        ? (this.currentIndex - DEFAULT_INEDX) * itemHeight + itemHeight / 2 < -translateY
+        : (this.currentIndex - DEFAULT_INEDX) * itemHeight - itemHeight / 2 > -translateY;
+
+    return isUpdate;
+  }
+
+  handleTouchEnd() {
+
     if (!this.state.touching) return;
 
-    const { itemHeight } = this.props;
-    let translate = this.state.translate;
-    console.log('translate', translate);
+    let itemHeight = calculate(this.props.itemHeight);
+
+    let translate = this.state.translateY;
+    
+
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
     } else {
-      let diff = (translate - this.state.ogTranslate) / itemHeight;
-
-      let step = 0,
-        adjust = 0;
-      if (Math.abs(diff) < 1) {
-        step = diff > 0 ? 1 : -1;
-      } else {
-        adjust = Math.abs((diff % 1) * 100) > 50 ? 1 : 0;
-        step = diff > 0 ? Math.floor(diff) + adjust : Math.ceil(diff) - adjust;
-      }
-
-      translate = this.state.ogTranslate + step * itemHeight;
+      
+      translate = -(this.currentIndex - DEFAULT_INEDX) * itemHeight;
     }
 
     this.setState(
@@ -231,46 +152,69 @@ class XDatePickerItem extends React.Component {
         touchId: undefined,
         ogTranslate: 0,
         animating: true,
-        translate,
-        currentIndex: MIDDLE_INDEX
+        translateY: translate
       },
       () => this.updateSelected()
     );
   }
 
+  updateSelected() {
+
+    this.props.onChange && this.props.onChange(this.state.dates[MIDDLE_INDEX]);
+  }
+
   render() {
     return (
-      <div
-        className={this.state.cls}
-        onTouchStart={this.handleTouchStart}
-        catchTouchMove={this.handleTouchMove}
-        onTouchEnd={this.handleTouchEnd}
+      <stack
+        catchTouchStart={this.handleTouchStart.bind(this)}
+        catchTouchMove={this.handleTouchMove.bind(this)}
+        onTouchEnd={this.handleTouchEnd.bind(this)}
+        style={{ width: '100%' }}
+        class="anu-stack"
       >
-        <div className="weui-picker__mask" />
-        <div className="weui-picker__indicator" />
         <div
-          className="weui-picker__content"
-          style={`transform: translate(0, ${this.state.translate}px); transition: ${
-            this.state.animating ? 'transform .3s' : 'none'
-          }`}
-          ref="content"
+          class="anu-picker_content"
+          style={
+            'transform: translateY(' +
+            this.state.translateY +
+            'px); height: ' +
+            this.state.totalHeight +
+            'px; margin-top:' +
+            this.state.marginTop +
+            'px'
+          }
         >
-          {this.state.dates.map(function(item, j) {
+          {this.state.dates.map(function(item, index) {
             return (
-              <div
-                key={j}
-                className={
-                  'weui-picker__item ' + (item.disabled ? 'weui-picker__item_disabled' : '')
-                }
+              <text
+                class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}
               >
                 {item.key}
-              </div>
+              </text>
             );
           })}
         </div>
-      </div>
+
+        <div class="anu-picker__mask">
+          <div class="anu-picker__mask_top" />
+          <div class="anu-picker__mask_center" />
+          <div class="anu-picker__mask_bottom " />
+        </div>
+      </stack>
     );
   }
 }
+
+XDatePickerItem.defaultProps = {
+  itemHeight: 25 + 9, //content + padding
+  indicatorTop: 102, // 中心点距离pick顶部的高度
+  indicatorHeight: 34,
+  aniamtion: true,
+  groupIndex: -1,
+  defaultIndex: -1,
+  mapKeys: {
+    label: 'label'
+  }
+};
 
 export default XDatePickerItem;

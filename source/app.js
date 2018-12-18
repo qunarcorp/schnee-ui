@@ -6,7 +6,7 @@ import './pages/demo/button/index';
 import './pages/demo/checkbox/index';
 import './pages/demo/icon/index';
 import './pages/demo/label/index';
-import './pages/demo/picker1/index';
+import './pages/demo/picker/index';
 import './pages/demo/progress/index';
 import './pages/demo/radio/index';
 import './pages/demo/slider/index';

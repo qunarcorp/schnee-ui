@@ -1,55 +1,38 @@
 import React from '@react';
-// import PropTypes from 'prop-types';
-import XPickerItem from '../XPickerItem/index';
-import { nextDate, nextMinute, getDate, getTime, timeStrToDate } from '../XDatePicker/time';
+import './index.scss';
+import XOverlay from '@components/XOverlay/index';
+import XPickerItem from '@components/XPickerItem/index';
+import XDatePickerItem from '@components/XDatePickerItem/index';
+import { nextDate, timeStrToDate, getDate, nextMinute, getTime } from '../../common/utils/time';
+import cnCity from '../../common/utils/cnCity';
+/* eslint-disable */
+function handleSelect(selected) {
+  if (selected) {
+    return Array.isArray(selected) ? selected : [selected];
+  } else {
+    return [];
+  }
+}
 
-/**
- *  Mobile select ui, currently only support Touch Events
- *
- */
 class XPicker extends React.Component {
-  static defaultProps = {
-    type: 'selector',
-    dataMap: { id: 'name', items: 'sub' },
-    // selected: [],  // 不同的type selected 不一样
-    actions: [],
-    range: [],
-    show: false,
-    lang: { leftBtn: 'Cancel', rightBtn: 'Ok' }
-  };
-
   constructor(props) {
     super(props);
-    // 多列选择器
-    const { range, dataMap, value, start, end, type } = props;
-    const { groups, newselected } = this.parseData(range, dataMap.items, value);
-    console.log('-----', groups, value)
+    this.selectedValue = props.value;
+    const { range, dataMap, value, mode, start, end } = props;
+    let rangeValue = mode === 'region' ? cnCity : range;
+    const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
+    console.log('groups', newselected);
     this.state = {
+      animationClass: '',
       groups,
       selected: newselected,
-      start: timeStrToDate(start, type),
-      end: timeStrToDate(end, type)
+      start: timeStrToDate(start, mode),
+      end: timeStrToDate(end, mode)
     };
-
-    this.parseData = this.parseData.bind(this);
-    this.updateDataBySelected = this.updateDataBySelected.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.type !== nextProps.type) {
-      const { range, dataMap, value } = nextProps;
-      const { groups, newselected } = this.parseData(range, dataMap.items, value);
-      this.state = {
-        groups,
-        // dataConfigList,
-        selected: newselected
-      };
-    }
   }
 
   parseData(data, subKey, selected, group = [], newselected = []) {
-    console.log('selected****', selected);
-    if (this.props.type === 'date') {
+    if (this.props.mode === 'date') {
       selected = selected ? new Date(selected) : new Date();
       let groups = [
         { format: 'YYYY', caption: '年', step: 1, type: 'Year' },
@@ -62,8 +45,9 @@ class XPicker extends React.Component {
       return { groups, newselected };
     }
 
-    if (this.props.type === 'time') {
+    if (this.props.mode === 'time') {
       selected = selected ? timeStrToDate(selected, 'time') : new Date();
+
 
       let groups = [
         { format: 'hh', caption: '时', step: 1, type: 'Hour' },
@@ -74,8 +58,7 @@ class XPicker extends React.Component {
       return { groups, newselected };
     }
 
-    selected = selected || [];
-
+    selected = handleSelect(selected);
     let _selected = 0;
 
     if (Array.isArray(selected) && selected.length > 0) {
@@ -84,9 +67,13 @@ class XPicker extends React.Component {
       selected = _selectedClone;
     }
 
-    if (typeof data[_selected] === 'undefined') {
-      _selected = 0;
-    }
+    data.forEach((item, index) => {
+      if (item[this.props.dataMap.id] === _selected) {
+        _selected = index;
+      }
+    });
+
+    
 
     newselected.push(_selected);
 
@@ -94,6 +81,7 @@ class XPicker extends React.Component {
 
     var _group = JSON.parse(JSON.stringify(data));
     _group.forEach(g => delete g[subKey]);
+
     group.push({ items: _group, mapKeys: { label: this.props.dataMap.id } });
 
     if (typeof item[subKey] !== 'undefined' && Array.isArray(item[subKey])) {
@@ -103,76 +91,170 @@ class XPicker extends React.Component {
     }
   }
 
-  updateDataBySelected(selected, cb) {
-    const { range, dataMap } = this.props;
-    //validate if item exists
-
-    const { groups, newselected } = this.parseData(range, dataMap.items, selected);
-    console.log('updateDataBySelected');
-
-    let text = '';
-    try {
-      groups.forEach((group, _i) => {
-        text += `${group['items'][selected[_i]][this.props.dataMap.id]} `;
+  updateVisible(visible) {
+    this.timeoutId && clearTimeout(this.timeoutId); //防止更改太快
+    if (visible) {
+      this.setState({
+        show: true,
+        animationClass: 'pickerenter'
       });
-    } catch (err) {
-      //wait
-      text = this.state.text;
-    }
-
-    this.setState(
-      {
-        groups,
-        text,
-        selected: newselected
-      },
-      () => cb()
-    );
-  }
-
-  handleChange(selected) {
-    let fn = this.props.onChange;
-    console.log('Picker', getTime(selected));
-    if (this.props.type === 'date') {
-      fn && fn(getDate(selected));
-    } else if (this.props.type === 'time') {
-      fn && fn(getTime(selected));
     } else {
-      this.updateDataBySelected(selected, () => {
-        fn && fn(this.state.text);
+      this.setState({
+        animationClass: 'pickerleave'
       });
+
+      this.timeoutId = setTimeout(() => {
+        this.setState({
+          show: false
+        });
+      }, 300);
     }
   }
 
-  handleCancel(e) {
-    let fn = this.props.onCancel;
-    fn && fn.call(this, e);
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps>>>>>>', this.props.mode, nextProps.mode);
+    if (this.props.mode !== nextProps.mode || this.props.value !== nextProps.value) {
+      const { range, dataMap, value, mode, start, end } = nextProps;
+      let rangeValue = mode === 'region' ? cnCity : range;
+      console.log('range', range);
+      const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
+      this.state = {
+        groups,
+        selected: newselected,
+        start: timeStrToDate(start, mode),
+        end: timeStrToDate(end, mode)
+      };
+    }
   }
 
-  updateGroup(item, i, groupIndex, selected, picker) {
-    this.updateDataBySelected(selected, () => {
-      //update picker
-      picker.setState({
-        selected: this.state.selected
-      });
+  cancelClick() {
+    this.updateVisible(false);
+  }
+
+  confirmClick() {
+    this.updateVisible(false);
+    this.props.onChange && this.props.onChange({ value: this.selectedValue });
+    // this.props.onChange && this.props.onChange({value: this.selectedDate});
+  }
+
+  click() {
+    // console.log('anupickerClick');
+    this.updateVisible(true);
+  }
+
+  //  动态更新用户选择
+  updateDataBySelected(selected, cb) {
+    const { range, dataMap, mode } = this.props;
+    //validate if item exists
+    let rangeValue = mode === 'region' ? cnCity : range;
+    const { groups, newselected } = this.parseData(rangeValue, dataMap.items, selected);
+    let text = [];
+    switch (mode) {
+      case 'region':
+      case 'multiSelector':
+        groups.forEach((group, _i) => {
+          text.push(group['items'][selected[_i]][this.props.dataMap.id]);
+        });
+        break;
+      case 'selector':
+        text = newselected[0];
+        break;
+    }
+    // 单列类型
+
+    this.setState({
+      groups,
+      selected: newselected
     });
+
+    cb(text);
+  }
+
+  handleItemChange(selected, groupIndex) {
+    let selectedArr = this.state.selected;
+    selectedArr[groupIndex] = selected;
+    // console.log('AnuPicker', selectedArr);
+    this.updateDataBySelected(selectedArr, value => {
+      this.selectedValue = value;
+      // console.log('value', value);
+    });
+  }
+
+  handleDateChange(data) {
+    console.log('date', data, getDate(data.date));
+    const { date, disabled } = data;
+
+    if (!disabled) {
+      this.selectedValue = this.props.mode === 'date' ? getDate(date) : getTime(date);
+      console.log(this.selectedValue);
+    } else {
+      if (date > this.state.end) {
+        this.selectedValue = this.props.end;
+      } else {
+        this.selectedValue = this.props.start;
+      }
+    }
   }
 
   render() {
     return (
-      <XPickerItem
-        onChange={this.handleChange.bind(this)}
-        onGroupChange={this.updateGroup.bind(this)}
-        groups={this.state.groups}
-        show={this.props.show}
-        type={this.props.type}
-        defaultSelect={this.state.selected}
-        onCancel={this.handleCancel.bind(this)}
-        start={this.state.start}
-        end={this.state.end}
-      />
+      <div catchTap={this.click.bind(this)}>
+        {this.props.children}
+        <XOverlay visible={this.state.show} onClose={this.cancelClick.bind(this)} />
+        {/* {this.state.show && ( */}
+        <div class={'quist-picker  ' + this.state.animationClass} hidden={!this.state.show}>
+          <div class="quist-picker-title">
+            <text class="quist-picker-cancel" catchTap={this.cancelClick.bind(this)}>
+              {this.props.cancelText}
+            </text>
+            <text
+              class="quist-picker-confirm"
+              style={{ color: this.props.okStyle }}
+              catchTap={this.confirmClick.bind(this)}
+            >
+              {this.props.okText}
+            </text>
+          </div>
+          <div class="quist-picker-content">
+            {this.state.groups.map(function(group, index) {
+              return (
+                <div class="anu-picker-item">
+                  {this.props.mode === 'date' || this.props.mode === 'time' ? (
+                    <XDatePickerItem
+                      value={this.state.selected}
+                      onChange={this.handleDateChange.bind(this)}
+                      step={group.step}
+                      type={group.type}
+                      format={group.format}
+                      start={this.state.start}
+                      end={this.state.end}
+                    />
+                  ) : (
+                    <XPickerItem
+                      items={group.items}
+                      mapKeys={group.mapKeys}
+                      groupIndex={index}
+                      onChange={this.handleItemChange.bind(this)}
+                      defaultIndex={this.state.selected[index]}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        {/* )} */}
+      </div>
     );
   }
 }
+
+XPicker.defaultProps = {
+  cancelText: '取消',
+  okText: '确定',
+  mode: 'selector',
+  dataMap: { id: 'name', items: 'sub' },
+  okStyle: '#1AAD19'
+};
 
 export default XPicker;
