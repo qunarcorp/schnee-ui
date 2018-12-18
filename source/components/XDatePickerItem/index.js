@@ -42,18 +42,21 @@ class XDatePickerItem extends React.Component {
     const { type, value } = props;
     const dates = Array(...Array(DATE_LENGTH)).map((item, index) => {
       let date = TimeUtil[`next${type}`](value, (index - MIDDLE_INDEX) * this.props.step);
-
       let disabled = date < this.props.start || date > this.props.end;
-
       return { key: TimeUtil.convertDate(date, this.props.format), date, disabled };
     });
 
     return dates;
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('nextPorps',this.props.value, nextProps.value)
-  // }
+  componentWillReceiveProps(nextProps) {
+    if(this.props.value !== nextProps.value) {
+      const dates = this._iniDates(nextProps);
+      this.setState({
+        dates
+      })
+    }
+  }
 
   handleTouchStart(e) {
     if (this.state.touching) return;

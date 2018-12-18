@@ -31,7 +31,6 @@ class XPickerItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
     if(this.props.items.length !== nextProps.items.length) {
       this.setState({
         totalHeight: nextProps.items.length * calculate(this.props.indicatorHeight)
@@ -172,7 +171,6 @@ class XPickerItem extends React.Component {
                 selected = i;
             }
     })
-    console.log('selected', selected)
     if (onChange && propagate) onChange(selected, groupIndex);
 
   }
