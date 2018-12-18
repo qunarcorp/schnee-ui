@@ -6,6 +6,7 @@ const DATE_LENGTH = 14; // 日期的个数
 const MIDDLE_INDEX = Math.floor(DATE_LENGTH / 2); // 日期数组中间值的索引
 const DEFAULT_INEDX = 3; // 中间索引距离顶部的索引差
 
+
 function calculate(value) {
   const ANU_ENV = process.env.ANU_ENV; //wx ali bu quick
   if (ANU_ENV === 'quick') {
@@ -40,7 +41,7 @@ class XDatePickerItem extends React.Component {
 
   _iniDates(value) {
     // const { type, value } = props;
-    const type = this.props.type
+    const type = this.props.type;
     const dates = Array(...Array(DATE_LENGTH)).map((item, index) => {
       let date = TimeUtil[`next${type}`](value, (index - MIDDLE_INDEX) * this.props.step);
       let disabled = date < this.props.start || date > this.props.end;
@@ -51,11 +52,11 @@ class XDatePickerItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.visible) {
+    if (nextProps.visible) {
       const dates = this._iniDates(nextProps.value);
       this.setState({
         dates
-      })
+      });
     }
   }
 
@@ -97,7 +98,7 @@ class XDatePickerItem extends React.Component {
   _updateDates(direction) {
     const typeName = this.props.type;
     let { dates } = this.state;
-    
+
     let itemHeight = calculate(this.props.itemHeight);
     if (direction === 1) {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
@@ -105,7 +106,7 @@ class XDatePickerItem extends React.Component {
       let key = TimeUtil.convertDate(value, this.props.format);
 
       let disabled = value < this.props.start || value > this.props.end;
-      
+
       this.setState({
         dates: [...dates.slice(1), { key, date: value, disabled }],
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
@@ -136,18 +137,15 @@ class XDatePickerItem extends React.Component {
   }
 
   handleTouchEnd() {
-
     if (!this.state.touching) return;
 
     let itemHeight = calculate(this.props.itemHeight);
 
     let translate = this.state.translateY;
-    
 
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
     } else {
-      
       translate = -(this.currentIndex - DEFAULT_INEDX) * itemHeight;
     }
 
@@ -166,7 +164,7 @@ class XDatePickerItem extends React.Component {
 
   updateSelected() {
     let selected = this.state.dates[MIDDLE_INDEX];
-    
+
     this.props.onChange && this.props.onChange(selected);
   }
 
@@ -181,19 +179,16 @@ class XDatePickerItem extends React.Component {
       >
         <div
           class="anu-picker_content"
-          style={
-            'transform: translateY(' +
-            this.state.translateY +
-            'px); height: ' +
-            this.state.totalHeight +
-            'px; margin-top:' +
-            this.state.marginTop +
-            'px'
-          }
+          style={{
+            marginTop: this.state.marginTop + 'px',
+            height: this.state.totalHeight + 'px',
+            transform: 'translateY(' + this.state.translateY + 'px)'
+          }}
         >
           {this.state.dates.map(function(item, index) {
             return (
               <text
+                key={item.key + '-' + index}
                 class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}
               >
                 {item.key}

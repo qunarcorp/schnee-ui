@@ -186,13 +186,10 @@ class XPickerItem extends React.Component {
       >
         <div
           class="anu-picker_content"
-          style={
-            'transform: translateY(' +
-            this.state.translate +
-            'px); height: ' +
-            this.state.totalHeight +
-            'px'
-          }
+          style = {{
+            height: this.state.totalHeight + 'px',
+            transform: 'translateY('+this.state.translate +'px)'
+          }}
         >
           {this.props.items.map(function(item, index) {
             return (
