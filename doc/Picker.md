@@ -15,7 +15,7 @@
 | 属性     | 类型          | 默认值 | 说明                                             |
 | -------- | ------------- | ------ |------------------------------------------------ |
 | range     | Array / Object Array        |    []    | mode 为 selector 或 multiSelector 时 range 有效                            |
-| dataMap    | Object |   { id: 'name', items: 'sub' }    |  当 range 是一个 Object Array 时，通过 dataMap 来指定 Object 中 key 的值作为选择器显示内容| 
+| dataMap    | Object |   { id: 'name', items: 'sub' }    |  当 range 是一个 Object Array 时，通过 dataMap 来指定 Object 中 id 的值作为选择器显示内容, [{ name: '无脊柱动物', sub: [{name: '扁性动物',sub: [{name: '猪肉绦虫'},{name: '吸血虫'}]}]]| 
 |value  | Array     |   []     | selected 的值表示选择了 data 中的第几个（下标从 0 开始）                          |
 | onChange     | function      |        | selected 改变时触发 change 事件                           |
 | onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |

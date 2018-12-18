@@ -21,7 +21,7 @@ class XPicker extends React.Component {
     const { range, dataMap, value, mode, start, end } = props;
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
-    console.log('groups', newselected);
+
     this.state = {
       animationClass: '',
       groups,
@@ -112,11 +112,11 @@ class XPicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps>>>>>>', this.props.mode, nextProps.mode);
+    
     if (this.props.mode !== nextProps.mode || this.props.value !== nextProps.value) {
       const { range, dataMap, value, mode, start, end } = nextProps;
       let rangeValue = mode === 'region' ? cnCity : range;
-      console.log('range', range);
+     
       const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
       this.state = {
         groups,
@@ -145,7 +145,7 @@ class XPicker extends React.Component {
   //  动态更新用户选择
   updateDataBySelected(selected, cb) {
     const { range, dataMap, mode } = this.props;
-    //validate if item exists
+    
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, selected);
     let text = [];
@@ -173,10 +173,10 @@ class XPicker extends React.Component {
   handleItemChange(selected, groupIndex) {
     let selectedArr = this.state.selected;
     selectedArr[groupIndex] = selected;
-    // console.log('AnuPicker', selectedArr);
+    
     this.updateDataBySelected(selectedArr, value => {
       this.selectedValue = value;
-      // console.log('value', value);
+      
     });
   }
 
