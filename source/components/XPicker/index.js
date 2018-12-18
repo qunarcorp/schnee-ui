@@ -21,7 +21,7 @@ class XPicker extends React.Component {
     const { range, dataMap, value, mode, start, end } = props;
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
-
+    console.log('newselected',newselected )
     this.state = {
       animationClass: '',
       groups,
@@ -182,9 +182,11 @@ class XPicker extends React.Component {
 
   handleDateChange(data) {
     const { date, disabled } = data;
-
+    console.log('date', getDate(date))
+    // let 
     if (!disabled) {
       this.selectedValue = this.props.mode === 'date' ? getDate(date) : getTime(date);
+     
      
     } else {
       if (date > this.state.end) {
@@ -193,6 +195,10 @@ class XPicker extends React.Component {
         this.selectedValue = this.props.start;
       }
     }
+
+    this.setState({
+      selected: date
+    })
   }
 
   render() {
@@ -217,7 +223,7 @@ class XPicker extends React.Component {
           <div class="quist-picker-content">
             {this.state.groups.map(function(group, index) {
               return (
-                <div class="anu-picker-item">
+                <div class="anu-picker-item" key={this.props.mode + index}>
                   {this.props.mode === 'date' || this.props.mode === 'time' ? (
                     <XDatePickerItem
                       value={this.state.selected}

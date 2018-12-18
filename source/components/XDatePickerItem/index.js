@@ -19,7 +19,7 @@ class XDatePickerItem extends React.Component {
   constructor(props) {
     super(props);
 
-    const dates = this._iniDates(props);
+    const dates = this._iniDates(props.value);
     this.currentIndex = MIDDLE_INDEX; // 滑动中当前日期的索引
     this.moveDateCount = 0; // 一次滑动移动了多少个时间
     this.translateY = 0; // 容器偏移的距离
@@ -38,8 +38,9 @@ class XDatePickerItem extends React.Component {
     };
   }
 
-  _iniDates(props) {
-    const { type, value } = props;
+  _iniDates(value) {
+    // const { type, value } = props;
+    const type = this.props.type
     const dates = Array(...Array(DATE_LENGTH)).map((item, index) => {
       let date = TimeUtil[`next${type}`](value, (index - MIDDLE_INDEX) * this.props.step);
       let disabled = date < this.props.start || date > this.props.end;
@@ -51,7 +52,7 @@ class XDatePickerItem extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.visible) {
-      const dates = this._iniDates(nextProps);
+      const dates = this._iniDates(nextProps.value);
       this.setState({
         dates
       })
@@ -96,13 +97,15 @@ class XDatePickerItem extends React.Component {
   _updateDates(direction) {
     const typeName = this.props.type;
     let { dates } = this.state;
+    
     let itemHeight = calculate(this.props.itemHeight);
     if (direction === 1) {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
       let key = TimeUtil.convertDate(value, this.props.format);
-      let disabled = value < this.props.start || value > this.props.end;
 
+      let disabled = value < this.props.start || value > this.props.end;
+      
       this.setState({
         dates: [...dates.slice(1), { key, date: value, disabled }],
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
@@ -162,8 +165,9 @@ class XDatePickerItem extends React.Component {
   }
 
   updateSelected() {
-
-    this.props.onChange && this.props.onChange(this.state.dates[MIDDLE_INDEX]);
+    let selected = this.state.dates[MIDDLE_INDEX];
+    
+    this.props.onChange && this.props.onChange(selected);
   }
 
   render() {

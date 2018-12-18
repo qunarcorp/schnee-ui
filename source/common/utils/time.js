@@ -74,6 +74,7 @@ export function nextYear(now, index = 0) {
 
 export function nextMonth(now, index = 0) {
   throwIfInvalidDate(now);
+
   const year = now.getFullYear();
   const month = now.getMonth() + index;
   const dayOfMonth = Math.min(now.getDate(), daysInMonth(year, month));
