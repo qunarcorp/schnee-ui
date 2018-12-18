@@ -211,7 +211,7 @@ class XSwiper extends React.Component {
                         return (index === this.state.curIndex ?
                             <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: indicatorActiveColor }}></div> :
                             <div className="anu-swiper__pagination-bullet" style={{ backgroundColor: indicatorColor }}></div>);
-                    })}
+                    }, this)}
                 </div> : null}
             </div>
         );
