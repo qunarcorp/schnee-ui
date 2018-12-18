@@ -24,7 +24,6 @@ class XDatePickerItem extends React.Component {
     this.moveDateCount = 0; // 一次滑动移动了多少个时间
     this.translateY = 0; // 容器偏移的距离
     this.touchY = 0; // 保存touchstart的pageY
-    console.log('AnuDatePickerItem>>>>>', props);
     this.state = {
       touching: false,
       touchId: undefined,
@@ -51,6 +50,10 @@ class XDatePickerItem extends React.Component {
 
     return dates;
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('nextPorps',this.props.value, nextProps.value)
+  // }
 
   handleTouchStart(e) {
     if (this.state.touching) return;
@@ -88,16 +91,13 @@ class XDatePickerItem extends React.Component {
 
   // 往上为正，往下为负
   _updateDates(direction) {
-    console.log('move>>>>>>');
     const typeName = this.props.type;
     let { dates } = this.state;
     let itemHeight = calculate(this.props.itemHeight);
     if (direction === 1) {
-      console.log('上');
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
       let key = TimeUtil.convertDate(value, this.props.format);
-      console.log('key', direction, key);
       let disabled = value < this.props.start || value > this.props.end;
 
       this.setState({
@@ -105,13 +105,11 @@ class XDatePickerItem extends React.Component {
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
       });
     } else {
-      console.log('下');
       this.currentIndex--;
       // 向下滑动机制
       let value = TimeUtil[`next${typeName}`](dates[0].date, -this.props.step);
       let key = TimeUtil.convertDate(value, this.props.format);
       let disabled = value < this.props.start || value > this.props.end;
-      console.log('key', direction, key);
       this.setState({
         dates: [{ key, date: value, disabled }, ...dates.slice(0, dates.length - 1)],
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
@@ -127,27 +125,18 @@ class XDatePickerItem extends React.Component {
       direction === 1
         ? (this.currentIndex - DEFAULT_INEDX) * itemHeight + itemHeight / 2 < -translateY
         : (this.currentIndex - DEFAULT_INEDX) * itemHeight - itemHeight / 2 > -translateY;
-    console.log('isUpdate', isUpdate, translateY);
 
     return isUpdate;
   }
 
   handleTouchEnd() {
-    console.log('end');
 
     if (!this.state.touching) return;
 
     let itemHeight = calculate(this.props.itemHeight);
-    let indicatorTop = calculate(this.props.indicatorTop);
-    let indicatorHeight = calculate(this.props.indicatorHeight);
 
     let translate = this.state.translateY;
-    console.log('end', translate);
-    if (translate > indicatorTop) {
-      console.log('top', translate, indicatorTop);
-    } else if (translate + this.state.totalHeight < indicatorTop + indicatorHeight) {
-      console.log('bottom', translate + indicatorTop);
-    }
+    
 
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
@@ -170,8 +159,7 @@ class XDatePickerItem extends React.Component {
   }
 
   updateSelected() {
-    console.log('current', this.currentIndex);
-    console.log('select', this.state.dates[MIDDLE_INDEX]);
+
     this.props.onChange && this.props.onChange(this.state.dates[MIDDLE_INDEX]);
   }
 

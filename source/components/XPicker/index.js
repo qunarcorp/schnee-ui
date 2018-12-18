@@ -48,7 +48,6 @@ class XPicker extends React.Component {
     if (this.props.mode === 'time') {
       selected = selected ? timeStrToDate(selected, 'time') : new Date();
 
-      // console.log('selected', selected);
 
       let groups = [
         { format: 'hh', caption: '时', step: 1, type: 'Hour' },
@@ -74,9 +73,7 @@ class XPicker extends React.Component {
       }
     });
 
-    // if (typeof data[_selected] === 'undefined') {
-    //   _selected = 0;
-    // }
+    
 
     newselected.push(_selected);
 
@@ -151,7 +148,6 @@ class XPicker extends React.Component {
     //validate if item exists
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, selected);
-    // console.log('updateDataBySelected', groups);
     let text = [];
     switch (mode) {
       case 'region':

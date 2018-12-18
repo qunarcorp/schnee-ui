@@ -5,7 +5,6 @@ import './index.scss';
 class XOverlay extends React.Component {
   constructor(props) {
     super(props);
-    console.log('AnuOverlay');
     this.state = {
       show: false,
       className: ''
@@ -18,14 +17,12 @@ class XOverlay extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.visible !== nextProps.visible) {
-      console.log('overlay', 111, nextProps.visible);
       this.updateVisible(nextProps.visible);
     }
   }
 
   updateVisible(visible) {
     this.timeoutId && clearTimeout(this.timeoutId); //防止更改太快
-    console.log('over>>>>>>', visible);
     if (visible) {
       this.setState({
         show: true,
