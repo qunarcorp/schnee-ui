@@ -1,7 +1,8 @@
 import React from '@react';
 import './index.scss';
 /* eslint-disable */
-class AnuOverlay extends React.Component {
+// 蒙层
+class XOverlay extends React.Component {
   constructor(props) {
     super(props);
     console.log('AnuOverlay');
@@ -64,10 +65,10 @@ class AnuOverlay extends React.Component {
   }
 }
 
-AnuOverlay.defaultProps = {
+XOverlay.defaultProps = {
   maskClosable: false,
   visible: false,
   background: 'rgba(0, 0, 0, 0.6)'
 };
 
-export default AnuOverlay;
+export default XOverlay;

@@ -10,7 +10,7 @@
 | onChange     | function      |        | selected 改变时触发 change 事件                           |
 | onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
-#### 普通选择器 mode = multiSelector  
+#### 多列选择器 mode = multiSelector  
 
 | 属性     | 类型          | 默认值 | 说明                                             |
 | -------- | ------------- | ------ |------------------------------------------------ |
@@ -21,7 +21,7 @@
 | onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
 
-#### 普通选择器 type = date  | time
+#### 日期选择器 | 时间选择器  type = date  | time
 
 | 属性     | 类型          | 默认值 | 说明                                             |
 | -------- | ------------- | ------ |------------------------------------------------ |
@@ -31,14 +31,22 @@
 | onChange     | function      |        | selected 改变时触发 change 事件                           |
 | onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
+#### 省市区选择器  mode = region
+
+| 属性     | 类型          | 默认值 | 说明                                             |
+| -------- | ------------- | ------ |------------------------------------------------ |
+| value     | Array        |    []   |           表示选中的省市区，默认选中每一列的第一个值                  |
+| onChange     | function      |        | selected 改变时触发 change 事件                           |
+| onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
+
+
+
 
 示例代码
 
 ```javascript
 import React from '@react';
 import AnuPicker from '@components/AnuPicker/index';
-/* eslint-disable */
-
 
 class P extends React.Component {
   constructor(props) {
@@ -49,6 +57,7 @@ class P extends React.Component {
       multiIndex: ['无脊柱动物', '扁性动物', '猪肉绦虫'],
       date: '2016-09-01',
       time: '12:01',
+      region: ['广东省', '广州市', '海珠区'],
       multiArray: [
         {
           name: '无脊柱动物',
@@ -152,6 +161,12 @@ class P extends React.Component {
     })
   }
 
+  bindRegionChange(e) {
+    this.setState({
+      region: e.value
+    })
+  }
+
   render() {
     return (
       <div class="picker-demo">
@@ -210,11 +225,23 @@ class P extends React.Component {
             <text>当前选择：{this.state.time}</text>
           </AnuPicker>
         </div>
+        <div class="item-li">
+          <text class="item-li-detail">省市区选择器</text>
+          <AnuPicker
+            mode="region"
+            value={this.state.region}
+            onCancel={this.close.bind(this)}
+            onChange={this.bindRegionChange.bind(this)}
+          >
+            <text>当前选择：{this.state.region[0]}, {this.state.region[1]},{this.state.region[2]}</text>
+          </AnuPicker>
+        </div>
       </div>
     );
   }
 }
 
 export default P;
+
 
 ```
