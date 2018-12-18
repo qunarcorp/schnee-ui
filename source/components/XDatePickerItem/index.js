@@ -50,7 +50,7 @@ class XDatePickerItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.value !== nextProps.value) {
+    if(nextProps.visible) {
       const dates = this._iniDates(nextProps);
       this.setState({
         dates

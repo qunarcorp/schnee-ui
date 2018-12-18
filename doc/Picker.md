@@ -46,7 +46,7 @@
 
 ```javascript
 import React from '@react';
-import AnuPicker from '@components/AnuPicker/index';
+import XPicker from '@components/XPicker/index';
 
 class P extends React.Component {
   constructor(props) {
@@ -175,18 +175,18 @@ class P extends React.Component {
         </div>
         <div class="item-li">
           <text class="item-li-detail">一列</text>
-          <AnuPicker
+          <XPicker
             value={0}
             onCancel={this.close.bind(this)}
             onChange={this.change.bind(this)}
             range={this.state.list1}
           >
             <text>当前选择：{this.state.list1[this.state.index]}</text>
-          </AnuPicker>
+          </XPicker>
         </div>
         <div class="item-li">
           <text class="item-li-detail">多列</text>
-          <AnuPicker
+          <XPicker
             mode="multiSelector"
             value={this.state.multiIndex}
             onCancel={this.close.bind(this)}
@@ -197,11 +197,11 @@ class P extends React.Component {
               当前选择：{this.state.multiIndex[0]}, {this.state.multiIndex[1]},{' '}
               {this.state.multiIndex[2]}
             </text>
-          </AnuPicker>
+          </XPicker>
         </div>
         <div class="item-li">
           <text class="item-li-detail">日期选择器</text>
-          <AnuPicker
+          <XPicker
             mode="date"
             value={this.state.date}
             start="2015-09-01"
@@ -210,11 +210,11 @@ class P extends React.Component {
             onChange={this.bindDateChange.bind(this)}
           >
             <text>当前选择：{this.state.date}</text>
-          </AnuPicker>
+          </XPicker>
         </div>
         <div class="item-li">
           <text class="item-li-detail">时间选择器</text>
-          <AnuPicker
+          <XPicker
             mode="time"
             value={this.state.time}
             start="09:01"
@@ -223,18 +223,18 @@ class P extends React.Component {
             onChange={this.bindTimeChange.bind(this)}
           >
             <text>当前选择：{this.state.time}</text>
-          </AnuPicker>
+          </XPicker>
         </div>
         <div class="item-li">
           <text class="item-li-detail">省市区选择器</text>
-          <AnuPicker
+          <XPicker
             mode="region"
             value={this.state.region}
             onCancel={this.close.bind(this)}
             onChange={this.bindRegionChange.bind(this)}
           >
             <text>当前选择：{this.state.region[0]}, {this.state.region[1]},{this.state.region[2]}</text>
-          </AnuPicker>
+          </XPicker>
         </div>
       </div>
     );

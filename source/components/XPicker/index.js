@@ -181,12 +181,11 @@ class XPicker extends React.Component {
   }
 
   handleDateChange(data) {
-    console.log('date', data, getDate(data.date));
     const { date, disabled } = data;
 
     if (!disabled) {
       this.selectedValue = this.props.mode === 'date' ? getDate(date) : getTime(date);
-      console.log(this.selectedValue);
+     
     } else {
       if (date > this.state.end) {
         this.selectedValue = this.props.end;
@@ -228,6 +227,7 @@ class XPicker extends React.Component {
                       format={group.format}
                       start={this.state.start}
                       end={this.state.end}
+                      visible={this.state.show}
                     />
                   ) : (
                     <XPickerItem
