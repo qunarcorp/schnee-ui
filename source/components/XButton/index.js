@@ -36,7 +36,6 @@ class XButton extends React.Component {
             loadingClasses.push('anu-button__loading--hidden');
         }
         return {
-            value: props.children,
             loadingClasses: loadingClasses.join(' '),
             buttonClasses: buttonClasses.join(' '),
             labelClasses: labelClasses.join(' ')
@@ -102,9 +101,8 @@ class XButton extends React.Component {
                         className={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
-
                     <text className={this.state.labelClasses}>
-                        {this.state.value}
+                        {this.props.children}
                     </text>
                 </div>
                 <input className="anu-button__mask" type='button' onClick={this.onClick} />
