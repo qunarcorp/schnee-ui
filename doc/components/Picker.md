@@ -1,53 +1,50 @@
-### Picker
+# Picker
 
-#### 普通选择器 mode = selector  
+滚动选择器。
 
-| 属性     | 类型          | 默认值 | 说明                                             |
-| -------- | ------------- | ------ |------------------------------------------------ |
-| range     | Array / Object Array        |    []    | mode 为 selector 或 multiSelector 时 range 有效                            |
-| dataMap    | Object |   { id: 'name', items: 'sub' }    |  当 range 是一个 Object Array 时，通过 dataMap 来指定 Object 中 key 的值作为选择器显示内容| 
-|value  | Number     |   0     | selected 的值表示选择了 data 中的第几个（下标从 0 开始）                          |
-| onChange     | function      |        | selected 改变时触发 change 事件                           |
-| onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
+## 普通选择器 mode = selector
 
-#### 多列选择器 mode = multiSelector  
+| 属性     | 类型          | 默认值 | 说明 |
+| -------- | ------------ | ---- | ---- |
+| range    | Array / Object Array | [] | mode 为 selector 或 multiSelector 时 range 有效 |
+| dataMap  | Object       | { id: 'name', items: 'sub' } |  当 range 是一个 Object Array 时，通过 dataMap 来指定 Object 中 key 的值作为选择器显示内容|
+| value    | Number       | 0 | selected 的值表示选择了 data 中的第几个（下标从 0 开始） |
+| onChange | function     |   | selected 改变时触发 change 事件 |
+| onCancel | function     |   | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
-| 属性     | 类型          | 默认值 | 说明                                             |
-| -------- | ------------- | ------ |------------------------------------------------ |
-| range     | Array / Object Array        |    []    | mode 为 selector 或 multiSelector 时 range 有效                            |
-| dataMap    | Object |   { id: 'name', items: 'sub' }    |  当 range 是一个 Object Array 时，通过 dataMap 来指定 Object 中 id 的值作为选择器显示内容, [{ name: '无脊柱动物', sub: [{name: '扁性动物',sub: [{name: '猪肉绦虫'},{name: '吸血虫'}]}]]| 
-|value  | Array     |   []     | selected 的值表示选择了 data 中的第几个（下标从 0 开始）                          |
-| onChange     | function      |        | selected 改变时触发 change 事件                           |
-| onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
+## 多列选择器 mode = multiSelector
 
+| 属性     | 类型          | 默认值 | 说明 |
+| -------- | ------------ | ---- | ---- |
+| range    | Array / Object Array | [] | mode 为 selector 或 multiSelector 时 range 有效 |
+| dataMap  | Object       | { id: 'name', items: 'sub' } | 当 range 是一个 Object Array 时，通过 dataMap 来指定 Object 中 id 的值作为选择器显示内容, [{ name: '无脊柱动物', sub: [{name: '扁性动物',sub: [{name: '猪肉绦虫'},{name: '吸血虫'}]}]] |
+| value    | Array        | [] | selected 的值表示选择了 data 中的第几个（下标从 0 开始） |
+| onChange | function     |    | selected 改变时触发 change 事件 |
+| onCancel | function     |    | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
-#### 日期选择器 | 时间选择器  type = date  | time
+## 日期选择器 | 时间选择器  type = date  | time
 
-| 属性     | 类型          | 默认值 | 说明                                             |
-| -------- | ------------- | ------ |------------------------------------------------ |
-| value     | String        |    当前时间   |           time 格式： hh:mm ; date 格式： YYYY-MM-DD                  |
-| start    | String |       | 开始  time 格式： hh:mm ; date 格式： YYYY-MM-DD| 
-|end  | String     |      | 结束  time 格式： hh:mm ; date 格式： YYYY-MM-DD                        |
-| onChange     | function      |        | selected 改变时触发 change 事件                           |
-| onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
+| 属性     | 类型          | 默认值 | 说明 |
+| -------- | ------------ | ---- | ---- |
+| value    | String       | 当前时间 |           time 格式： hh:mm ; date 格式： YYYY-MM-DD |
+| start    | String       |  | 开始  time 格式： hh:mm ; date 格式： YYYY-MM-DD |
+| end      | String       |  | 结束  time 格式： hh:mm ; date 格式： YYYY-MM-DD |
+| onChange | function     |  | selected 改变时触发 change 事件 |
+| onCancel | function     |  | bindcancel	EventHandle 取消选择或点遮罩层收起 picker 时触发 |
 
-#### 省市区选择器  mode = region
+## 省市区选择器  mode = region
 
-| 属性     | 类型          | 默认值 | 说明                                             |
-| -------- | ------------- | ------ |------------------------------------------------ |
-| value     | Array        |    []   |           表示选中的省市区，默认选中每一列的第一个值                  |
-| onChange     | function      |        | selected 改变时触发 change 事件                           |
-| onCancel | function      |        | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
+| 属性     | 类型          | 默认值 | 说明 |
+| -------- | ------------ | ---- | ---- |
+| value    | Array        | [] | 表示选中的省市区，默认选中每一列的第一个值 |
+| onChange | function     |    | selected 改变时触发 change 事件 |
+| onCancel | function     |    | bindcancel	EventHandle		取消选择或点遮罩层收起 picker 时触发 |
 
-
-
-
-示例代码
+## 示例代码
 
 ```javascript
 import React from '@react';
 import XPicker from '@components/XPicker/index';
-
 class P extends React.Component {
   constructor(props) {
     super(props);

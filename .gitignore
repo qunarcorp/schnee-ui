@@ -103,6 +103,9 @@ typings/
 #DynamoDB Local files
 .dynamodb/
 
+#yDoc
+_site/
+
 # nanachi
 dist/
 src/

@@ -29,7 +29,16 @@
 基本使用：
 
 ```js
-<XIcon content="&#xf078;"></XIcon>
+import React from '@react';
+import XButton from '@components/XButton/index';
+class P extends React.Component {
+  render() {
+    return (
+      <XIcon content="&#xf078;"></XIcon>
+    );
+  }
+}
+export default P;
 ```
 
 自定义 className（该 class 需要写在 *common/style/iconfont.scss* 文件中）：
