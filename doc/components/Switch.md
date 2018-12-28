@@ -34,7 +34,7 @@ class P extends React.Component {
 export default P;
 ```
 
-Disabled:
+Disabled：
 
 ```js
 <XSwitch checked={false} disabled={true} onChange={this.change.bind(this)} />

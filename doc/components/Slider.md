@@ -48,7 +48,7 @@ class P extends React.Component {
 }
 export default P;
 ```
-## 自定义滑块大小
+自定义滑块大小：
 
 ```js
 <XSlider
@@ -58,7 +58,7 @@ export default P;
 />
 ```
 
-## Disabled
+Disabled：
 
 
 ```js
@@ -70,7 +70,7 @@ export default P;
 />
 ```
 
-## 不显示当前 value
+不显示当前 value：
 
 ```js
 <XSlider
@@ -81,7 +81,7 @@ export default P;
 />
 ```
 
-## 步长
+步长：
 
 ```js
 <XSlider
@@ -91,7 +91,7 @@ export default P;
 />
 ```
 
-## 最大值和最小值
+最大值和最小值：
 
 ```js
 <XSlider
@@ -103,7 +103,7 @@ export default P;
 />
 ```
 
-## 自定义样式
+自定义样式：
 
 ```js
 <XSlider
