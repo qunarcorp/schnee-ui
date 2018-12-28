@@ -35,7 +35,7 @@ class P extends React.Component {
                 </div>
                 <span className="demo-header">自定义</span>
                 <div className="demo-content">
-                    <XSwitch checked={false} color="red" innerStyle={this.state.innerStyle} wrapperStyle={this.state.wrapperStyle} />
+                    <XSwitch checked={false} onChange={this.change.bind(this)} color="red" innerStyle={this.state.innerStyle} wrapperStyle={this.state.wrapperStyle} />
                 </div>
             </div>
         );

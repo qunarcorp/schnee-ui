@@ -38,7 +38,8 @@ class XButton extends React.Component {
         return {
             loadingClasses: loadingClasses.join(' '),
             buttonClasses: buttonClasses.join(' '),
-            labelClasses: labelClasses.join(' ')
+            labelClasses: labelClasses.join(' '),
+            label: this.props.children
         };
     }
 
@@ -92,6 +93,7 @@ class XButton extends React.Component {
         }, 150);
     }
     render() {
+        console.log(this.props.children);
         return (
             <stack
                 className={'anu-col anu-center anu-middle ' + this.state.buttonClasses}
@@ -101,9 +103,9 @@ class XButton extends React.Component {
                         className={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
-                    <text className={this.state.labelClasses}>
-                        {this.props.children}
-                    </text>
+                    <span className={this.state.labelClasses}>
+                        {this.state.label}
+                    </span>
                 </div>
                 <input className="anu-button__mask" type='button' onClick={this.onClick} />
             </stack>
