@@ -164,7 +164,7 @@ window.ydoc_plugin_search_json = {
         {
           "title": "Demo",
           "url": "/Demo.html#demo",
-          "content": "Demo"
+          "content": "Demo请扫码下载，然后在快应用调试器里选择本地安装打开。"
         }
       ]
     }
