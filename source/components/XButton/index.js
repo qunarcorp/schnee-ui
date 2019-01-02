@@ -38,8 +38,7 @@ class XButton extends React.Component {
         return {
             loadingClasses: loadingClasses.join(' '),
             buttonClasses: buttonClasses.join(' '),
-            labelClasses: labelClasses.join(' '),
-            label: this.props.children
+            labelClasses: labelClasses.join(' ')
         };
     }
 
@@ -66,7 +65,6 @@ class XButton extends React.Component {
         // 不在 XLabel 内部的时候，执行本身逻辑
         // 在快应用下不支持事件冒泡，直接执行本身逻辑
         if (process.env.ANU_ENV === 'quick' || !this.props.__InLabel) {
-            console.log(111);
             this.handleClick(e);
         }
     }
@@ -93,7 +91,6 @@ class XButton extends React.Component {
         }, 150);
     }
     render() {
-        console.log(this.props.children);
         return (
             <stack
                 className={'anu-col anu-center anu-middle ' + this.state.buttonClasses}
@@ -103,9 +100,9 @@ class XButton extends React.Component {
                         className={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
-                    <span className={this.state.labelClasses}>
-                        {this.state.label}
-                    </span>
+                    <text className={this.state.labelClasses}>
+                        {this.props.children}
+                    </text>
                 </div>
                 <input className="anu-button__mask" type='button' onClick={this.onClick} />
             </stack>
