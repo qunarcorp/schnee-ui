@@ -1,8 +1,10 @@
 ydoc build
 git checkout gh-pages
-ls | grep -v _site | xargs rm -rd
-mv _site/* .
-rm -rd _site
-git add .
-git commit -m "Update page"
-# git push
+if [[ $? == 0 ]]; then
+    ls | grep -vE '_site|node_modules|dist|src|build|sign' | xargs rm -rd
+    mv _site/* .
+    rm -rd _site
+    git add .
+    git commit -m "Update page"
+    # git push
+fi

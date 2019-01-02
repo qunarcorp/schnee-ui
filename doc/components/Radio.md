@@ -20,6 +20,8 @@
 | isRight | Boolean | false | true | 文本是否显示在 `Radio` 的右侧，默认显示在右侧 | true | true | true | true |
 | size | String | false | 'default' | `Radio` 的大小，有三种选项：`large`、`default`、`small` | true | true | true | true |
 
+<p><img style="max-height: 500px" src="../assets/images/components/radio.png" /></p>
+
 ## 示例
 
 基本用法：

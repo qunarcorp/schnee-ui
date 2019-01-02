@@ -17,6 +17,8 @@ show-value | Boolean | false | 是否显示当前 value |  - | - | - | √ |
 bindchange | EventHandle |  | 完成一次拖动后触发的事件，event.detail = {value: value} |  - | - | - | - |
 bindchanging | EventHandle |  | 拖动过程中触发的事件，event.detail = {value: value} | - | - | - | - |
 
+<p><img style="max-height: 500px" src="../assets/images/components/slider.png" /></p>
+
 ## 示例
 
 基本用法：

@@ -14,6 +14,8 @@
 | onTap    | Function | false | | 点击的回调 |  |  |  | true |
 | catchTap | Function | false | | 点击的回调 |  |  |  | true |
 
+<p><img style="max-height: 500px" src="../assets/images/components/button.png" /></p>
+
 ## 示例
 
 基本使用：

@@ -8,6 +8,8 @@
 | size  | String | false |  | icon 的大小 | true | true | true | true |
 | color | String | false |  | icon 的颜色 | true | true | true | true |
 
+<p><img style="max-height: 500px" src="../assets/images/components/icon.png" /></p>
+
 ## 示例
 
 ```scss

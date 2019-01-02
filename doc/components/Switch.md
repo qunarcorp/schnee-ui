@@ -12,6 +12,8 @@
 | innerStyle | Object  | false |  | 内部按钮的样式 | true | true | true | true |
 | onChange   | Function | false |  | checked 改变时触发 change 事件 event.value | true | true | true | true |
 
+<p><img style="max-height: 500px" src="../assets/images/components/switch.png" /></p>
+
 ## 示例
 
 基本用法：
