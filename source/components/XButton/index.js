@@ -38,7 +38,9 @@ class XButton extends React.Component {
         return {
             loadingClasses: loadingClasses.join(' '),
             buttonClasses: buttonClasses.join(' '),
-            labelClasses: labelClasses.join(' ')
+            labelClasses: labelClasses.join(' '),
+            children: this.props.children,
+            env: process.env.ANU_ENV
         };
     }
 
@@ -95,16 +97,18 @@ class XButton extends React.Component {
             <stack
                 className={'anu-col anu-center anu-middle ' + this.state.buttonClasses}
             >
-                <div className="anu-row anu-middle">
+                <div className="anu-button__main anu-row anu-middle">
                     <image
                         className={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
                     <text className={this.state.labelClasses}>
-                        {this.props.children}
+                        {this.state.children}
                     </text>
                 </div>
-                <input className="anu-button__mask" type='button' onClick={this.onClick} />
+                {(this.state.env === 'ali' || this.state.env === 'bu') ?
+                    <div className="anu-button__mask" onClick={this.onClick}></div> :
+                    <input className="anu-button__mask" type='button' onClick={this.onClick} />}
             </stack>
         );
     }
