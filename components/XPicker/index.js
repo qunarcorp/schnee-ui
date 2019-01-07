@@ -21,7 +21,6 @@ class XPicker extends React.Component {
     const { range, dataMap, value, mode, start, end } = props;
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
-    console.log('newselected',newselected )
     this.state = {
       animationClass: '',
       groups,
@@ -62,14 +61,13 @@ class XPicker extends React.Component {
     selected = handleSelect(selected);
     let _selected = 0;
 
-    console.log(data, subKey, selected)
 
     if (Array.isArray(selected) && selected.length > 0) {
       let _selectedClone = selected.slice(0);
       _selected = _selectedClone.shift();
       selected = _selectedClone;
     }
-    
+
     if (typeof data[_selected] === 'undefined') {
       _selected = 0;
     }
@@ -80,10 +78,9 @@ class XPicker extends React.Component {
       }
     });
 
-    
+
 
     newselected.push(_selected);
-    console.log('data', data, _selected);
 
     let item = data[_selected];
 
@@ -92,7 +89,6 @@ class XPicker extends React.Component {
 
     group.push({ items: _group, mapKeys: { label: this.props.dataMap.id } });
 
-    console.log('item', item)
 
     if (typeof item[subKey] !== 'undefined' && Array.isArray(item[subKey])) {
       return this.parseData(item[subKey], subKey, selected, group, newselected);
@@ -104,16 +100,19 @@ class XPicker extends React.Component {
   updateVisible(visible) {
     this.timeoutId && clearTimeout(this.timeoutId); //防止更改太快
     if (visible) {
+      console.log(111);
       this.setState({
         show: true,
         animationClass: 'pickerenter'
       });
     } else {
+      console.log(222);
       this.setState({
         animationClass: 'pickerleave'
       });
 
       this.timeoutId = setTimeout(() => {
+        console.log(333);
         this.setState({
           show: false
         });
@@ -122,11 +121,11 @@ class XPicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    
+
     if (this.props.mode !== nextProps.mode || this.props.value !== nextProps.value) {
       const { range, dataMap, value, mode, start, end } = nextProps;
       let rangeValue = mode === 'region' ? cnCity : range;
-     
+
       const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
       this.state = {
         groups,
@@ -138,24 +137,26 @@ class XPicker extends React.Component {
   }
 
   cancelClick() {
+    console.log('cancel');
     this.updateVisible(false);
   }
 
   confirmClick() {
+    console.log('confirm');
     this.updateVisible(false);
     this.props.onChange && this.props.onChange({ value: this.selectedValue });
     // this.props.onChange && this.props.onChange({value: this.selectedDate});
   }
 
-  click() {
-    // console.log('anupickerClick');
+  click(e) {
+    console.log('click');
     this.updateVisible(true);
   }
 
   //  动态更新用户选择
   updateDataBySelected(selected, cb) {
     const { range, dataMap, mode } = this.props;
-    
+
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, selected);
     let text = [];
@@ -183,21 +184,20 @@ class XPicker extends React.Component {
   handleItemChange(selected, groupIndex) {
     let selectedArr = this.state.selected;
     selectedArr[groupIndex] = selected;
-    
+
     this.updateDataBySelected(selectedArr, value => {
       this.selectedValue = value;
-      
+
     });
   }
 
   handleDateChange(data) {
     const { date, disabled } = data;
-    console.log('date', getDate(date))
-    // let 
+    // let
     if (!disabled) {
       this.selectedValue = this.props.mode === 'date' ? getDate(date) : getTime(date);
-     
-     
+
+
     } else {
       if (date > this.state.end) {
         this.selectedValue = this.props.end;
@@ -213,8 +213,8 @@ class XPicker extends React.Component {
 
   render() {
     return (
-      <div catchTap={this.click.bind(this)}>
-        {this.props.children}
+      <div>
+        <div catchTap={this.click.bind(this)}>{this.props.children}</div>
         <XOverlay visible={this.state.show} onClose={this.cancelClick.bind(this)} />
         {/* {this.state.show && ( */}
         <div class={'quist-picker  ' + this.state.animationClass} hidden={!this.state.show}>
