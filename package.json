@@ -2,14 +2,6 @@
     "license": "MIT",
     "version": "1.0.0",
     "name": "shinee-ui",
-    "nanachi": {
-        "alias": {
-            "@assets": "source/assets"
-        }
-    },
-    "dependencies": {
-        "regenerator-runtime": "^0.12.1"
-    },
     "scripts": {
         "server": "hap server",
         "postinstall": "hap postinstall",

@@ -10,6 +10,7 @@ import './pages/demo/navigator/index';
 import './pages/demo/picker/index';
 import './pages/demo/progress/index';
 import './pages/demo/radio/index';
+import './pages/demo/richText/index';
 import './pages/demo/slider/index';
 import './pages/demo/swiper/index';
 import './pages/demo/switch/index';

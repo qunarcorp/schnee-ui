@@ -7,7 +7,7 @@ class P extends React.Component {
         super(props);
         const ROOT_PATH = '/pages/demo';
         this.state = {
-            list: 'button,checkbox,icon,label,navigator,picker,progress,radio,scrollView,slider,swiper,switch'
+            list: 'button,checkbox,icon,label,navigator,picker,progress,radio,richText,scrollView,slider,swiper,switch'
                 .split(',')
                 .map(function(name) {
                     return {
