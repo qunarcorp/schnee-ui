@@ -9,7 +9,7 @@ class XRadioGroup extends React.Component {
 
     emitEvent(value) {
         var fn = this.props.onChange || Number;
-        fn({detail: {value}});
+        fn({detail: {value}, target: {value}});
     }
     render() {
         return <div className="col">{this.props.children}</div>;

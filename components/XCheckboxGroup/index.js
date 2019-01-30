@@ -7,7 +7,10 @@ class XCheckboxGroup extends React.Component {
     }
 
     emitEvent(value) {
-        this.props.onChange && this.props.onChange({detail: {value}});
+        this.props.onChange && this.props.onChange({
+            detail: {value},
+            target: {value}
+        });
     }
 
     render() {

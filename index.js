@@ -13,6 +13,7 @@ import XScrollView from './components/XScrollView';
 import XSlider from './components/XSlider';
 import XSwiper from './components/XSwiper';
 import XSwitch from './components/XSwitch';
+import XWebview from './components/XWebView';
 
 export default {
     XButton,
@@ -29,5 +30,6 @@ export default {
     XScrollView,
     XSlider,
     XSwiper,
-    XSwitch
+    XSwitch,
+    XWebview
 };
