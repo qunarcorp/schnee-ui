@@ -1,6 +1,7 @@
 import React from '@react';
 import './index.scss';
 
+const env = process.env.ANU_ENV;
 
 function jsonEqual(objA, objB) {
     let flag = false;
@@ -83,10 +84,6 @@ class XSwitch extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.updateState(nextProps, nextProps.checked);
-    }
-
     render() {
         return (
             <div class="anu-switch">
@@ -115,15 +112,15 @@ XSwitch.defaultProps = {
     disabled: false,
     checked: false,
     innerStyle: {
-        width: '68px',
-        height: '68px',
-        borderRadius: '34px',
+        width: env === 'web' ? '36px' : '68px',
+        height: env === 'web' ? '36px' : '68px',
+        borderRadius: env === 'web' ? '18px' : '34px',
         backgroundColor: '#fff'
     },
     wrapperStyle: {
-        width: '140px',
-        height: '76px',
-        borderRadius: '38px',
+        width: env === 'web' ? '74px' : '140px',
+        height: env === 'web' ? '40px' : '76px',
+        borderRadius: env === 'web' ? '20px' : '38px',
     },
     color: '#00bcd4',
     checkColor: '#c1c1c1',
