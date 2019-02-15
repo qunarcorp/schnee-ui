@@ -1,4 +1,9 @@
 {
     "root": "doc",
-    "title": "Schnee UI"
+    "title": "Schnee UI",
+    "pluginsConfig": {
+        "import-asset": {
+          "css": ["styles/index.css"]
+        }
+    }
 }
