@@ -125,6 +125,11 @@
     padding-top: 29px;
 }
 
+.wh{
+    width: 117px;
+    height: 24px;
+}
+
 .github{
     font-family: ydoc;
     position: absolute;
