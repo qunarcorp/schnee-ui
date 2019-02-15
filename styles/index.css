@@ -1,0 +1,140 @@
+.m-header-title .name, .m-header-title .logo {
+    width: 124px !important;
+    padding-left: 20px;
+    margin-bottom: 5px;
+}
+
+.banner{
+    width: 100%;
+    height: 486px;
+    background: url(../images/inset.png) no-repeat right top;
+    background-size: 698px 486px;
+    margin-top: 50px;
+    padding-left: 100px;
+    padding-top: 80px;
+}
+.banner h1{
+    width:275px;
+    height:69px;
+    font-size:50px;
+    font-family:FZLTZHK--GBK1-0;
+    font-weight:normal;
+    color:rgba(0,0,0,1);
+    line-height:69px;
+}
+.banner .text{
+    padding: 16px 0 64px 0;
+    width:458px;
+    height:33px;
+    font-size:24px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(0,0,0,1);
+    line-height:33px;
+}
+.banner .btn1{
+    width:150px;
+    height:44px;
+    background:rgba(96,88,229,1);
+    border-radius:24px;
+    color: #fff;
+    font-size: 18px;
+    margin-right: 32px;
+    cursor: pointer;
+}
+.banner .btn2{
+    width:150px;
+    height:44px;
+    border-radius:24px;
+    border:1px solid rgba(96,88,229,1);
+    color: #6058E5;
+    font-size: 18px;
+    cursor: pointer;
+    background: url('../images/github.png') no-repeat 25px;
+    background-size: 16px 16px;
+}
+
+.content{
+    text-align: center;
+}
+.content h2{
+    padding: 50px 0;
+    margin: 0 auto;
+    height:40px;
+    font-size:28px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(0,0,0,1);
+    line-height:40px;
+}
+.instructions{
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+.instructions .i{
+    padding: 0 50px;
+}
+.instructions .i .text{
+    margin: 37px 0 120px 0;
+    text-align: center;
+    height:22px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+}
+
+.foot{
+    width: 100%;
+    height: 300px;
+    background:rgba(12,13,32,1);
+    display: flex;
+    flex-wrap: wrap;
+    color: #fff;
+    padding-top: 88px;
+}
+.foot .group{
+    width: 25%;
+    padding-left: 7%;
+}
+.foot .group .title{
+    height:25px;
+    font-size:18px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    color:rgba(239,243,246,1);
+    line-height:25px;
+    margin-bottom: 31px;
+}
+.foot .group .t{
+    height:22px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(239,243,246,1);
+    line-height:22px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.padtop{
+    padding-top: 29px;
+}
+
+.wh{
+    width: 117px;
+    height: 24px;
+}
+
+.github{
+    font-family: ydoc;
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+}

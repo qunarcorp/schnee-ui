@@ -150,7 +150,7 @@ window.ydoc_plugin_search_json = {
         {
           "title": "示例",
           "url": "/components/Switch.html#示例",
-          "content": "示例基本用法：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  change(e) {\n    console.log('change value', e);\n  }\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\nexport default P;\nDisabled：自定义样式+：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  constructor() {\n    super();\n    this.state = {\n      innerStyle: {\n        borderRadius: 0,\n        backgroundColor: '#fac450'\n      },\n      wrapperStyle: {\n        borderRadius: 0\n      }\n    };\n  }\n\n  change(e) {\n    console.log('change value', e);\n  }\n\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\n\nexport default P;\n"
+          "content": "示例基本用法：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  change(e) {\n    console.log('change value', e);\n  }\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\nexport default P;\nDisabled：自定义样式：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  constructor() {\n    super();\n    this.state = {\n      innerStyle: {\n        borderRadius: 0,\n        backgroundColor: '#fac450'\n      },\n      wrapperStyle: {\n        borderRadius: 0\n      }\n    };\n  }\n\n  change(e) {\n    console.log('change value', e);\n  }\n\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\n\nexport default P;\n"
         }
       ]
     }
