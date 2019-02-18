@@ -5,7 +5,7 @@
 | CheckboxGroup  | ✓/✓   | ✓   | ✓   | ✓   | js 问题 | @codeArvin | |
 | Icon           | ✓/✓ | ✓   | ✓   | ✓   | ✓ | @kitian616 | |
 | Label          | ✓/✓  | ✓   | ✓   | ✓ (快应用中不支持`<XLabel>apple</XLabel>`的写法，只能传入子元素`<XLabel><text>apple</text></XLabel>`，所以子元素方式的文本最好都用`text`包起来，不然快应用会有问题，暂时没有找到解决方案)   | js 问题 | @codeArvin | |
-| Picker         |     |     |     |     | - | @gaoxiaomumu | |
+| Picker         |  ✓  |     |  ✓  |  ✓  | - | @gaoxiaomumu | |
 | Progress       | 百分比换行了 | 同左 | 同左 | ✓   | ✓ | @aweleey | |
 | Radio          | ✓/✓ | ✓   | ✓   | ✓   | ✓ | @codeArvin | |
 | RadioGroup     | ✓/✓ | ✓   | ✓   | ✓   | js 问题 | @codeArvin | |

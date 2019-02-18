@@ -9,6 +9,9 @@ class XOverlay extends React.Component {
       show: false,
       className: ''
     };
+
+    this.overlayClick = this.overlayClick.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +24,18 @@ class XOverlay extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // 只在必要属性变化的时候，才更新，防止快应用的闪烁问题
+    if (
+      nextProps.visible === this.props.visible &&
+      nextState.show === this.state.show &&
+      nextState.className === this.state.className
+    ) {
+      return false;
+    }
+    return true;
+  }
+  
   updateVisible(visible) {
     this.timeoutId && clearTimeout(this.timeoutId); //防止更改太快
     if (visible) {
@@ -48,16 +63,20 @@ class XOverlay extends React.Component {
     this.props.onClose && this.props.onClose();
   }
 
+  handleTouchMove(e) {
+    // 阻止滑动
+    return false;
+  }
+
   render() {
     return (
-      <div class="quist-overlay">
         <div
-          class={'quist-overlay-mask  ' + this.state.className}
+          className={'quist-overlay-mask  ' + this.state.className}
           style={{ backgroundColor: this.props.background }}
           hidden={!this.state.show}
-          onClick={this.overlayClick.bind(this)}
+          onClick={this.overlayClick}
+          catchTouchMove={this.handleTouchMove}
         />
-      </div>
     );
   }
 }

@@ -58,34 +58,22 @@ export function convertDate(date, format) {
  */
 export function nextYear(now, index = 0) {
   if (throwIfInvalidDate(now)) {
-    const date = new Date(
-      now.getFullYear() + index,
-      now.getMonth(),
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes(),
-      now.getSeconds()
-    );
+    const date = new Date(now.getTime());
+    date.setFullYear(date.getFullYear() + index);
     return date;
   } else {
     return parseInt(now) + index;
   }
 }
 
+// 谨慎使用这个函数
 export function nextMonth(now, index = 0) {
   throwIfInvalidDate(now);
-
-  const year = now.getFullYear();
   const month = now.getMonth() + index;
-  const dayOfMonth = Math.min(now.getDate(), daysInMonth(year, month));
-  const date = new Date(
-    year,
-    month,
-    dayOfMonth,
-    now.getHours(),
-    now.getMinutes(),
-    now.getSeconds()
-  );
+  const date = new Date(now.getTime());
+  // 为了避免 2 月份没有 30号导致的 bug，这里统一设成 1
+  date.setDate(1);
+  date.setMonth(month);
   return date;
 }
 

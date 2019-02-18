@@ -23,7 +23,7 @@ class Global extends React.Component {
             backgroundTextStyle: 'light',
             // navigationBarBackgroundColor: '#0088a4',
             navigationBarTitleText: 'Schnee UI',
-            navigationBarTextStyle: '#fff'
+            navigationBarTextStyle: 'white'
         }
     };
     onLaunch() {

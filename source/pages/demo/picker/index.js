@@ -10,7 +10,7 @@ class P extends React.Component {
     this.state = {
       show: false,
       index: 0,
-      multiIndex: ['无脊柱动物', '扁性动物', '猪肉绦虫'],
+      multiIndex: ['无脊柱动物', '扁性动物', '吸血虫'],
       date: '2016-09-01',
       time: '12:01',
       region: ['广东省', '广州市', '海珠区'],
@@ -160,7 +160,7 @@ class P extends React.Component {
           <XPicker
             mode="date"
             value={this.state.date}
-            start="2015-09-01"
+            start="2015-10-01"
             end="2017-09-01"
             onCancel={this.close.bind(this)}
             onChange={this.bindDateChange.bind(this)}
@@ -192,6 +192,7 @@ class P extends React.Component {
             <text>当前选择：{this.state.region[0]}, {this.state.region[1]},{this.state.region[2]}</text>
           </XPicker>
         </div>
+        <div style={{height: '1000px'}}></div>
       </div>
     );
   }

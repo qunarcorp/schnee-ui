@@ -47,7 +47,6 @@ class XDatePickerItem extends React.Component {
       let disabled = date < this.props.start || date > this.props.end;
       return { key: TimeUtil.convertDate(date, this.props.format), date, disabled };
     });
-
     return dates;
   }
 
@@ -96,7 +95,7 @@ class XDatePickerItem extends React.Component {
 
   // 往上为正，往下为负
   _updateDates(direction) {
-    const typeName = this.props.type;
+    let typeName = this.props.type;
     let { dates } = this.state;
 
     let itemHeight = calculate(this.props.itemHeight);
@@ -104,9 +103,7 @@ class XDatePickerItem extends React.Component {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
       let key = TimeUtil.convertDate(value, this.props.format);
-
       let disabled = value < this.props.start || value > this.props.end;
-
       this.setState({
         dates: [...dates.slice(1), { key, date: value, disabled }],
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
@@ -164,7 +161,19 @@ class XDatePickerItem extends React.Component {
 
   updateSelected() {
     let selected = this.state.dates[MIDDLE_INDEX];
-
+    const { value, type } = this.props; 
+    // 只对改变的列作出修改
+    ['Year', 'Month', 'Date', 'Hour', 'Minute', 'Second'].forEach(key => {
+      if (key !== type) {
+        let prop = key === 'Year' ? 'FullYear' : key;
+        prop = (
+          prop === 'Hour' ||
+          prop === 'Minute' ||
+          prop === 'Second'
+        ) ? `${prop}s` : prop;
+        selected.date[`set${prop}`](value[`get${prop}`]());
+      }
+    });
     this.props.onChange && this.props.onChange(selected);
   }
 
