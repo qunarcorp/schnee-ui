@@ -63,6 +63,7 @@ class XOverlay extends React.Component {
     this.props.onClose && this.props.onClose();
   }
 
+  // TODO: 支付宝小程序，阻止页面滚动
   handleTouchMove(e) {
     // 阻止滑动
     return false;

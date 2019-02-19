@@ -18,6 +18,7 @@ class XPicker extends React.Component {
   constructor(props) {
     super(props);
     this.selectedValue = props.value;
+    this.prevSelectedValue = this.selectedValue;
     const { range, dataMap, value, mode, start, end } = props;
     let rangeValue = mode === 'region' ? cnCity : range;
     const { groups, newselected } = this.parseData(rangeValue, dataMap.items, value);
@@ -97,23 +98,20 @@ class XPicker extends React.Component {
   updateVisible(visible) {
     this.timeoutId && clearTimeout(this.timeoutId); //防止更改太快
     if (visible) {
-      console.log(111);
       this.setState({
         show: true,
         animationClass: 'pickerenter'
       });
     } else {
-      console.log(222);
       this.setState({
         animationClass: 'pickerleave'
       });
 
       this.timeoutId = setTimeout(() => {
-        console.log(333);
         this.setState({
           show: false
         });
-      }, 300);
+      }, 200);
     }
   }
 
@@ -133,26 +131,25 @@ class XPicker extends React.Component {
   }
 
   cancelClick() {
-    console.log('cancel');
     // 恢复之前的选项
     this.setState({
       selected: this.prevSelected,
       groups: this.prevGroups
     });
+    this.selectedValue = this.prevSelectedValue;
     this.updateVisible(false);
   }
 
   confirmClick() {
-    console.log('confirm');
     this.updateVisible(false);
     this.prevSelected = this.state.selected;
     this.prevGroups = this.state.groups;
+    this.prevSelectedValue = this.selectedValue;
     this.props.onChange && this.props.onChange({ value: this.selectedValue });
     // this.props.onChange && this.props.onChange({value: this.selectedDate});
   }
 
   click(e) {
-    console.log('click');
     this.updateVisible(true);
   }
 
@@ -201,7 +198,6 @@ class XPicker extends React.Component {
 
   handleDateChange(data) {
     let { date, disabled } = data;
-    // let
     if (!disabled) {
       this.selectedValue = this.props.mode === 'date' ? getDate(date) : getTime(date);
     } else {
