@@ -36,9 +36,8 @@ class XPickerItem extends React.Component {
         totalHeight: nextProps.items.length * calculate(this.props.indicatorHeight)
       })
     }
-    // console.log('componentWillReceiveProps')
-    // // 这里不知道需要不
-    // this.adjustPosition(nextProps);
+
+    this.adjustPosition(nextProps);
   }
 
   adjustPosition(props) {
@@ -67,7 +66,6 @@ class XPickerItem extends React.Component {
       }
     }
 
-    
     this.setState({
       selected: defaultIndex,
       ogTranslate: translate,

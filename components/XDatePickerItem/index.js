@@ -4,7 +4,7 @@ import * as TimeUtil from '../../common/utils/time.js';
 /* eslint-disable */
 const DATE_LENGTH = 14; // 日期的个数
 const MIDDLE_INDEX = Math.floor(DATE_LENGTH / 2); // 日期数组中间值的索引
-const DEFAULT_INEDX = 3; // 中间索引距离顶部的索引差
+const DEFAULT_INDEX = 3; // 中间索引距离顶部的索引差
 var gid = 0;
 
 function calculate(value) {
@@ -24,7 +24,7 @@ class XDatePickerItem extends React.Component {
     this.currentIndex = MIDDLE_INDEX; // 滑动中当前日期的索引
     this.moveDateCount = 0; // 一次滑动移动了多少个时间
     this.translateY = 0; // 容器偏移的距离
-    this.touchY = 0; // 保存touchstart的pageY
+    this.touchY = 0; // 保存 touchstart 的 pageY
     this.state = {
       touching: false,
       touchId: undefined,
@@ -47,7 +47,6 @@ class XDatePickerItem extends React.Component {
       let disabled = date < this.props.start || date > this.props.end;
       return { key: TimeUtil.convertDate(date, this.props.format), date, disabled };
     });
-
     return dates;
   }
 
@@ -96,7 +95,7 @@ class XDatePickerItem extends React.Component {
 
   // 往上为正，往下为负
   _updateDates(direction) {
-    const typeName = this.props.type;
+    let typeName = this.props.type;
     let { dates } = this.state;
 
     let itemHeight = calculate(this.props.itemHeight);
@@ -104,9 +103,7 @@ class XDatePickerItem extends React.Component {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
       let key = TimeUtil.convertDate(value, this.props.format);
-
       let disabled = value < this.props.start || value > this.props.end;
-
       this.setState({
         dates: [...dates.slice(1), { key, date: value, disabled }],
         marginTop: (this.currentIndex - MIDDLE_INDEX) * itemHeight
@@ -130,8 +127,8 @@ class XDatePickerItem extends React.Component {
 
     let isUpdate =
       direction === 1
-        ? (this.currentIndex - DEFAULT_INEDX) * itemHeight + itemHeight / 2 < -translateY
-        : (this.currentIndex - DEFAULT_INEDX) * itemHeight - itemHeight / 2 > -translateY;
+        ? (this.currentIndex - DEFAULT_INDEX) * itemHeight + itemHeight / 2 < -translateY
+        : (this.currentIndex - DEFAULT_INDEX) * itemHeight - itemHeight / 2 > -translateY;
 
     return isUpdate;
   }
@@ -146,7 +143,7 @@ class XDatePickerItem extends React.Component {
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
       translate = this.state.ogTranslate;
     } else {
-      translate = -(this.currentIndex - DEFAULT_INEDX) * itemHeight;
+      translate = -(this.currentIndex - DEFAULT_INDEX) * itemHeight;
     }
 
     this.setState(
@@ -164,7 +161,20 @@ class XDatePickerItem extends React.Component {
 
   updateSelected() {
     let selected = this.state.dates[MIDDLE_INDEX];
-
+    const { value, type } = this.props; 
+    // 只对改变的列作出修改
+    ['Year', 'Month', 'Date', 'Hour', 'Minute', 'Second'].forEach(key => {
+      if (key !== type) {
+        let prop = key === 'Year' ? 'FullYear' : key;
+        prop = (
+          prop === 'Hour' ||
+          prop === 'Minute' ||
+          prop === 'Second'
+        ) ? `${prop}s` : prop;
+        selected.date[`set${prop}`](value[`get${prop}`]());
+      }
+    });
+    selected.disabled = selected.date < this.props.start || selected.date > this.props.end;
     this.props.onChange && this.props.onChange(selected);
   }
 
@@ -211,7 +221,7 @@ XDatePickerItem.defaultProps = {
   itemHeight: 25 + 9, //content + padding
   indicatorTop: 102, // 中心点距离pick顶部的高度
   indicatorHeight: 34,
-  aniamtion: true,
+  animation: true,
   groupIndex: -1,
   defaultIndex: -1,
   mapKeys: {
