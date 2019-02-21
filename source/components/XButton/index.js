@@ -128,13 +128,13 @@ class XButton extends React.Component {
 }
 
 XButton.defaultProps = {
-  type: 'default',
-  disabled: false,
-  plain: false,
-  size: 'default',
-  style: {},
-  loading: false,
-  __InLabel: false
+    type: 'default',
+    disabled: false,
+    plain: false,
+    size: 'default',
+    style: {},
+    loading: false,
+    __InLabel: false
 };
 
 export default XButton;
