@@ -96,6 +96,7 @@ class XButton extends React.Component {
         return (
             <stack
                 className={'anu-col anu-center anu-middle ' + this.state.buttonClasses}
+                style={this.props.style}
             >
                 <div className="anu-button__main anu-row anu-middle">
                     <image
@@ -119,6 +120,7 @@ XButton.defaultProps = {
     disabled: false,
     plain: false,
     size: 'default',
+    style: {},
     loading: false,
     __InLabel: false
 };
