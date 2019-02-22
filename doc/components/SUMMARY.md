@@ -10,3 +10,4 @@
 * [Slider](Slider.md)
 * [Swiper](Swiper.md)
 * [Switch](Switch.md)
+* [Clander](Clander.md)
