@@ -20,3 +20,97 @@
 ## 示例
 
 基础用法：
+
+```html
+<!-- 水平方向 -->
+<XSwiper
+    style={{ height: '300px' }}
+    current={3}
+>
+    {[0,1,2,3,4,5].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+
+<!-- 水平带指示点 -->
+<XSwiper
+    indicatorDots={true}
+    style={{ height: '300px' }}
+    current={3}
+>
+    {[0,1,2,3,4,5].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+
+<!-- 垂直方向 -->
+<XSwiper
+    vertical={true}
+    style={{ height: '300px' }}
+>
+    {[0,1,2,3,4,5].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+
+<!-- 垂直带指示点 -->
+<XSwiper
+    indicatorDots={true}
+    vertical={true}
+    style={{ height: '300px' }}
+>
+    {[0,1,2,3,4,5].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+
+<!-- 循环滚动 -->
+<XSwiper
+    indicatorDots={true}
+    circular={true}
+    style={{ height: '300px' }}
+>
+    {[5,0,1,2,3,4,5,0].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+
+<!-- 自动播放 -->
+<XSwiper
+    indicatorDots={true}
+    autoPlay={true}
+    interval={1000}
+    style={{ height: '300px' }}
+>
+    {[0,1,2,3,4,5].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+
+<!-- 循环播放 -->
+<XSwiper
+    indicatorDots={true}
+    circular={true}
+    autoPlay={true}
+    interval={1000}
+    style={{ height: '300px' }}
+>
+    {[5,0,1,2,3,4,5,0].map(function(item) {
+        return <div className="anu-swiper__item">
+            <div className="swiper-content">{item}</div>
+        </div>;
+    })}
+</XSwiper>
+```

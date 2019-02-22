@@ -38,7 +38,7 @@ class P extends React.Component {
                         <div className="label">
                             <XLabel for="button_label"><text>button label</text></XLabel>
                         </div>
-                        <div className="label-control"><XButton id="button_label"></XButton></div>
+                        <div className="label-control"><XButton id="button_label">Label</XButton></div>
                     </div>
                     <div className="label-item">
                         <div className="label">
@@ -70,7 +70,7 @@ class P extends React.Component {
                     <XLabel>
                         <div className="label-item">
                             <div className="label">button label</div>
-                            <div className="label-control"><XButton></XButton></div>
+                            <div className="label-control"><XButton>Label</XButton></div>
                         </div>
                     </XLabel>
                     <XLabel>

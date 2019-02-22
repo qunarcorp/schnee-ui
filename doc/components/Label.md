@@ -6,7 +6,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | for | String | false | | 绑定控件的 id | true | true | true | true |
 
-<p><img style="max-height: 500px" src="../assets/images/components/icon.png" /></p>
+<p><img style="max-height: 500px" src="../assets/images/components/label.png" /></p>
 
 用来改进表单组件的可用性，有两种使用方式：
 1. 使用 `for` 属性找到对应的 `id`

@@ -9,6 +9,7 @@
 | type     | String  | false | default | 按钮的样式类型 | 可选值：default，primary，secondary，warn |  |  | true |
 | size     | String  | false | default | 按钮的大小 | 可选值：default，mini |  |  | true |
 | loading  | Boolean | false | false | 名称前是否带 loading 图标 |  |  |  | true |
+| style | Object | {} | 用来设置按钮的样式 | true | true | true | true |
 | onClick  | Function | false | | 点击的回调 |  |  |  | true |
 | catchClick | Function | false | | 点击的回调 |  |  |  | true |
 | onTap    | Function | false | | 点击的回调 |  |  |  | true |

@@ -18,6 +18,7 @@ class P extends React.Component {
     }
 
     checkboxChange(e) {
+        // eslint-disable-next-line
         console.log('XCheckbox 发生改变，触发 XCheckboxGroup onChange 事件，被选中的 XCheckbox 的 value 为: ', e.detail.value);
         this.setState({ checkedValues: e.detail.value.toString() });
     }
@@ -27,14 +28,14 @@ class P extends React.Component {
             <div className="anu-col demo-page">
                 {
                     this.state.env === 'wx' ?
-                    <div className="checkbox-col">
-                        <span className="demo-header">与微信原生对比</span>
-                        <div className="demo-content checkbox-content">
-                            <XCheckbox />
-                            <checkbox />
-                        </div>
-                    </div> :
-                    null
+                        <div className="checkbox-col">
+                            <span className="demo-header">与微信原生对比</span>
+                            <div className="demo-content checkbox-content">
+                                <XCheckbox />
+                                <checkbox />
+                            </div>
+                        </div> :
+                        null
                 }
                 {
                     this.state.configs.map(config => (
