@@ -35,13 +35,27 @@ class XButton extends React.Component {
         if (!props.loading) {
             loadingClasses.push('anu-button__loading--hidden');
         }
+        let { style } = props;
+        let textStyle = this._complateStyle(style);
         return {
             loadingClasses: loadingClasses.join(' '),
             buttonClasses: buttonClasses.join(' '),
             labelClasses: labelClasses.join(' '),
             children: this.props.children,
-            env: process.env.ANU_ENV
+            env: process.env.ANU_ENV,
+            textStyle
         };
+    }
+
+    _complateStyle(style) {
+        var textStyle = {};
+        'color,fontFamily, fontSize'.replace(/\w+/g, function(name) {
+            if (name in style) {
+                textStyle[name] = style[name];
+            }
+        });
+
+        return textStyle;
     }
 
     updateState(nextProps, active) {
@@ -72,9 +86,7 @@ class XButton extends React.Component {
     }
     handleClick(e) {
         var props = this.props;
-        Array('onTap', 'catchTap', 'onClick', 'catchClick').forEach(function(
-            name
-        ) {
+        Array('onTap', 'catchTap', 'onClick', 'catchClick').forEach(function(name) {
             var fn = props[name];
             if (fn) {
                 fn(e);
@@ -103,13 +115,13 @@ class XButton extends React.Component {
                         className={this.state.loadingClasses}
                         src="https://s.qunarzz.com/flight_qzz/loading.gif"
                     />
-                    <text className={this.state.labelClasses}>
-                        {this.state.children}
-                    </text>
+                    <text className={this.state.labelClasses} style={this.state.textStyle}>{this.state.children}</text>
                 </div>
-                {(this.state.env === 'ali' || this.state.env === 'bu') ?
-                    <div className="anu-button__mask" onClick={this.onClick}></div> :
-                    <input className="anu-button__mask" type='button' onClick={this.onClick} />}
+                {this.state.env === 'ali' || this.state.env === 'bu' ? (
+                    <div className="anu-button__mask" onClick={this.onClick} />
+                ) : (
+                    <input className="anu-button__mask" type="button" onClick={this.onClick} />
+                )}
             </stack>
         );
     }
