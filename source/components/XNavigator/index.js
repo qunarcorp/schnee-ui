@@ -6,7 +6,7 @@ class XNavigator extends React.Component{
     constructor(props){
         super(props);
         if (typeof props.children !== 'string'){
-            console.warn('<Navigator>组件的内容暂时只能传字符串，不能放标签');//eslint-disable-line
+            console.warn('<Navigator>组件的内容暂时只能传字符串，不能放标签'); //eslint-disable-line
         }
         this.state = {
             children: props.children
@@ -15,8 +15,8 @@ class XNavigator extends React.Component{
     static defaultProps = {
         target: 'self',
         url: '',
-        'open-type': 'navigate',
-        'hover-class': 'navigator-hover'
+        openType: 'navigate',
+        hoverClass: 'navigator-hover'
     }
     componentWillReceiveProps(props){
         if (this.state.children != props.children){
@@ -26,7 +26,7 @@ class XNavigator extends React.Component{
         }
     }
     goPage(){
-        var method = this.props['open-type'];
+        var method = this.props.openType;
         var hook = methodMap[method] || 'navigateTo';
         React.api[hook]({
             url: this.props.url,

@@ -14,23 +14,23 @@ class P extends React.Component {
             <div className="anu-col demo-page">
                 <span className="demo-header">默认样式</span>
                 <div className="demo-content">
-                    <XProgress percent={10} class="progress-cell" />
+                    <XProgress percent={10} />
                 </div>
                 <span className="demo-header">自定义进度条颜色</span>
                 <div className="demo-content">
-                    <XProgress percent={20} class="progress-cell" strokeColor="#52c41a" />
+                    <XProgress percent={20} strokeColor="#52c41a" />
                 </div>
                 <span className="demo-header">不显示提示信息</span>
                 <div className="demo-content">
-                    <XProgress percent={40} class="progress-cell" showInfo={false} />
+                    <XProgress percent={40} showInfo={false} />
                 </div>
                 <span className="demo-header">自定义进度条高度</span>
                 <div className="demo-content">
-                    <XProgress percent={60} class="progress-cell" strokeHeight={20} />
+                    <XProgress percent={60} strokeHeight={20} />
                 </div>
                 <span className="demo-header">自定义进度条圆角大小</span>
                 <div className="demo-content">
-                    <XProgress percent={80} class="progress-cell" borderRadius={2} />
+                    <XProgress percent={80} borderRadius={2} />
                 </div>
             </div>
         );

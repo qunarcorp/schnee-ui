@@ -10,8 +10,6 @@ class XWebView extends React.Component {
         };
         React.webview.instance = this;
         React.webview.cb = this.onMsgFunc;
-        
-        
     }
     componentDidMount() {
         this.setState({

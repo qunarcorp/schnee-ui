@@ -1,6 +1,6 @@
 # Swiper
 
-轮播图。
+轮播图
 
 | 属性名 | 类型 | 必填 | 默认值 | 说明 | 微信 | 支付宝 | 百度 | 快应用 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -21,8 +21,8 @@
 
 基础用法：
 
+水平方向
 ```html
-<!-- 水平方向 -->
 <XSwiper
     style={{ height: '300px' }}
     current={3}
@@ -33,8 +33,10 @@
         </div>;
     })}
 </XSwiper>
+```
 
-<!-- 水平带指示点 -->
+水平带指示点
+```html
 <XSwiper
     indicatorDots={true}
     style={{ height: '300px' }}
@@ -46,8 +48,10 @@
         </div>;
     })}
 </XSwiper>
+```
 
-<!-- 垂直方向 -->
+垂直方向
+```html
 <XSwiper
     vertical={true}
     style={{ height: '300px' }}
@@ -58,8 +62,9 @@
         </div>;
     })}
 </XSwiper>
+```
 
-<!-- 垂直带指示点 -->
+垂直带指示点
 <XSwiper
     indicatorDots={true}
     vertical={true}
@@ -72,7 +77,8 @@
     })}
 </XSwiper>
 
-<!-- 循环滚动 -->
+循环滚动
+```html
 <XSwiper
     indicatorDots={true}
     circular={true}
@@ -84,8 +90,10 @@
         </div>;
     })}
 </XSwiper>
+```
 
-<!-- 自动播放 -->
+自动播放
+```html
 <XSwiper
     indicatorDots={true}
     autoPlay={true}
@@ -98,8 +106,10 @@
         </div>;
     })}
 </XSwiper>
+```
 
-<!-- 循环播放 -->
+循环播放
+```html
 <XSwiper
     indicatorDots={true}
     circular={true}
