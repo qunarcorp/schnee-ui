@@ -2,7 +2,7 @@ window.ydoc_plugin_search_json = {
   "文档": [
     {
       "title": "Button",
-      "content": "按钮。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\ndisabled\nBoolean\nfalse\nfalse\n是否禁用\n\n\n\ntrue\n\n\nplain\nBoolean\nfalse\n\n按钮是否镂空，背景色透明\n\n\n\ntrue\n\n\ntype\nString\nfalse\ndefault\n按钮的样式类型\n可选值：default，primary，secondary，warn\n\n\ntrue\n\n\nsize\nString\nfalse\ndefault\n按钮的大小\n可选值：default，mini\n\n\ntrue\n\n\nloading\nBoolean\nfalse\nfalse\n名称前是否带 loading 图标\n\n\n\ntrue\n\n\nonClick\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\ncatchClick\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\nonTap\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\ncatchTap\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\n",
+      "content": "按钮。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\ndisabled\nBoolean\nfalse\nfalse\n是否禁用\n\n\n\ntrue\n\n\nplain\nBoolean\nfalse\n\n按钮是否镂空，背景色透明\n\n\n\ntrue\n\n\ntype\nString\nfalse\ndefault\n按钮的样式类型\n可选值：default，primary，secondary，warn\n\n\ntrue\n\n\nsize\nString\nfalse\ndefault\n按钮的大小\n可选值：default，mini\n\n\ntrue\n\n\nloading\nBoolean\nfalse\nfalse\n名称前是否带 loading 图标\n\n\n\ntrue\n\n\nstyle\nObject\n{}\n用来设置按钮的样式\ntrue\ntrue\ntrue\ntrue\n\n\n\nonClick\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\ncatchClick\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\nonTap\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\ncatchTap\nFunction\nfalse\n\n点击的回调\n\n\n\ntrue\n\n\n",
       "url": "/components/Button.html",
       "children": [
         {
@@ -20,7 +20,7 @@ window.ydoc_plugin_search_json = {
         {
           "title": "CheckboxGroup",
           "url": "/components/Checkbox.html#checkboxgroup",
-          "content": "CheckboxGroup多项选择器，内部由多个 Checkbox 组成。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nonChange\nFunction\nfalse\n\nCheckboxGroup 中的 Checkbox 发生变化时触发 onChange 事件，e.detail = {value: [选中的 Checkbox 的 value 的数组]}\ntrue\ntrue\ntrue\ntrue\n\n\n"
+          "content": "CheckboxGroup多项选择器，内部由多个 Checkbox 组成。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nonChange\nFunction\nfalse\n\nCheckboxGroup 中的 Checkbox 发生变化时触发 onChange 事件，e.detail/target = {value: [选中的 Checkbox 的 value 的数组]}\ntrue\ntrue\ntrue\ntrue\n\n\n"
         },
         {
           "title": "Checkbox",
@@ -92,7 +92,7 @@ window.ydoc_plugin_search_json = {
         {
           "title": "RadioGroup",
           "url": "/components/Radio.html#radiogroup",
-          "content": "RadioGroup单项选择器，内部由多个 Radio 组成。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nonChange\nFunction\nfalse\n\nRadioGroup 中的 Radio 发生变化时触发 onChange 事件，e.detail = { value: 选中 Radio 的 value }\ntrue\ntrue\ntrue\ntrue\n\n\n"
+          "content": "RadioGroup单项选择器，内部由多个 Radio 组成。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nonChange\nFunction\nfalse\n\nRadioGroup 中的 Radio 发生变化时触发 onChange 事件，e.detail/target = { value: 选中 Radio 的 value }\ntrue\ntrue\ntrue\ntrue\n\n\n"
         },
         {
           "title": "Radio",
@@ -132,25 +132,112 @@ window.ydoc_plugin_search_json = {
     },
     {
       "title": "Swiper",
-      "content": "轮播图。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nstyle\nObject\nfalse\n\nSwiper 的样式\ntrue\ntrue\ntrue\ntrue\n\n\nindicatorDots\nBoolean\nfalse\nfalse\n是否显示面板指示点\ntrue\ntrue\ntrue\ntrue\n\n\nindicatorColor\nColor\nfalse\nrgba(0, 0, 0, .3)\n指示点颜色\ntrue\ntrue\ntrue\ntrue\n\n\nindicatorActiveColor\nColor\nfalse\n#000000\n当前选中的指示点颜色\ntrue\ntrue\ntrue\ntrue\n\n\nautoplay\nBoolean\nfalse\nfalse\n是否自动切换\ntrue\ntrue\ntrue\ntrue\n\n\ncurrent\nNumber\nfalse\n0\n当前所在滑块的 index\ntrue\ntrue\ntrue\ntrue\n\n\ninterval\nNumber\nfalse\n5000\n自动切换时间间隔\ntrue\ntrue\ntrue\ntrue\n\n\nduration\nNumber\nfalse\n500\n滑动动画时长\ntrue\ntrue\ntrue\ntrue\n\n\ncircular\nBoolean\nfalse\nfalse\n是否采用衔接滑动\ntrue\ntrue\ntrue\ntrue\n\n\nvertical\nBoolean\nfalse\nfalse\n滑动方向是否为纵向\ntrue\ntrue\ntrue\ntrue\n\n\nonChange\nEventHandle\nfalse\n\ncurrent 改变时会触发 change 事件，event.detail = {current: current, source: source}\ntrue\ntrue\ntrue\ntrue\n\n\nonAnimationfinish\nEventHandle\nfalse\n\n动画结束时会触发 animationfinish 事件，event.detail 同上\ntrue\ntrue\ntrue\ntrue\n\n\n",
+      "content": "轮播图\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nstyle\nObject\nfalse\n\nSwiper 的样式\ntrue\ntrue\ntrue\ntrue\n\n\nindicatorDots\nBoolean\nfalse\nfalse\n是否显示面板指示点\ntrue\ntrue\ntrue\ntrue\n\n\nindicatorColor\nColor\nfalse\nrgba(0, 0, 0, .3)\n指示点颜色\ntrue\ntrue\ntrue\ntrue\n\n\nindicatorActiveColor\nColor\nfalse\n#000000\n当前选中的指示点颜色\ntrue\ntrue\ntrue\ntrue\n\n\nautoplay\nBoolean\nfalse\nfalse\n是否自动切换\ntrue\ntrue\ntrue\ntrue\n\n\ncurrent\nNumber\nfalse\n0\n当前所在滑块的 index\ntrue\ntrue\ntrue\ntrue\n\n\ninterval\nNumber\nfalse\n5000\n自动切换时间间隔\ntrue\ntrue\ntrue\ntrue\n\n\nduration\nNumber\nfalse\n500\n滑动动画时长\ntrue\ntrue\ntrue\ntrue\n\n\ncircular\nBoolean\nfalse\nfalse\n是否采用衔接滑动\ntrue\ntrue\ntrue\ntrue\n\n\nvertical\nBoolean\nfalse\nfalse\n滑动方向是否为纵向\ntrue\ntrue\ntrue\ntrue\n\n\nonChange\nEventHandle\nfalse\n\ncurrent 改变时会触发 change 事件，event.detail = {current: current, source: source}\ntrue\ntrue\ntrue\ntrue\n\n\nonAnimationfinish\nEventHandle\nfalse\n\n动画结束时会触发 animationfinish 事件，event.detail 同上\ntrue\ntrue\ntrue\ntrue\n\n\n",
       "url": "/components/Swiper.html",
       "children": [
         {
           "title": "示例",
           "url": "/components/Swiper.html#示例",
-          "content": "示例基础用法："
+          "content": "示例基础用法：水平方向    {[0,1,2,3,4,5].map(function(item) {\n        return \n            {item}\n        ;\n    })}\n\n水平带指示点    {[0,1,2,3,4,5].map(function(item) {\n        return \n            {item}\n        ;\n    })}\n\n垂直方向    {[0,1,2,3,4,5].map(function(item) {\n        return \n            {item}\n        ;\n    })}\n\n垂直带指示点<XSwiper\nindicatorDots={true}\nvertical={true}\nstyle={{ height: '300px' }}{[0,1,2,3,4,5].map(function(item) {    return \n        {item}\n    ;\n})}\n\n循环滚动    {[5,0,1,2,3,4,5,0].map(function(item) {\n        return \n            {item}\n        ;\n    })}\n\n自动播放    {[0,1,2,3,4,5].map(function(item) {\n        return \n            {item}\n        ;\n    })}\n\n循环播放    {[5,0,1,2,3,4,5,0].map(function(item) {\n        return \n            {item}\n        ;\n    })}\n\n"
         }
       ]
     },
     {
       "title": "Switch",
-      "content": "开关选择器。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nchecked\nBoolean\nfalse\nfalse\n是否选中\ntrue\ntrue\ntrue\ntrue\n\n\ndisabled\nBoolean\nfalse\nfalse\n是否禁用\ntrue\ntrue\ntrue\ntrue\n\n\ncolor\nString\nfalse\n#2998F9\nswitch 开启的颜色\ntrue\ntrue\ntrue\ntrue\n\n\ncheckColor\nString\nfalse\n#C1C1C1\nswitch 关闭的颜色\ntrue\ntrue\ntrue\ntrue\n\n\nwrapperStyle\nObject\nfalse\n\n外层的样式\ntrue\ntrue\ntrue\ntrue\n\n\ninnerStyle\nObject\nfalse\n\n内部按钮的样式\ntrue\ntrue\ntrue\ntrue\n\n\nonChange\nFunction\nfalse\n\nchecked 改变时触发 change 事件 event.value\ntrue\ntrue\ntrue\ntrue\n\n\n",
+      "content": "开关选择器。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nchecked\nBoolean\nfalse\nfalse\n是否选中\ntrue\ntrue\ntrue\ntrue\n\n\ndisabled\nBoolean\nfalse\nfalse\n是否禁用\ntrue\ntrue\ntrue\ntrue\n\n\ncolor\nString\nfalse\n#2998F9\nswitch 开启的颜色\ntrue\ntrue\ntrue\ntrue\n\n\ncheckColor\nString\nfalse\n#C1C1C1\nswitch 关闭的颜色\ntrue\ntrue\ntrue\ntrue\n\n\nwrapperStyle\nObject\nfalse\n\n外层的样式\ntrue\ntrue\ntrue\ntrue\n\n\ninnerStyle\nObject\nfalse\n\n内部按钮的样式\ntrue\ntrue\ntrue\ntrue\n\n\nonChange\nFunction\nfalse\n\nchecked 改变时触发 change 事件: 传入参数为 { event: 事件, detail/target: { value: switch 值 } }\ntrue\ntrue\ntrue\ntrue\n\n\n",
       "url": "/components/Switch.html",
       "children": [
         {
           "title": "示例",
           "url": "/components/Switch.html#示例",
-          "content": "示例基本用法：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  change(e) {\n    console.log('change value', e);\n  }\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\nexport default P;\nDisabled：自定义样式：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  constructor() {\n    super();\n    this.state = {\n      innerStyle: {\n        borderRadius: 0,\n        backgroundColor: '#fac450'\n      },\n      wrapperStyle: {\n        borderRadius: 0\n      }\n    };\n  }\n\n  change(e) {\n    console.log('change value', e);\n  }\n\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\n\nexport default P;\n"
+          "content": "示例基本用法：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  change(e) {\n    console.log('change value', e);\n  }\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\nexport default P;\nDisabled：自定义样式：import React from '@react';import XSwitch from '@components/XSwitch/index';\nclass P extends React.Component {\n  constructor() {\n    super();\n    this.state = {\n      innerStyle: {\n        borderRadius: 0,\n        backgroundColor: '#fac450'\n      },\n      wrapperStyle: {\n        borderRadius: 0\n      }\n    };\n  }\n\n  change(e) {\n    console.log('携带值：', e.detail.value);\n    console.log('携带值：', e.target.value);\n    console.log('携带事件：', e.event);\n  }\n\n  render() {\n    return (\n      \n        \n      \n    );\n  }\n}\n\nexport default P;\n"
+        }
+      ]
+    },
+    {
+      "title": "",
+      "content": "",
+      "url": "/components/Navigator.html",
+      "children": [
+        {
+          "title": "Navigator",
+          "url": "/components/Navigator.html#navigator",
+          "content": "Navigator页面链接\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\nH5\n\n\n\n\ntarget\nString\nfalse\n'self'\n在哪个目标上发生跳转，目前只支持 self\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nurl\nString\ntrue\n''\n跳转链接\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nopenType\nString\nfalse\nnavigate\n跳转方式，支持 navigate、redirect、switchTab、reLaunch、navigateBack\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nbindsuccess\nFunction\nfalse\n()=>{}\n成功回调\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nbindfail\nFunction\nfalse\n()=>{}\n失败回调\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nbindcomplete\nFunction\nfalse\n()=>{}\n失败/成功都会调用\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\n"
+        },
+        {
+          "title": "说明",
+          "url": "/components/Navigator.html#说明",
+          "content": "说明组件内容暂时只能传字符串，不能放标签"
+        },
+        {
+          "title": "示例",
+          "url": "/components/Navigator.html#示例",
+          "content": "示例Goto Button"
+        }
+      ]
+    },
+    {
+      "title": "Progress",
+      "content": "进度条\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\nH5\n\n\n\n\npercent\nNumber\nfalse\n0\n百分比0~100\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nshowInfo\nBoolean\nfalse\ntrue\n在进度条下方显示百分比\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nstrokeColor\nString\nfalse\n'#1890ff'\n进度条颜色\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nstrokeHeight\nNumber\nfalse\n32\n进度条宽度\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\nborderRadius\nNumber\nfalse\n20\n圆角大小，单位 px\ntrue\ntrue\ntrue\ntrue\ntrue\n\n\n",
+      "url": "/components/Progress.html",
+      "children": [
+        {
+          "title": "示例",
+          "url": "/components/Progress.html#示例",
+          "content": "示例默认样式自定义进度条颜色不显示提示信息自定义进度条高度自定义进度条圆角大小"
+        }
+      ]
+    },
+    {
+      "title": "RichText",
+      "content": "富文本\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\nH5\n\n\n\n\nnodes\nString\ntrue\n\nHTML String\nfalse\ntrue\nfalse\nfalse\nfalse\n\n\n",
+      "url": "/components/RichText.html",
+      "children": [
+        {
+          "title": "示例",
+          "url": "/components/RichText.html#示例",
+          "content": "示例rich text\">"
+        }
+      ]
+    },
+    {
+      "title": "Webview",
+      "content": "\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\nH5\n\n\n\n\nsrc\nString\ntrue\n\n网页链接\ntrue\ntrue\ntrue\ntrue\nfalse\n\n\n",
+      "url": "/components/Webview.html",
+      "children": [
+        {
+          "title": "示例",
+          "url": "/components/Webview.html#示例",
+          "content": "示例"
+        }
+      ]
+    },
+    {
+      "title": "CitySelector (内部组件)",
+      "content": "\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\nH5\n\n\n\n\ntype\nNumber\ntrue\n\n0: 机票 1: 火车票 2: 汽车票 3: 酒店 4: 攻略\n\n\n\n\n\n\n\ncitySuggestService\nString\nfalse\n\n用于搜索框的接口路径\n\n\n\n\n\n\n\ncitySuggestHost\nString\nfalse\n\n用于搜索框的 host\n\n\n\n\n\n\n\ncityListHost\nString\nfalse\n\n用于获取热门/全部城市的 host\n\n\n\n\n\n\n\ncityListService\nString\nfalse\n\n用于获取热门/全部城市的接口路径\n\n\n\n\n\n\n\neventType\nString\nfalse\n\n事件类型，在点击城市后会调用名称为 eventType 的回调函数，参数为 {city, cityUrl, isDep, source}\n\n\n\n\n\n\n\nplaceholder\nString\nfalse\n''\n搜索框的placeholder\n\n\n\n\n\n\n\nisDep\nBoolean\nfalse\n无\n用于设置标题 true: 出发城市 false: 到达城市\n\n\n\n\n\n\n\n",
+      "url": "/components/CitySelector.html",
+      "children": [
+        {
+          "title": "说明",
+          "url": "/components/CitySelector.html#说明",
+          "content": "说明点击城市后，会设置 globalData[evnetType] = cityObj，同时触发名称为 eventType 的回调函数，传入 cityObjcityObj = {    city: 选择的城市\n    cityUrl:\n    isDep: 传入的 isDep\n    source: \n}\n"
+        },
+        {
+          "title": "示例",
+          "url": "/components/CitySelector.html#示例",
+          "content": "示例const params = {    type: 4,\n    cityListHost: '***.com',\n    citySuggestHost: '***.com',\n    cityListService: '/***/***',\n    citySuggestService: '/***/***',\n    eventType: 'CITY_SELECT',\n    placeholder: '请输入城市名称或首字母'\n};\nReact.api.navigateTo({url: `${citySelect页面路径}?data=${JSON.stringify(params)}`});\n"
+        }
+      ]
+    },
+    {
+      "title": "Clander (内部组件)",
+      "content": "日历。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n举例\n\n\n\n\neventType\nString\ntrue\n\n回调事件名字，选择日期成功之后触发的事件，通过监听这个事件来得到响应\n\n\n\n\nhotel酒店：HOTEL。Ticket门票：TICKET_DATE_SELECT。Train火车票多选：OPTIONAL_DATE_SELECT。Train火车票单选：CALENDAR_DATE_CHANGE。\n\n\nisDoubleSelect\nBoolean\ntrue\n\n是否双选\n\n\n\n\n\n\n\nsText\nString\nfalse\n入住\n酒店入住文本文案\n\n\n\n\n\n\n\neText\nString\nfalse\n离店\n酒店离店文本文案\n\n\n\n\n\n\n\ncalendarDays\nNumber\nfalse\n90\n日历显示的天数\n\n\n\n\n\n\n\ndate\nString\ntrue\n\n例如：'2019-02-01'。如果多选，则表示选择第一天的时间。如果单选则表示选中的日期。选中的日期\n\n\n\n\n默认格式'YYYY-MM-dd'\n\n\neDate\nString\nfalse\n\n例如：'2019-02-01'。如果多选，则表示选择最后一天的时间。双选时的第二个日期\n\n\n\n\n默认格式'YYYY-MM-dd'\n\n\nurl\nString\nfalse\n\n请求数据，在日历中显示价钱列表，例如火车票和酒店\n\n\n\n\n\n\n\nreqData\nObject\nfalse\n\n请求日历数据的参数\n\n\n\n\n\n\n\nbizType\nString\ntrue\n\n对应业务线名称\n\n\n\n\n例如：Train\n\n\nisMultiSelect\nBoolean\nfalse\n\n是否多选\n\n\n\n\n\n\n\ndates\nArray\nfalse\n\n已经选择的备选日期s\n\n\n\n\n\n\n\nmaxSelectDays\nNumber\nfalse\n\n最多备选多少个\n\n\n\n\n\n\n\n",
+      "url": "/components/Clander.html",
+      "children": [
+        {
+          "title": "示例",
+          "url": "/components/Clander.html#示例",
+          "content": "示例基本使用：var params = {    bizType: '业务线名称', // 业务线\n    date: 'YYYY-MM-dd', // 主选日期\n    eventType: '回调函数的名字',  // 选择日期成功之后触发的事件，通过监听这个事件来得到响应\n    isMultiSelect: true, // 是否多选\n    reqData: { },   // 请求日历数据的 参数\n    dates: ['YYYY-MM-dd', 'YYYY-MM-dd'], // 已经选择的备选日期s\n    maxSelectDays: 6, // 最多备选多少个\n    dataUrlHost: '/api/***',\n    url: '/api/***'\n};\nReact.api.navigateTo({url: '***/calendar/index?data=' + JSON.stringify(params)});\n"
         }
       ]
     }
