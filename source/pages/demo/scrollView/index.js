@@ -5,7 +5,7 @@ import XScrollView from '@components/XScrollView/index';
 class P extends React.Component {
     constructor (){
         super();
-        this.bindMethods()
+        this.bindMethods();
     }
     bindMethods (){
         this.logScrollTop = this.logScrollTop.bind(this);
@@ -13,12 +13,15 @@ class P extends React.Component {
         this.logOnScrollToLower = this.logOnScrollToLower.bind(this);
     }
     logScrollTop(e) {
-        console.log(e.target.scrollTop)
+        // eslint-disable-next-line
+        console.log(e.target.scrollTop);
     }
     logOnScrollToUpper(e) {
+        // eslint-disable-next-line
         console.log(e.target.scrollTop)
     }
     logOnScrollToLower(e) {
+        // eslint-disable-next-line
         console.log(e.target.scrollTop)
     }
     render() {

@@ -116,3 +116,6 @@ source/ReactAli.js
 source/ReactBU.js
 source/ReactQuick.js
 source/ReactWX.js
+
+#.vscode
+.vscode

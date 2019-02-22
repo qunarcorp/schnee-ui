@@ -19,6 +19,7 @@ class P extends React.Component {
     }
 
     handleRadioChange(e) {
+        // eslint-disable-next-line
         console.log('XRadio 发生改变，触发 XRadioGroup onChange 事件，被选中的 XRadio 的 value 为: ', e.detail.value);
         this.setState({ checkedValue: e.detail.value.toString() });
     }
@@ -28,14 +29,14 @@ class P extends React.Component {
             <div className="anu-col demo-page">
                 {
                     this.state.env === 'wx' ?
-                    <div className="radio-col">
-                        <span className="demo-header">与微信原生对比</span>
-                        <div className="demo-content radio-content">
-                            <XRadio />
-                            <radio />
-                        </div>
-                    </div> :
-                    null
+                        <div className="radio-col">
+                            <span className="demo-header">与微信原生对比</span>
+                            <div className="demo-content radio-content">
+                                <XRadio />
+                                <radio />
+                            </div>
+                        </div> :
+                        null
                 }
                 {
                     this.state.configs.map(config => (

@@ -8,5 +8,9 @@ schnee，念希尼， RWBY中白衣少女的名字
 使用时，要先安装nanachi, 详见 https://rubylouvre.github.io/nanachi/documents/install.html
 有了nanachi命令后
 
-在git clone下来后，命令行直接定义到schnee-ui中使用`nanachi watch:wx`，编译后多出dist目录，
-然后用微信开发者工具打开这个dist目录后就能看到效果
+在git clone下来后，命令行直接定义到schnee-ui中使用`nanachi watch:wx/ali/bu/quick`，编译后多出dist目录，
+然后用微信/百度/支付宝开发者工具或快应用打开这个dist目录后就能看到效果
+
+[文档](https://qunarcorp.github.io/schnee-ui/index.html)
+
+[更新日志](./CHANGELOG.md)

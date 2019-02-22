@@ -14,7 +14,7 @@ class P extends React.Component {
             slider5: 0
         };
 
-        this.sliderChange = this.sliderChange.bind(this)
+        this.sliderChange = this.sliderChange.bind(this);
     }
 
     sliderChange(idx, value) {

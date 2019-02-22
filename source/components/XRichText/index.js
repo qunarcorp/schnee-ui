@@ -35,7 +35,7 @@ class XRichText extends React.Component {
         this.setState({ nodes });
     }
 
-    renderNode(item) {}
+    // renderNode(item) {}
 
     render() {
         return (

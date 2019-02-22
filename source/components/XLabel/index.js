@@ -61,7 +61,6 @@ class XLabel extends React.Component {
         let targetFiber = null;
 
         // 获得目标控件
-        console.time('label target search');
         if (this.props.for !== undefined) {
             // for 方式
             const topFiber = getTopFiber(fiber);
@@ -71,8 +70,6 @@ class XLabel extends React.Component {
             // 子元素方式，只取第一个符合要求的控件
             targetFiber = getFirstWidget(fiber);
         }
-        console.timeEnd('label target search');
-        console.log('XLabel target: ', targetFiber);
         // 目标控件存在的话执行对应的 handleClick 方法
         if (targetFiber) {
             const fn = targetFiber.stateNode.handleClick;

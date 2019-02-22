@@ -71,6 +71,7 @@ class XCheckbox extends React.Component {
         }
 
         let fiber = this._reactInternalFiber;
+        // eslint-disable-next-line
         console.log('fiber: ', fiber);
         const checkboxInstances = [];
         let parentInstance = null;

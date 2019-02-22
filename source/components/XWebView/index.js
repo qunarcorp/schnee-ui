@@ -18,8 +18,8 @@ class XWebView extends React.Component {
             src:  this.props.src
         });
     }
-    onMsgFunc(e) {
-        console.log(1222, e)
+    onMsgFunc() {
+        // console.log(1222, e)
     }
 
     render() {
