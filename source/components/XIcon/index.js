@@ -4,9 +4,9 @@ import './index.scss';
 class XIcon extends React.Component {
 
     render() {
-        return <span className={`iconfont ${this.props.className}`} style={{ color: this.props.color, 'font-size': this.props.size }}>
+        return <text className={`iconfont ${this.props.className}`} style={{ color: this.props.color, 'font-size': this.props.size }}>
             {this.props.content}
-        </span>;
+        </text>;
     }
 }
 

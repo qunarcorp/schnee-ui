@@ -145,8 +145,8 @@ class XRadio extends React.Component {
                     }}
                 >
                     {
-                        this.state.checked ?
-                            <span
+                        this.state.checked &&
+                            <text
                                 className='anu-radio__check'
                                 style={{
                                     backgroundColor: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
@@ -157,8 +157,7 @@ class XRadio extends React.Component {
                                     // 并不是圆形(快应用中是圆形)，border-radius 需要再大点，所以索性直接填 width 的值
                                     borderRadius: this.state.thumb_width,
                                 }}
-                            ></span> :
-                            null
+                            ></text> 
                     }
                 </div>
                 {this.props.isRight && <text>{this.props.text}</text>}
