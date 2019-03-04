@@ -21,19 +21,9 @@
         "eslint": "^5.14.1",
         "eslint-plugin-react": "^7.12.4",
         "hap-toolkit": "^0.2.0",
-        "koa": "^2.3.0",
-        "koa-body": "^2.5.0",
-        "koa-router": "^7.2.1",
-        "koa-send": "^4.1.1",
-        "koa-static": "^4.0.1",
-        "less-loader": "^4.1.0",
-        "node-sass": "^4.9.4",
-        "pre-commit": "^1.2.2",
-        "sass-loader": "^7.1.0",
-        "socket.io": "^2.1.0",
-        "webpack": "^4"
+        "pre-commit": "^1.2.2"
     },
     "dependencies": {
-        "schnee-ui": "^1.0.6"
+        "schnee-ui": "^1.0.7"
     }
 }
