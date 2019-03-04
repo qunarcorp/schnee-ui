@@ -160,8 +160,6 @@ class P extends React.Component {
           <XPicker
             mode="date"
             value={this.state.date}
-            start="2015-10-01"
-            end="2017-09-01"
             onCancel={this.close.bind(this)}
             onChange={this.bindDateChange.bind(this)}
           >

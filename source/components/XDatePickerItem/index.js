@@ -7,14 +7,6 @@ const MIDDLE_INDEX = Math.floor(DATE_LENGTH / 2); // 日期数组中间值的索
 const DEFAULT_INDEX = 3; // 中间索引距离顶部的索引差
 var gid = 0;
 
-function calculate(value) {
-  const ANU_ENV = process.env.ANU_ENV; //wx ali bu quick
-  if (ANU_ENV === 'quick') {
-    return value * 2;
-  } else {
-    return value;
-  }
-}
 
 class XDatePickerItem extends React.Component {
   constructor(props) {
@@ -30,11 +22,11 @@ class XDatePickerItem extends React.Component {
       touchId: undefined,
       ogY: 0,
       ogTranslate: 0, // 移动之前的起始位置
-      translateY: -MIDDLE_INDEX * calculate(props.itemHeight) + calculate(props.indicatorTop),
+      translateY: -MIDDLE_INDEX * props.itemHeight + props.indicatorTop,
       totalHeight: 0,
       selected: 0,
       marginTop: 0,
-      totalHeight: DATE_LENGTH * calculate(props.indicatorHeight),
+      totalHeight: DATE_LENGTH * props.indicatorHeight,
       dates
     };
   }
@@ -98,7 +90,7 @@ class XDatePickerItem extends React.Component {
     let typeName = this.props.type;
     let { dates } = this.state;
 
-    let itemHeight = calculate(this.props.itemHeight);
+    let itemHeight = this.props.itemHeight;
     if (direction === 1) {
       let value = TimeUtil[`next${typeName}`](dates[dates.length - 1].date, this.props.step);
       this.currentIndex++;
@@ -123,7 +115,7 @@ class XDatePickerItem extends React.Component {
 
   // // 是否更新
   _checkIsUpdateDates(direction, translateY) {
-    let itemHeight = calculate(this.props.itemHeight);
+    let itemHeight = this.props.itemHeight;
 
     let isUpdate =
       direction === 1
@@ -136,7 +128,7 @@ class XDatePickerItem extends React.Component {
   handleTouchEnd() {
     if (!this.state.touching) return;
 
-    let itemHeight = calculate(this.props.itemHeight);
+    let itemHeight = this.props.itemHeight;
 
     let translate = this.state.translateY;
 

@@ -1,36 +1,39 @@
 {
-  "license": "MIT",
-  "version": "1.0.0",
-  "name": "shinee-ui",
-  "scripts": {
-    "server": "hap server",
-    "postinstall": "hap postinstall",
-    "debug": "hap debug",
-    "build": "hap build",
-    "release": "hap release",
-    "watch": "hap watch",
-    "eslint": "eslint source",
-    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
-  },
-  "pre-commit": [
-    "precommit-msg",
-    "eslint"
-  ],
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.14.1",
-    "eslint-plugin-react": "^7.12.4",
-    "hap-toolkit": "^0.2.0",
-    "koa": "^2.3.0",
-    "koa-body": "^2.5.0",
-    "koa-router": "^7.2.1",
-    "koa-send": "^4.1.1",
-    "koa-static": "^4.0.1",
-    "less-loader": "^4.1.0",
-    "node-sass": "^4.9.4",
-    "pre-commit": "^1.2.2",
-    "sass-loader": "^7.1.0",
-    "socket.io": "^2.1.0",
-    "webpack": "^4"
-  }
+    "license": "MIT",
+    "version": "1.0.0",
+    "name": "shinee-ui",
+    "scripts": {
+        "server": "hap server",
+        "postinstall": "hap postinstall",
+        "debug": "hap debug",
+        "build": "hap build",
+        "release": "hap release",
+        "watch": "hap watch",
+        "eslint": "eslint source",
+        "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
+    },
+    "pre-commit": [
+        "precommit-msg",
+        "eslint"
+    ],
+    "devDependencies": {
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.14.1",
+        "eslint-plugin-react": "^7.12.4",
+        "hap-toolkit": "^0.2.0",
+        "koa": "^2.3.0",
+        "koa-body": "^2.5.0",
+        "koa-router": "^7.2.1",
+        "koa-send": "^4.1.1",
+        "koa-static": "^4.0.1",
+        "less-loader": "^4.1.0",
+        "node-sass": "^4.9.4",
+        "pre-commit": "^1.2.2",
+        "sass-loader": "^7.1.0",
+        "socket.io": "^2.1.0",
+        "webpack": "^4"
+    },
+    "dependencies": {
+        "schnee-ui": "^1.0.6"
+    }
 }
