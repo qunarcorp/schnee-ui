@@ -71,6 +71,7 @@ class XCheckbox extends React.Component {
         }
 
         let fiber = this._reactInternalFiber;
+        // eslint-disable-next-line
         console.log('fiber: ', fiber);
         const checkboxInstances = [];
         let parentInstance = null;
@@ -130,15 +131,14 @@ class XCheckbox extends React.Component {
                     }}
                 >
                     {
-                        this.state.checked ?
-                            <span
+                        this.state.checked &&
+                            <text
                                 className="iconfont checkbox__check"
                                 style={{
                                     color: this.props.disabled ? DISABLED_ENHANCE_COLOR : this.props.color,
                                     fontSize: this.state.fontSize
                                 }}
-                            >&#xf078;</span>:
-                            null
+                            >&#xf078;</text>
                     }
                 </div>
                 {this.props.isRight && <text>{this.props.text}</text>}

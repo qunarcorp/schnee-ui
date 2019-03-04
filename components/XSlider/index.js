@@ -36,13 +36,8 @@ class XSlider extends React.Component {
             className,
             max,
             min,
-            step,
-            showValue,
             value,
-            disabled,
             defaultValue,
-            onChange,
-            snapToValue,
             ...domProps
         } = props;
         let percent = value

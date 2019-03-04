@@ -1,14 +1,7 @@
 import React from '@react';
 import './index.scss';
 /* eslint-disable */
-function calculate(value) {
-  const ANU_ENV = process.env.ANU_ENV; //wx ali bu quick
-  if (ANU_ENV === 'quick') {
-    return value * 2;
-  } else {
-    return value;
-  }
-}
+
 
 class XPickerItem extends React.Component {
   constructor(props) {
@@ -20,9 +13,8 @@ class XPickerItem extends React.Component {
       ogY: 0,
       ogTranslate: 0, // 移动之前的起始位置
       translate: 0,
-      totalHeight: 0,
       selected: 0,
-      totalHeight: props.items.length * calculate(props.indicatorHeight)
+      totalHeight: props.items.length * props.indicatorHeight
     };
   }
 
@@ -33,7 +25,7 @@ class XPickerItem extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(this.props.items.length !== nextProps.items.length) {
       this.setState({
-        totalHeight: nextProps.items.length * calculate(this.props.indicatorHeight)
+        totalHeight: nextProps.items.length * this.props.indicatorHeight
       })
     }
 
@@ -43,8 +35,8 @@ class XPickerItem extends React.Component {
   adjustPosition(props) {
     
     let { items, itemHeight, indicatorTop, defaultIndex } = props;
-    itemHeight = calculate(itemHeight);
-    indicatorTop = calculate(indicatorTop);
+    itemHeight = itemHeight;
+    indicatorTop = indicatorTop;
     const totalHeight = items.length * itemHeight;
     let translate = totalHeight <= indicatorTop ? indicatorTop : 0;
     if (defaultIndex > -1) {
@@ -112,9 +104,9 @@ class XPickerItem extends React.Component {
     if (!this.state.touching || this.props.items.length <= 1) return;
 
     let { indicatorTop, indicatorHeight, itemHeight } = this.props;
-    indicatorTop = calculate(indicatorTop);
-    indicatorHeight = calculate(indicatorHeight);
-    itemHeight = calculate(itemHeight);
+    indicatorTop = indicatorTop;
+    indicatorHeight = indicatorHeight;
+    itemHeight = itemHeight;
     let translate = this.state.translate;
 
     if (Math.abs(translate - this.state.ogTranslate) < itemHeight * 0.51) {
@@ -158,9 +150,9 @@ class XPickerItem extends React.Component {
 
   updateSelected(propagate = true, translate) {
     let { items, itemHeight, indicatorTop, indicatorHeight, onChange, groupIndex } = this.props;
-    indicatorTop = calculate(indicatorTop);
-    indicatorHeight = calculate(indicatorHeight);
-    itemHeight = calculate(itemHeight);
+    indicatorTop = indicatorTop;
+    indicatorHeight = indicatorHeight;
+    itemHeight = itemHeight;
     let selected = 0;
 
     items.forEach((item, i) => {

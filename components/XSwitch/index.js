@@ -79,7 +79,11 @@ class XSwitch extends React.Component {
     handleClick(e) {
         let fn = this.props.onChange;
         if (!this.props.disabled) {
-            fn && fn.call(this, { ...e, value: !this.state.checked });
+            const params = {};
+            params.event = e;
+            params.detail = { value: !this.state.checked };
+            params.target = params.detail;
+            fn && fn.call(this, params);
             this.updateState(this.props, !this.state.checked);
         }
     }

@@ -27,9 +27,9 @@ class XScrollView extends React.Component {
         let classes = 'anu-scroll-view';
         if (scrollX && scrollY) {
             classes += ' anu-scroll-view--overflow';
-        } else if(scrollX) {
+        } else if (scrollX) {
             classes += ' anu-scroll-view--overflow-x';
-        } else if(scrollY) {
+        } else if (scrollY) {
             classes += ' anu-scroll-view--overflow-y';
         }
         return classes;
@@ -70,7 +70,6 @@ class XScrollView extends React.Component {
         const { scrollX, scrollY, scrollWithAnimation, scrollIntoView } = this.props;
         let { scrollTop, scrollLeft } = this.props;
 
-        console.log(scrollTop);
         if (typeof scrollIntoView === 'string') {
             const dom = document.getElementById(scrollIntoView);
             scrollX && dom && this.scroll && (scrollLeft = dom.getBoundingClientRect().left - this.scroll.getBoundingClientRect().left);
@@ -78,7 +77,9 @@ class XScrollView extends React.Component {
         }
 
         if (scrollWithAnimation && scroll && scroller) {
-            let curTop, curLeft, deltaTop, deltaLeft, stepX, stepY;
+            let curTop, curLeft, deltaTop, stepX, stepY;
+            // eslint-disable-next-line
+            let deltaLeft;
             curTop  = scroll.scrollTop;
             curLeft = scroll.scrollLeft;
             curTop  !== undefined && scrollTop  !== undefined && (deltaTop  = scrollTop  - curTop);
@@ -93,8 +94,7 @@ class XScrollView extends React.Component {
             } else if (scrollLeft > 0) {
                 stepX = -30;
             }
-            animation();
-            function animation() {
+            const animation = () => {
                 setTimeout(function() {
                     if (stepY !== undefined) {
                         curTop += stepY;
@@ -118,6 +118,7 @@ class XScrollView extends React.Component {
                     }
                 }, 16);
             };
+            animation();
         } else {
             scrollTop !== undefined && scroller && (scroller.scrollTop = scrollTop);
             scrollLeft !== undefined && scroller && (scroller.scrollLeft = scrollLeft);

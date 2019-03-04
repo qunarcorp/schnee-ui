@@ -83,7 +83,7 @@ class XSwiper extends React.Component {
     }
 
     handleTouchEnd() {
-        const deltaLength = this.props.vertical ? this.state.translateY : this.state.translateX
+        const deltaLength = this.props.vertical ? this.state.translateY : this.state.translateX;
         let nextIndex = this.state.curIndex;
         if (deltaLength < -30) {
             if (this.state.curIndex + 1 < (this.props.circular ? this.count + 1 : this.count)) {
@@ -152,14 +152,14 @@ class XSwiper extends React.Component {
             return `translate(${x}, ${y})`;
         }
     }
-    calculateTransformFormIndex(index, vertical) {
+    calculateTransformFormIndex(index) {
         return this.props.vertical ? {
-                translateY: 0,
-                wrapperTranslateY: `-${100 * (this.props.circular ? index + 1 : index)}%`
-            } : {
-                translateX: 0,
-                wrapperTranslateX: `-${100 * (this.props.circular ? index + 1 : index)}%`
-            };
+            translateY: 0,
+            wrapperTranslateY: `-${100 * (this.props.circular ? index + 1 : index)}%`
+        } : {
+            translateX: 0,
+            wrapperTranslateX: `-${100 * (this.props.circular ? index + 1 : index)}%`
+        };
     }
 
     componentWillMount() {
@@ -175,7 +175,7 @@ class XSwiper extends React.Component {
     }
 
     componentWillUpdate(nextProps) {
-        if(nextProps.autoPlay !== this.props.autoPlay) {
+        if (nextProps.autoPlay !== this.props.autoPlay) {
             nextProps.autoPlay ?
                 this.autoPlay() :
                 (this.intervalId && clearInterval(this.intervalId));
