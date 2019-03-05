@@ -1,0 +1,16 @@
+.click-button {
+    padding: 10px;
+    background-color: #fff;
+    margin: 5px 0px;
+    width: 100%;
+    text {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+}

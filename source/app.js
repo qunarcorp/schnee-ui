@@ -15,6 +15,7 @@ import './pages/demo/slider/index';
 import './pages/demo/swiper/index';
 import './pages/demo/switch/index';
 import './pages/demo/webView/index';
+import './pages/demo/dialog/index';
 import './app.scss';
 
 class Global extends React.Component {
