@@ -71,6 +71,9 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹
     .then(() => myExec(`rm -rf _sourceDev`))
     .then(() => myExec(`git add .`))
     .then(() => myExec(`git commit -m 'fix: 发布'`))
+    .then(function(){
+        console.log('commit suc');
+    })
     .catch(err => err);
 
 
