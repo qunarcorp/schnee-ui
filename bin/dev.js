@@ -50,7 +50,9 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹
         copyDir(path.resolve(__dirname, '../source/components'), path.resolve(__dirname, '../_sourceDev/'));
     })
     .then(() =>myExec(`git checkout ydocTest`))
-    .then(() => myExec(`git add _sourceDev/*`))
+    .then(() => myExec(`git add _sourceDev`))
+    .then(() => myExec(`mv _sourceDev/* .`))
+    .then(() => myExec(`rm -rd _sourceDev`))
     .then(() => myExec(`git commit -m 'fix: 发布'`))
     .catch(err => err);
 
