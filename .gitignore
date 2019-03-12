@@ -119,3 +119,6 @@ source/ReactWX.js
 
 #.vscode
 .vscode
+
+#发布dev相关内容
+_sourceDev/
