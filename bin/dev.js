@@ -17,8 +17,8 @@ function myExec(param){
 }
 
 
-// 对文件夹的操作
-myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`)   // 删除文件夹_sourceDev
+myExec(`git checkout ydocTest`)
+    .then(() => myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) )  // 删除文件夹_sourceDev
     .then(() => myExec(`mkdir ${path.resolve(__dirname, '../_sourceDev')}`))    // 创建文件夹_sourceDev
     .then(() => myExec(`rm -rf ${path.resolve(__dirname, '../_sourceDev/index.js')}`))    // 删除文件index
     .then(() => myExec(`touch ${path.resolve(__dirname, '../_sourceDev/index.js')}`))    // 创建文件index
@@ -54,5 +54,5 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`)   // 删除文件�
     .catch(err => err);
 
 
-
+// 执行命令的脚本 node bin/dev.js
 
