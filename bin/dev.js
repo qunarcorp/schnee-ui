@@ -57,10 +57,13 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹
     .then(() =>myExec(`git checkout textDev`))
     
     .then(() => {
-        console.log(process.cwd());
-        //return myExec(`mv ../_sourceDev/* ../`);
+        let cwd = process.cwd();
+        let source = path.join(cwd, '_sourceDev', '*');
+        return myExec(`mv ${source} ${cwd}`);
     })
-    //.then(function())
+    .then(function(){
+        console.log('move sucess');
+    })
     // .then(() => myExec(`rm -rf _sourceDev`))
     // .then(() => myExec(`git add .`))
     // .then(() => myExec(`git commit -m 'fix: 发布'`))
