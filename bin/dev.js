@@ -16,9 +16,7 @@ function myExec(param){
     });
 }
 
-
-myExec(`git checkout ydocTest`)
-    .then(() => myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) )  // 删除文件夹_sourceDev
+myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹_sourceDev
     .then(() => myExec(`mkdir ${path.resolve(__dirname, '../_sourceDev')}`))    // 创建文件夹_sourceDev
     .then(() => myExec(`rm -rf ${path.resolve(__dirname, '../_sourceDev/index.js')}`))    // 删除文件index
     .then(() => myExec(`touch ${path.resolve(__dirname, '../_sourceDev/index.js')}`))    // 创建文件index
@@ -51,6 +49,7 @@ myExec(`git checkout ydocTest`)
         copyDir(path.resolve(__dirname, '../source/common'), path.resolve(__dirname, '../_sourceDev/'));
         copyDir(path.resolve(__dirname, '../source/components'), path.resolve(__dirname, '../_sourceDev/'));
     })
+    .then(() =>myExec(`git checkout ydocTest`))
     .then(() => myExec(`git add _sourceDev/*`))
     .then(() => myExec(`git commit -m 'fix: 发布'`))
     .catch(err => err);
