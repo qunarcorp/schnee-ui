@@ -59,7 +59,8 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹
     .then(() => {
         let cwd = process.cwd();
         let source = path.join(cwd, '_sourceDev', '*');
-        return myExec(`mv ${source} ${cwd}`);
+        let cmd = `cp -r ${source} ${cwd}`
+        return myExec(cmd);
     })
     .then(function(){
         console.log('move sucess');
