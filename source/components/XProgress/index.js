@@ -13,16 +13,16 @@ class XProgress extends React.Component {
                     <div
                         class="anu-progress-inner"
                         style={{
-                            height: `${this.props.strokeHeight}px`,
-                            borderRadius: `${this.props.borderRadius}px`
+                            height: `${this.props.strokeHeight}rpx`,
+                            borderRadius: `${this.props.borderRadius}rpx`
                         }}
                     >
                         <div
                             style={{
                                 width: `${this.props.percent}%`,
                                 'background-color': `${this.props.strokeColor}`,
-                                height: `${this.props.strokeHeight}px`,
-                                borderRadius: `${this.props.borderRadius}px`
+                                height: `${this.props.strokeHeight}rpx`,
+                                borderRadius: `${this.props.borderRadius}rpx`
                             }}
                         />
                     </div>
