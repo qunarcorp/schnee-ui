@@ -68,12 +68,9 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹
         let cmd = `cp -r ${source} ${cwd}`
         return myExec(cmd);
     })
-    // .then(function(){
-    //     console.log('move sucess');
-    // })
-    // .then(() => myExec(`rm -rf _sourceDev`))
-    // .then(() => myExec(`git add .`))
-    // .then(() => myExec(`git commit -m 'fix: 发布'`))
+    .then(() => myExec(`rm -rf _sourceDev`))
+    .then(() => myExec(`git add .`))
+    .then(() => myExec(`git commit -m 'fix: 发布'`))
     .catch(err => err);
 
 
