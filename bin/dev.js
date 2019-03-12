@@ -51,6 +51,8 @@ myExec(`git checkout ydocTest`)
         copyDir(path.resolve(__dirname, '../source/common'), path.resolve(__dirname, '../_sourceDev/'));
         copyDir(path.resolve(__dirname, '../source/components'), path.resolve(__dirname, '../_sourceDev/'));
     })
+    .then(() => myExec(`git add _sourceDev/*`))
+    .then(() => myExec(`git commit -m 'fix: 发布'`))
     .catch(err => err);
 
 
