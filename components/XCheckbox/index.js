@@ -32,8 +32,8 @@ function getSizeStyle(size) {
             break;
     }
     return {
-        width: `${width}px`,
-        fontSize: `${fontSize}px`
+        width: `${width}rpx`,
+        fontSize: `${fontSize}rpx`
     };
 }
 
@@ -122,8 +122,8 @@ class XCheckbox extends React.Component {
                     onClick={this.onClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
-                        marginLeft: this.props.isRight ? '0px' : '10px',
-                        marginRight: this.props.isRight ? '10px' : '0px',
+                        marginLeft: this.props.isRight ? '0rpx' : '10rpx',
+                        marginRight: this.props.isRight ? '10rpx' : '0rpx',
                         minWidth: this.state.width,
                         minHeight: this.state.width,
                         width: this.state.width,

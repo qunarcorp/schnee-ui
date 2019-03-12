@@ -33,7 +33,7 @@ function getSizeWidth(type, size) {
             width -= gap;
             break;
     }
-    return `${width}px`;
+    return `${width}rpx`;
 }
 
 const BACKGROUND_COLOR = '#ffffff'; // 正常背景色
@@ -140,8 +140,8 @@ class XRadio extends React.Component {
                         borderRadius: this.state.check_width, // 快应用不支持百分比形式
                         width: this.state.check_width,
                         height: this.state.check_width,
-                        marginLeft: this.props.isRight ? '0px' : '10px',
-                        marginRight: this.props.isRight ? '10px' : '0px'
+                        marginLeft: this.props.isRight ? '0rpx' : '10rpx',
+                        marginRight: this.props.isRight ? '10rpx' : '0rpx'
                     }}
                 >
                     {
@@ -157,7 +157,7 @@ class XRadio extends React.Component {
                                     // 并不是圆形(快应用中是圆形)，border-radius 需要再大点，所以索性直接填 width 的值
                                     borderRadius: this.state.thumb_width,
                                 }}
-                            ></text> 
+                            ></text>
                     }
                 </div>
                 {this.props.isRight && <text>{this.props.text}</text>}

@@ -40,9 +40,9 @@ class XSwitch extends React.Component {
         const backgroundColor = checked ? this.props.color : this.props.checkColor;
         const newWrapperStyle = Object.assign({}, XSwitch.defaultProps.wrapperStyle, wrapperStyle, { backgroundColor });
         let newInnerStyle = Object.assign({}, XSwitch.defaultProps.innerStyle, innerStyle);
-        newInnerStyle.margin = ((parseFloat(newWrapperStyle.height) - parseFloat(newInnerStyle.height)) / 2) + 'px';
+        newInnerStyle.margin = ((parseFloat(newWrapperStyle.height) - parseFloat(newInnerStyle.height)) / 2) + 'rpx';
         newInnerStyle.transform = `translateX(${checked ?
-            (parseFloat(newWrapperStyle.width) - parseFloat(newInnerStyle.width) - parseFloat(newWrapperStyle.height) + parseFloat(newInnerStyle.height)) + 'px' : '0'})`;
+            (parseFloat(newWrapperStyle.width) - parseFloat(newInnerStyle.width) - parseFloat(newWrapperStyle.height) + parseFloat(newInnerStyle.height)) + 'rpx' : '0'})`;
         return {
             checked,
             innerStyle: newInnerStyle,
@@ -116,15 +116,15 @@ XSwitch.defaultProps = {
     disabled: false,
     checked: false,
     innerStyle: {
-        width: env === 'web' ? '36px' : '68px',
-        height: env === 'web' ? '36px' : '68px',
-        borderRadius: env === 'web' ? '18px' : '34px',
+        width: env === 'web' ? '36px' : '68rpx',
+        height: env === 'web' ? '36px' : '68rpx',
+        borderRadius: env === 'web' ? '18px' : '34rpx',
         backgroundColor: '#fff'
     },
     wrapperStyle: {
-        width: env === 'web' ? '74px' : '140px',
-        height: env === 'web' ? '40px' : '76px',
-        borderRadius: env === 'web' ? '20px' : '38px',
+        width: env === 'web' ? '74px' : '140rpx',
+        height: env === 'web' ? '40px' : '76rpx',
+        borderRadius: env === 'web' ? '20px' : '38rpx',
     },
     color: '#00bcd4',
     checkColor: '#c1c1c1',
