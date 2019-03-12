@@ -1,3 +1,7 @@
+/*
+*执行脚本，将master分支的修改，自动执行dev分支上
+*/
+
 var fs = require("fs");
 var path = require('path');
 var child_process = require('child_process');
@@ -6,21 +10,16 @@ var { componentsArr } = require(path.resolve(__dirname, '../source/componentInfo
 
 function myExec(param){
     return new Promise(function(resolve, reject){
-        child_process.exec(param, function(err){
-            if(err){
-                reject(err);
-            }else{
-                resolve();
-            }
-        });
+        try {
+            child_process.execSync(param);
+            resolve();
+        } catch (err){
+            reject(err);
+        }
     });
 }
-
-
-// 对文件夹的操作
-myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`)   // 删除文件夹_sourceDev
+myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹_sourceDev
     .then(() => myExec(`mkdir ${path.resolve(__dirname, '../_sourceDev')}`))    // 创建文件夹_sourceDev
-    .then(() => myExec(`rm -rf ${path.resolve(__dirname, '../_sourceDev/index.js')}`))    // 删除文件index
     .then(() => myExec(`touch ${path.resolve(__dirname, '../_sourceDev/index.js')}`))    // 创建文件index
     .then(function(){
         // 将新加的组件(写在componentInfo里)，写到index.js中
@@ -32,11 +31,12 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`)   // 删除文件�
         });
         const exportDefault = "export default {"+ exportArr + "};"
         const writeContent = importCompontent+ '\n' +exportDefault;  // 要写入文件的内容
-        fs.writeFile(path.resolve(__dirname, '../_sourceDev/index.js'), writeContent, function(err){
-            if(err){
-                console.log('写入文件失败');
-            }
-        });
+        
+        let fileId = path.resolve(__dirname, '../_sourceDev/index.js');
+        fs.writeFileSync(
+            fileId,
+            writeContent
+        )
     })
     .then(function(){
         // 复制文件夹,将source中的三个文件，复制到此文件夹中_sourceDev
@@ -51,4 +51,22 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`)   // 删除文件�
         copyDir(path.resolve(__dirname, '../source/common'), path.resolve(__dirname, '../_sourceDev/'));
         copyDir(path.resolve(__dirname, '../source/components'), path.resolve(__dirname, '../_sourceDev/'));
     })
+    .then(() =>myExec(`git checkout dev`))
+    
+    .then(() => {
+        let cwd = process.cwd();
+        let source = path.join(cwd, '_sourceDev', '*');
+        let cmd = `cp -r ${source} ${cwd}`
+        return myExec(cmd);
+    })
+    .then(() => myExec(`rm -rf _sourceDev`))
+    .then(() => myExec(`git add .`))
+    .then(() => myExec(`git commit -m 'fix: 发布'`))
+    .then(function(){
+        console.log('commit suc');
+    })
     .catch(err => err);
+
+
+// 执行命令的脚本 node bin/dev.js
+
