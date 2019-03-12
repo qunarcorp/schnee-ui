@@ -1,6 +1,6 @@
 {
   "name": "schnee-ui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "运用于nanachi的H5，快应用的补丁组件",
   "main": "index.js",
   "module": "index.js",
