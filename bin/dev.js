@@ -55,6 +55,10 @@ myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹
         copyDir(path.resolve(__dirname, '../source/components'), path.resolve(__dirname, '../_sourceDev/'));
     })
     .then(() =>myExec(`git checkout textDev`))
+    .then(function(){
+        console.log('checkout sucess');
+    })
+
     // .then(() => {
     //     console.log('sssssssss');
     //     return myExec(`mv _sourceDev/* .`);
