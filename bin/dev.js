@@ -6,13 +6,19 @@ var { componentsArr } = require(path.resolve(__dirname, '../source/componentInfo
 
 function myExec(param){
     return new Promise(function(resolve, reject){
-        child_process.exec(param, function(err){
-            if(err){
-                reject(err);
-            }else{
-                resolve();
-            }
-        });
+        try {
+            child_process.execSync(param);
+            resolve();
+        } catch (err){
+            reject(err);
+        }
+        // child_process.exec(param, function(err){
+        //     if(err){
+                
+        //     }else{
+        //         resolve();
+        //     }
+        // });
     });
 }
 myExec(`rm -rf  ${path.resolve(__dirname, '../_sourceDev')}`) // 删除文件夹_sourceDev
