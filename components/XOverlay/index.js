@@ -73,8 +73,7 @@ class XOverlay extends React.Component {
     return (
         <div
           className={'quist-overlay-mask  ' + this.state.className}
-          style={{ backgroundColor: this.props.background }}
-          hidden={!this.state.show}
+          style={{ backgroundColor: this.props.background, display:  this.state.show ? 'flex' : 'none'}}
           onClick={this.overlayClick}
           catchTouchMove={this.handleTouchMove}
         />
