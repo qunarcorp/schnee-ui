@@ -9,21 +9,17 @@ class XDialog extends React.Component {
 
     }
 
-    stopPropagation(e) {
-        e.stopPropagation();
-    }
 
 
     render() {
 
         return (
-            <div class="fixed-container" hidden={!this.props.show}>
-                <stack class="modal">
-                    <div class="modal-bg" onClick={this.props.onHiden}></div>
-                    <div class="content-container" onTap={this.stopPropagation}>
+            <div class="fixed-container" style={{display: this.props.show ? 'flex' : 'none'}}>
+                <div class="modal">
+                    <div class="content-container" onTap={this.props.onHiden}>
                         {this.props.children}
                     </div>
-                </stack>
+                </div>
 
             </div>
         );

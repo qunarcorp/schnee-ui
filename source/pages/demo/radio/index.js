@@ -24,6 +24,10 @@ class P extends React.Component {
         this.setState({ checkedValue: e.detail.value.toString() });
     }
 
+    handleChangeCardType(e) {
+        console.log('wiwiwiwi',e.detail.value);
+    }
+
     render() {
         return (
             <div className="anu-col demo-page">
@@ -64,7 +68,7 @@ class P extends React.Component {
                 }
                 <span className="demo-header">XRadioGroup</span>
                 <div className="demo-content radio-col">
-                    <XRadioGroup onChange={this.handleRadioChange}>
+                    <radio-group onChange={this.handleRadioChange}>
                         <div className="radio-content">
                             {
                                 ['apple', 'house', 'cookie'].map(text => (
@@ -78,8 +82,25 @@ class P extends React.Component {
                                 ))
                             }
                         </div>
-                    </XRadioGroup>
+                    </radio-group>
                     <text>被选中的 radio 的 value: {this.state.checkedValue}</text>
+                </div>
+
+                <div className="demo-content radio-col">
+                    <radio-group class="mpw-dock-content" onChange={this.handleChangeCardType.bind(this)} >
+                        { ['apple', 'house', 'cookie'].map(function(item, index) {
+                            return (
+                                <div class="mp-spec-item">
+                                    <div class="mp-spec-text">
+                                        <label for={'passenger_' + item}>
+                                            <text class="txt">{item}</text>
+                                        </label>
+                                    </div>
+                                    <radio class="mp-spec-radio" id={'passenger_' +item} value={item}  />
+                                </div>
+                            );
+                        })}
+                    </radio-group>
                 </div>
             </div>
         );
