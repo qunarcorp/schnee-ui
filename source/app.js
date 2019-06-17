@@ -27,6 +27,7 @@ class Global extends React.Component {
             navigationBarTextStyle: 'white'
         }
     };
+    globalData = {}
     onLaunch() {
         //针对快应用的全局getApp补丁
         if (this.$data && typeof global === 'object') {

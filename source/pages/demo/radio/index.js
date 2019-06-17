@@ -1,7 +1,7 @@
 import React from '@react';
 import './index.scss';
 import XRadio from '@components/XRadio/index';
-import XRadioGroup from '@components/XRadioGroup/index';
+// import XRadioGroup from '@components/XRadioGroup/index';
 import { configs, getValue } from '../../../common/utils/config';
 
 
@@ -24,9 +24,9 @@ class P extends React.Component {
         this.setState({ checkedValue: e.detail.value.toString() });
     }
 
-    handleChangeCardType(e) {
-        console.log('wiwiwiwi',e.detail.value);
-    }
+    // handleChangeCardType(e) {
+    //     console.log('wiwiwiwi',e.detail.value);
+    // }
 
     render() {
         return (
@@ -88,7 +88,7 @@ class P extends React.Component {
 
                 <div className="demo-content radio-col">
                     <radio-group class="mpw-dock-content" onChange={this.handleChangeCardType.bind(this)} >
-                        { ['apple', 'house', 'cookie'].map(function(item, index) {
+                        { ['apple', 'house', 'cookie'].map(function(item) {
                             return (
                                 <div class="mp-spec-item">
                                     <div class="mp-spec-text">
