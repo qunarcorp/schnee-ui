@@ -25,5 +25,11 @@
     },
     "dependencies": {
         "schnee-ui": "^1.0.7"
+    },
+    "nanachi": {
+        "alias": {
+            "@components": "source/components",
+            "@common": "source/common"
+        }
     }
 }

@@ -1,7 +1,7 @@
 import React from '@react';
 import './index.scss';
 import XOverlay from '../XOverlay/index';
-import XPickerItem from '../XPickerItem/index';
+import XPickerItem from '@components/XPickerItem/index';
 import XDatePickerItem from '../XDatePickerItem/index';
 import { nextDate, timeStrToDate, getDate, nextMinute, getTime } from '../../common/utils/time';
 import cnCity from '../../common/utils/cnCity';
@@ -255,11 +255,11 @@ class XPicker extends React.Component {
                   />
                 ) : (
                   <XPickerItem
-                    items={group.items}
-                    mapKeys={group.mapKeys}
-                    groupIndex={index}
-                    onChange={this.handleItemChange.bind(this)}
-                    defaultIndex={this.state.selected[index]}
+                  items={group.items}
+                  mapKeys={group.mapKeys}
+                  groupIndex={index}
+                  onChange={this.handleItemChange.bind(this)}
+                  defaultIndex={this.state.selected[index]}
                   />
                 )}
               </div>
