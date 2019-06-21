@@ -336,7 +336,10 @@ class XCalendar extends React.Component {
                                             return (
                                                 <div key={item.lunar} className='anu-row anu-flex-center'>
                                                     <text className={
-                                                        (item.weekend === true || item.isCheck === true ? 'weekColor':'') + (item.holiday !== '' ? 'holidayColor':'')
+                                                        item.disabled === true ? 'disabledColor'
+                                                            : 
+                                                            (item.weekend === true || item.isCheck === true ? 'weekColor':'') +
+                                                            (item.holiday !== '' ? 'holidayColor' : '')
                                                     }>
                                                         {
                                                             item.isCheck === true ? 
