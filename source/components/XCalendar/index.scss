@@ -1,0 +1,90 @@
+page {
+  height: 100%;
+}
+  
+.anu-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex:1;
+}
+  
+.anu-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+  
+.anu-col-flex {
+    flex-direction: column;
+}
+
+.anu-center {
+  justify-content: center;
+}
+  
+.anu-middle {
+  align-items: center;
+}
+  
+.anu-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// @mixin weekColor {
+//   color: #fe9808;
+// }
+
+.calendar-content {
+    width:100%;
+  .e-head {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: #fff;
+    border-bottom: 1rpx solid #e5e5e5;
+    display: flex;
+    height: 21px;
+  }
+
+  .e-head .w {
+    flex: 1;
+    font-size: 24rpx;
+    text-align: center;
+    height: 21px;
+    line-height: 21px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .e-head .s {
+    color: #fe9808;
+  }
+
+  .m-calendar {
+    font-size: 16px;
+  }
+  .w-row {
+    padding-top: 30px;
+  }
+
+  .m-header {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+  }
+  .weekColor{
+    color: #f00;
+  }
+
+  .holidayColor {
+    color: #fe9808;
+  }
+  
+}
+
+

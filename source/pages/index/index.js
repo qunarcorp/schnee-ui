@@ -7,7 +7,7 @@ class P extends React.Component {
         super(props);
         const ROOT_PATH = '/pages/demo';
         this.state = {
-            list: 'button,checkbox,icon,label,navigator,picker,progress,radio,richText,scrollView,slider,swiper,switch,webView,dialog'
+            list: 'button,checkbox,icon,label,navigator,picker,progress,radio,richText,scrollView,slider,swiper,switch,webView,dialog,calendar'
                 .split(',')
                 .map(function(name) {
                     return {
@@ -34,8 +34,8 @@ class P extends React.Component {
         return (
             <div className="anu-col demo-page">
                 <span className="demo-header">Demo</span>
-                {this.state.list.map(function(item) {
-                    return (<div className="demo-list__item" onClick={this.goto.bind(this, item.url)}>
+                {this.state.list.map(function(item, index) {
+                    return (<div key={index} className="demo-list__item" onClick={this.goto.bind(this, item.url)}>
                         <text>{item.name}</text>
                     </div>);
                 }, this)}
