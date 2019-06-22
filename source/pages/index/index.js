@@ -12,7 +12,7 @@ class P extends React.Component {
                 .map(function(name) {
                     return {
                         url: `${ROOT_PATH}/${name}/index`,
-                        name: name
+                        name
                     };
                 })
         };

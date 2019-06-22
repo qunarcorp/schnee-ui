@@ -69,7 +69,8 @@ page {
     font-size: 16px;
   }
   .w-row {
-    padding-top: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 
   .m-header {
@@ -87,6 +88,10 @@ page {
   
   .disabledColor {
     color: #888;
+  }
+  
+  .selectBag {
+    background: #00bcd4;
   }
 }
 

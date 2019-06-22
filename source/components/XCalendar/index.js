@@ -137,16 +137,17 @@ const getArrayByLength = (length) => {
 class XCalendar extends React.Component {
     constructor(props) {
         super(props);
+        this.checkInDate = null;
         this.beginDate = null; // 开始日期
         this.endDate = null; // 结束日期
         this.prevBeginDate = null; // 前一次的开始日期
-        this.allowSingle = false; // 是否尽允许选择单日情况
-        const { selectionStart, allowSelectionBeforeToday } = props;
+        this.allowSingle = false; // 是否允许选择单日情况
+        const { duration, selectionStart, allowSelectionBeforeToday } = props;
         this.state = {
             heightStyle: {
                 height: getWeekHeightStyle()
             },
-            calendarArray: this.getData({ selectionStart, allowSelectionBeforeToday }),
+            calendarArray: this.getData({ duration, selectionStart, allowSelectionBeforeToday }),
         };
     }
 
@@ -164,7 +165,6 @@ class XCalendar extends React.Component {
 
     /**
      * getDate 获取日历列表
-     * @param prevDuration { Number | Array } duration属性变化之前的起始时间日期
      * @param duration {Number | Array} 时间间隔或起始时间日期
      * @param selectionStart {String} 入店时间， eg: 2016-10-01
      * @param selectionEnd {String} 离店时间， eg: 2016-10-01
@@ -172,11 +172,12 @@ class XCalendar extends React.Component {
      * @param allowSelectionBeforeToday {Boolean} 允许选择今天之前的日期
      * @returns {Array}
      */
-    getData({duration = 90, allowSelectionBeforeToday = false, selectionStart = '' }) {
+    getData({duration, allowSelectionBeforeToday = false, selectionStart = '' }) {
         // 获取当前的年月日
         const [todayYear, todayMonth, todayDateNum] = getDateInfoArr();
         const todayDate = new Date(todayYear, todayMonth - 1, todayDateNum);
-        this.checkInDate = selectionStart ? getDate(selectionStart) : null;
+        this.checkInDate = selectionStart ? getDate(selectionStart) : null;  //将2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
+        
         // 不能选中今天之前的日期时，入店日期为今天之前的情况， 则重置为今天
         if (!allowSelectionBeforeToday && selectionStart && compareDate(this.checkInDate, todayDate) < 0) {
             this.checkInDate = todayDate;
@@ -286,9 +287,11 @@ class XCalendar extends React.Component {
                 const itemDate = getDate(`${itemDayObj.date}/${itemDayObj.day}`);
                 const compareIn = compareDate(itemDate, this.checkInDate);
                 const compareOut = !!this.checkOutDate && compareDate(itemDate, this.checkOutDate);
+                // console.log('...compareIn...', compareIn, 'hahahahah;;;;;;',itemDayObj.isCheckIn);
                 if (!compareIn) {
                     this.checkInDate = itemDate;
                     itemDayObj.isCheckIn = true;
+                    console.log('...compareIn...', compareIn, 'hahahahah;;;;;;',itemDayObj.isCheckIn);
                 }
                 if ((compareIn > 0 && compareOut < 0) || ((!compareIn || compareOut === 0) && !this.allowSingle)) {
                     itemDayObj.isCheck = true;
@@ -310,8 +313,16 @@ class XCalendar extends React.Component {
         return resMonthArr.map((item, i) => ({ ...item, key: item.groupKey + i, isRender: i === 0 }));
     }
 
+    clickDay(param) {
+        console.log('param', param);
+        this.props.onChange({
+            selectionStart: param
+        });
+        param.isCheckIn = true;
+    }
+
     render() {
-        // console.log('calendarArray.....', this.state.calendarArray);
+        console.log('calendarArray.....', this.state.calendarArray);
         return (
             <div className="calendar-content" style={this.state.heightStyle}>
                 <view className="e-head">
@@ -327,19 +338,23 @@ class XCalendar extends React.Component {
                     {
                         this.state.calendarArray && this.state.calendarArray.map(function(week){
                             return (
-                                <list-item key={week.key} className="anu-row w-row" >
+                                <list-item key={week.key} className="anu-row" >
                                     {
                                         week.isRender === true && <div className="m-header">{week.groupKey}</div>
                                     }
                                     {
                                         week.week.map((item) => {
                                             return (
-                                                <div key={item.lunar} className='anu-row anu-flex-center'>
+                                                <div
+                                                    key={item.lunar} 
+                                                    className={'anu-row anu-flex-center w-row' + (item.isCheckIn === true ? ' selectBag' : '')}
+                                                    onClick={this.clickDay.bind(this, item)}
+                                                >
                                                     <text className={
                                                         item.disabled === true ? 'disabledColor'
                                                             : 
                                                             (item.weekend === true || item.isCheck === true ? 'weekColor':'') +
-                                                            (item.holiday !== '' ? 'holidayColor' : '')
+                                                            (item.holiday !== '' ? ' holidayColor' : '')
                                                     }>
                                                         {
                                                             item.isCheck === true ? 
@@ -365,8 +380,9 @@ class XCalendar extends React.Component {
 
 XCalendar.defaultProps = {
     dateTitle: ['日', '一', '二', '三', '四', '五', '六'],
+    selectionStart: '',
     selectionEnd: '',
-    allowSingle: true,
+    allowSingle: false,
     allowSelectionBeforeToday: false,
     duration: 90
 };
@@ -388,8 +404,3 @@ function getWeekHeightStyle() {
     }
     return windowHeight;
 }
-
-// function generateDates() {  // 生成日历表格
-
-// }
-
