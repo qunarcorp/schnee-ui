@@ -19,13 +19,15 @@ class P extends React.Component {
     }
 
     selectChange(obj) {
-        console.log(';;;;;;页面', obj);
+        var date = obj.data.date.replace(/\//g, '-')+'-'+obj.data.day;
         this.setState({
-            selectionStart: obj.selectionStart
+            showComponents: false,
+            selectionStart: date
         });
     }
 
     render() {
+        // console.log('选择的日期为: ', this.state.selectionStart);
         return (
             <div>
                 {
@@ -44,12 +46,15 @@ class P extends React.Component {
                                 组件调用的使用方式:
                             </div>
                             <button onClick={this.show.bind(this)}>
-                                点击我去使用组件:选中日期为{this.state.selectionStart}
+                                点击我去使用组件~
                             </button>
                         </div>
                         :
                         <XCalendar
-                            onChange = {(obj) => this.selectChange.bind(this, obj)}
+                            onChange = {(obj) => {
+                                this.selectChange(obj);
+                                React.api.navigateTo(-1);
+                            }}
                             allowSingle={true}
                             selectionStart={this.state.selectionStart} />
                 }
