@@ -141,13 +141,14 @@ class XCalendar extends React.Component {
         this.checkInDate = null;
         this.beginDate = null; // 开始日期
         this.endDate = null; // 结束日期
-        this.allowSingle = false; // 是否允许选择单日情况
-        const { duration, selectionStart } = props;
+        const { duration, selectionStart, selectionEnd } = props;
         this.state = {
             heightStyle: {
                 height: getWeekHeightStyle()
             },
-            calendarArray: this.getData({ duration, selectionStart }),
+            calendarArray: this.getData({ duration, selectionStart, selectionEnd }),
+            firstSelelct: '',
+            secondSelelct: ''
         };
     }
 
@@ -171,7 +172,7 @@ class XCalendar extends React.Component {
      * @param allowSingle {Boolean} 允许单选
      * @returns {Array}
      */
-    getData({duration, selectionStart = '' }) {
+    getData({ duration, selectionStart }) {
         // 获取当前的年月日
         const [todayYear, todayMonth, todayDateNum] = getDateInfoArr();
         const todayDate = new Date(todayYear, todayMonth - 1, todayDateNum);
@@ -180,18 +181,18 @@ class XCalendar extends React.Component {
 
         // 选择的开始时间和结束时间
         this.beginDate = todayDate;
-        this.endDate = getEndDate(this.beginDate, duration);
+        this.endDate = getEndDate(this.beginDate, duration);  // 计算结束显示的时间
         const compareBeginAndToday = compareDate(this.beginDate, todayDate); // beginDate 和 TodayDate比较返回值
-        
-        // 
-        const [beginYear, beginMonth] = getDateInfoArr(this.beginDate);
-        const [endYear, endMonth, endDateNum, endDay] = getDateInfoArr(this.endDate);
-        const endMonthLastDate = getLastDayOfMonth(endYear, endMonth).getDate();
+
+        const [beginYear, beginMonth] = getDateInfoArr(this.beginDate);   // 结束日期
+        const [endYear, endMonth, endDateNum, endDay] = getDateInfoArr(this.endDate);   // 开始日期
+        const endMonthLastDate = getLastDayOfMonth(endYear, endMonth).getDate(); // 最后一个月的天数
+
         let tempYear = beginYear;
         let tempMonth = beginMonth;
+
         let resArr = [];
-        // 当月第一天的星期数
-        let dayFirst = getFirstDayOfMonth(beginYear, beginMonth - 1).getDay();
+        let dayFirst = getFirstDayOfMonth(beginYear, beginMonth - 1).getDay();  // 当月第一天的星期数
         // baseIndex 基数值，用于补足日期显示范围最后一周的剩下几天
         // addNormalDateFlag 避免超过当前月的最大值，如32
         // disable 同上，最后一周补上额外的几天不可点击
@@ -254,6 +255,7 @@ class XCalendar extends React.Component {
             }
             const monthArr = firstMonthArr.concat(tempMonthArr, lastMonthArr);
             const groupKey = formatMonthChinese(tempYear, tempMonth);
+            // 生成了 calendarArray 中数组的每一个元素
             resArr = resArr.concat(this.getMonthArr(monthArr, groupKey));
             if (tempMonth === 12) {
                 tempMonth = 1;
@@ -282,11 +284,9 @@ class XCalendar extends React.Component {
                 const itemDate = getDate(`${itemDayObj.date}/${itemDayObj.day}`);
                 const compareIn = compareDate(itemDate, this.checkInDate);
                 const compareOut = !!this.checkOutDate && compareDate(itemDate, this.checkOutDate);
-                // console.log('...compareIn...', compareIn, 'hahahahah;;;;;;',itemDayObj.isCheckIn);
                 if (!compareIn) {
                     this.checkInDate = itemDate;
                     itemDayObj.isCheckIn = true;
-                    // console.log('...compareIn...', compareIn, 'hahahahah;;;;;;',itemDayObj.isCheckIn);
                 }
                 if ((compareIn > 0 && compareOut < 0) || ((!compareIn || compareOut === 0) && !this.allowSingle)) {
                     itemDayObj.isCheck = true;
@@ -314,8 +314,16 @@ class XCalendar extends React.Component {
      * @returns {null}
      */
     handleChange(param) {
-        // console.log('点击参数', param);
-        const arrCalendar = [];
+        if (this.props.allowSingle){
+            this.dateSelectDefault(param);
+        } else {
+            this.dateSelectDouble(param);
+        }
+    }
+
+
+    // 单选
+    dateSelectDefault(param){
         this.state.calendarArray.forEach(function(item) {
             item.week.forEach(function(day) {
                 if (day.date === param.date && day.day === param.day ){
@@ -323,20 +331,57 @@ class XCalendar extends React.Component {
                 } else {
                     day.isCheckIn = false;
                 }
-            }, this);
-            arrCalendar.push(item);
-        }, this);
+            });
+        });
         this.setState({
-            calendarArray: arrCalendar
+            calendarArray: this.state.calendarArray
         });
         this.props.onChange({
             data: param
         });
     }
 
+    // 双选
+    dateSelectDouble(param) {
+        var date = param.date;
+        var day = param.day;
+        var selectedDate = getDate((date.replace(/\//g, '-') + '-' + day));  // 将传进来的2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
+        var format = getDateInfoArr(selectedDate)[0] + '-' + getDateInfoArr(selectedDate)[1] + '-' + getDateInfoArr(selectedDate)[2];
+    
+        // if(!this.state.firstSelelct){
+        //     this.state.firstSelelct = param.select
+        // }else {
+        //     if(!this.state.secondSelelct){
+        //         if(param.select < this.state.firstSelelct.select){
+        //              this.state.firstSelelct  = param.select 
+        //         }else {
+        //              this.state.secondSelelct = param.select
+        //         }
+        //     }
+        // }
+
+        // 双选
+        if (!this.state.firstSelelct) {
+            console.log('selectedDate', format);
+            this.state.firstSelelct = format;
+        } else {
+            if (!this.state.secondSelelct) {
+                console.log('this.state.firstSelelct', this.state.firstSelelct);
+                if (selectedDate.getTime() < getDate(this.state.firstSelelct).getTime()) {
+                    this.state.firstSelelct = selectedDate;
+                } else {
+                    this.state.secondSelelct = format;
+                }
+            }
+        }
+
+    }
+
+
+
     render() {
         // console.log('this.checkInDate', this.checkInDate);
-        // console.log('calendarArray.....', this.state.calendarArray);
+        console.log('calendarArray.....', this.state.calendarArray);
         return (
             <div className="calendar-content" style={this.state.heightStyle}>
                 <view className="e-head">
@@ -394,10 +439,10 @@ class XCalendar extends React.Component {
 
 XCalendar.defaultProps = {
     dateTitle: ['日', '一', '二', '三', '四', '五', '六'],
-    selectionStart: '',
-    selectionEnd: '',
-    allowSingle: false,
-    duration: 90
+    selectionStart: '',  // 选择的初始日期
+    selectionEnd: '',    // 选择的结束日期
+    allowSingle: true,  // 是否允许单选 true单选 false双选（默认单选）
+    duration: 90  // 默认选中90天
 };
 
 export default XCalendar;

@@ -9,6 +9,7 @@ class P extends React.Component {
         this.state = {
             showComponents: true,
             selectionStart: moment().add(0, 'days').format('YYYY-MM-DD'), // 默认选择明天日期  2019 9 13 === 中秋节
+            selectionEnd: moment().add(60, 'days').format('YYYY-MM-DD'), 
         };
     }
 
@@ -27,7 +28,7 @@ class P extends React.Component {
     }
 
     render() {
-        // console.log('选择的日期为: ', this.state.selectionStart);
+        // console.log('hahahhaha', this.state.selectionStart);
         return (
             <div>
                 {
@@ -53,10 +54,11 @@ class P extends React.Component {
                         <XCalendar
                             onChange = {(obj) => {
                                 this.selectChange(obj);
-                                React.api.navigateTo(-1);
                             }}
-                            allowSingle={true}
-                            selectionStart={this.state.selectionStart} />
+                            allowSingle={false}
+                            // selectionStart={this.state.selectionStart}
+                            // selectionEnd={this.state.selectionEnd}
+                        />
                 }
             </div>
         );

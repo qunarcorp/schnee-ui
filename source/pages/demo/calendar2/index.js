@@ -1,6 +1,6 @@
 import React from '@react';
 import moment from 'moment';
-import XCalendar from '@components/XCalendar/index';
+import XCalendar2 from '@components/XCalendar2/index';
 import './index.scss';
 
 class P extends React.Component {
@@ -13,8 +13,7 @@ class P extends React.Component {
     render() {
         return (
             <div>
-                
-                <XCalendar 
+                <XCalendar2 
                     selectionStart={this.state.selectionStart} />
             </div>
         );
