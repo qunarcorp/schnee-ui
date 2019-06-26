@@ -16,8 +16,8 @@ import './pages/demo/swiper/index';
 import './pages/demo/switch/index';
 import './pages/demo/webView/index';
 import './pages/demo/dialog/index';
-import './pages/demo/calendar1/index';
-import './pages/demo/calendar2/index';
+import './pages/demo/calendar_selectOne/index';
+import './pages/demo/calendar_selectTwo/index';
 import './app.scss';
 
 class Global extends React.Component {

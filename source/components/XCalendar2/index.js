@@ -1,6 +1,6 @@
 import React from '@react';
-import solar2lunar, { convert2digit } from '@common/utils/lunar.js';
-import Holiday from '@common/utils/holiday.js';
+// import solar2lunar, { convert2digit } from '@common/utils/lunar.js';
+// import Holiday from '@common/utils/holiday.js';
 import './index.scss';
 
 class XCalendar2 extends React.Component {

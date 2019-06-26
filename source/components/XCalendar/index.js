@@ -147,8 +147,8 @@ class XCalendar extends React.Component {
                 height: getWeekHeightStyle()
             },
             calendarArray: this.getData({ duration, selectionStart, selectionEnd }),
-            firstSelelct: '',
-            secondSelelct: ''
+            firstSelect: '',
+            secondSelect: ''
         };
     }
 
@@ -321,9 +321,7 @@ class XCalendar extends React.Component {
         }
     }
 
-
-    // 单选
-    dateSelectDefault(param){
+    calculateDayClassName(param) {
         this.state.calendarArray.forEach(function(item) {
             item.week.forEach(function(day) {
                 if (day.date === param.date && day.day === param.day ){
@@ -336,41 +334,70 @@ class XCalendar extends React.Component {
         this.setState({
             calendarArray: this.state.calendarArray
         });
+    }
+
+
+    // 单选
+    dateSelectDefault(param){
+        var date = param.date;
+        var day = param.day;
+        var selectedDate = getDate((date.replace(/\//g, '-') + '-' + day));  // 将传进来的2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
+        var format = getDateInfoArr(selectedDate)[0] + '-' + getDateInfoArr(selectedDate)[1] + '-' + getDateInfoArr(selectedDate)[2];
+       
+        this.calculateDayClassName(param);
+       
+
         this.props.onChange({
-            data: param
+            selectionStart: format
         });
     }
 
     // 双选
     dateSelectDouble(param) {
+        // console.log('param', param);
         var date = param.date;
         var day = param.day;
         var selectedDate = getDate((date.replace(/\//g, '-') + '-' + day));  // 将传进来的2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
         var format = getDateInfoArr(selectedDate)[0] + '-' + getDateInfoArr(selectedDate)[1] + '-' + getDateInfoArr(selectedDate)[2];
-    
-        // if(!this.state.firstSelelct){
-        //     this.state.firstSelelct = param.select
-        // }else {
-        //     if(!this.state.secondSelelct){
-        //         if(param.select < this.state.firstSelelct.select){
-        //              this.state.firstSelelct  = param.select 
-        //         }else {
-        //              this.state.secondSelelct = param.select
-        //         }
-        //     }
-        // }
-
+        
         // 双选
-        if (!this.state.firstSelelct) {
-            console.log('selectedDate', format);
-            this.state.firstSelelct = format;
+        if (!this.state.firstSelect) {
+            this.calculateDayClassName(param);
+            this.setState({
+                firstSelect:format
+            });
+            this.props.onChange({
+                selectionStart: format
+            });
         } else {
-            if (!this.state.secondSelelct) {
-                console.log('this.state.firstSelelct', this.state.firstSelelct);
-                if (selectedDate.getTime() < getDate(this.state.firstSelelct).getTime()) {
-                    this.state.firstSelelct = selectedDate;
+            if (!this.state.secondSelect) {
+                if (selectedDate.getTime() <= getDate(this.state.firstSelect).getTime()) {
+                    this.calculateDayClassName(param);
+                    this.setState({
+                        firstSelect:format
+                    });
+                    this.props.onChange({
+                        selectionStart: format,
+                        selectionEnd: ''
+                    });
                 } else {
-                    this.state.secondSelelct = format;
+                    this.state.calendarArray.forEach(function(item) {
+                        item.week.forEach(function(day) {
+                            if (day.date === param.date && day.day === param.day ){
+                                day.isCheckOut = true;
+                            } else {
+                                day.isCheckOut = false;
+                            }
+                        });
+                    });
+                    this.setState({
+                        secondSelect: format,
+                        calendarArray: this.state.calendarArray
+                    });
+                    this.props.onChange({
+                        selectionStart: this.state.firstSelect,
+                        selectionEnd: format
+                    });
                 }
             }
         }
@@ -380,8 +407,6 @@ class XCalendar extends React.Component {
 
 
     render() {
-        // console.log('this.checkInDate', this.checkInDate);
-        console.log('calendarArray.....', this.state.calendarArray);
         return (
             <div className="calendar-content" style={this.state.heightStyle}>
                 <view className="e-head">
@@ -406,14 +431,14 @@ class XCalendar extends React.Component {
                                             return (
                                                 <div
                                                     key={item.lunar} 
-                                                    className={'anu-row anu-flex-center w-row' + (item.isCheckIn === true ? ' selectBag whiteColor' : '')}
+                                                    className={'anu-row anu-flex-center w-row' + (item.isCheckIn === true || item.isCheckOut === true ? ' selectBag whiteColor' : '')}
                                                     onClick={item.disabled ? null: this.handleChange.bind(this, item)}
                                                 >
                                                     <text className={
                                                         item.disabled === true ? 'disabledColor'
                                                             : 
-                                                            (item.weekend === true || item.isCheck === true ? 'weekColor': (item.isCheckIn === true ? 'whiteColor' : '')) +
-                                                            (item.holiday !== '' ? ' holidayColor' : (item.isCheckIn === true ? 'whiteColor' : ''))
+                                                            (item.weekend === true || item.isCheck === true ? 'weekColor': (item.isCheckIn === true || item.isCheckOut === true ? 'whiteColor' : '')) +
+                                                            (item.holiday !== '' ? ' holidayColor' : (item.isCheckIn === true || item.isCheckOut === true ? 'whiteColor' : ''))
                                                     }>
                                                         {
                                                             item.isCheck === true ? 
