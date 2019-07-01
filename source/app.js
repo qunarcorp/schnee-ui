@@ -18,6 +18,7 @@ import './pages/demo/webView/index';
 import './pages/demo/dialog/index';
 import './pages/demo/calendar_selectOne/index';
 import './pages/demo/calendar_selectTwo/index';
+import './pages/demo/calendar/index';
 import './app.scss';
 
 class Global extends React.Component {

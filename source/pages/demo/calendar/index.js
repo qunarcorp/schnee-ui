@@ -1,0 +1,48 @@
+import React from '@react';
+import moment from 'moment';
+import XCalendar2 from '@components/XCalendar2/index';
+import './index.scss';
+
+class P extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            firstSelected: moment().add(1, 'days').format('YYYY-MM-DD'), // 默认选择明天日期  2019 9 13 === 中秋节
+            secondSelected: moment().add(5, 'days').format('YYYY-MM-DD')
+        };
+    }
+
+    select(obj) {
+        // eslint-disable-next-line
+        console.log('选择的日期为:', obj);
+
+        this.setState({
+            firstSelected: obj.firstSelected,
+            secondSelected: obj.secondSelected
+        });
+        // setTimeout(function() {
+        //     React.api.navigateBack({
+        //         url: '/pages/index/index'
+        //     });
+        // }, 200);
+
+    }
+
+    render() {
+        return (
+            <div>  
+                <XCalendar2
+                    onChange = {obj => this.select(obj)}
+                    isDoubleSelect={true}
+                    // sDoubleSelect={false}
+                    firstSelected={this.state.firstSelected}
+                    secondSelected={this.state.secondSelected}
+                />
+            </div>
+        );
+    }
+}
+
+export default P;
+
+
