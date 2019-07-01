@@ -186,6 +186,7 @@ class XCalendar extends React.Component {
                                                     (item.isSelectSecond ? 'select-second' : '')
                                                 }
                                             >
+                                                <text class={'base'}>{item.holiday}</text>
                                                 <div class={'dayclass ' + item.className}>{item.middleText}</div>
                                             </view>
                                         );
@@ -261,16 +262,16 @@ function generateDates(currentYear, currentMonth, calendarDays) {
     const months = [];    //收集几个月的
     const formatToday = JSON.stringify(new Date()).replace(/T.+|"/g,'');   //今天的时间格式化 YYYY-MM-DD
     let useEnabledCount = false, enabledCount = 0;
-    for (let i=0; i <= monthLen; i++) {
+    for (let i=0; i < monthLen; i++) {
         let month = [];
         let curMonth = currentMonth + i;
-        if (curMonth + i > 11) {
+        if (curMonth > 11) {
             currentYear++;
             //月份从0开始， 0~11，大于11，年份加1，月份置0
             curMonth = 0;
         }
         // 例如：月为5，转化为05
-        var formatMonth = curMonth+1 < 10 ?  '0' + (curMonth+1): (curMonth+1); 
+        var formatMonth = curMonth+1 < 10 ?  '0' + (curMonth+1): (curMonth+1);
         //  日期列表数据的存储
         month = {
             idMonth: currentYear + '-' + formatMonth,   //  即: 2019-01
