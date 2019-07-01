@@ -3,407 +3,154 @@ import solar2lunar, { convert2digit } from '@common/utils/lunar.js';
 import Holiday from '@common/utils/holiday.js';
 import './index.scss';
 
-/**
- * getDateInfoArr 获取年、月、日、星期等信息
- * @param date {Date}
- * @returns {Array}
- */
-const getDateInfoArr = (date = new Date()) => [
-    date.getFullYear(),
-    date.getMonth() + 1,
-    date.getDate(),
-    date.getDay()
-];
-
-/**
- * getHoliday 根据传入的参数，对应到holiday.js，返回节假日信息
- * @param str1 {string} 月-日 eg: '09-08'
- * @param str2 {string} solar | lunar
- * @returns {string} 节假日信息
- */
-const getHoliday = (str1, str2 = 'solar') => {
-    return Holiday[str2][str1] || '';
-};
-
-/**
- * getEndDate 获取间隔天数的最后一天日期
- * @param date {Date} 起始日期对象
- * @param offset {Number} 间隔天数
- * @returns {Date} 结束日期对象
- */
-const getEndDate = (date, offset) => {
-    const startTime = date.getTime();
-    const endTime = startTime + offset * 24 * 3600 * 1000;
-    return new Date(endTime);
-};
-
-/**
- * formatMonth 格式化某年某月月为指定格式， eg： 2016/08
- * @param year {String}
- * @param month {String}
- * @returns {string}
- */
-const formatMonth = (year, month) => [year, convert2digit(month)].join('/');
-
-/**
- * getFirstDayOfMonth 获取某年某月第一天
- * @param year {String} 年份
- * @param month {String} 月份
- * @returns {Date}
- */
-const getFirstDayOfMonth = (year, month) => new Date(year, month, 1);
-
-/**
- * getLastDayOfMonth 获取某年某月最后一天
- * @param year {String}
- * @param month {String}
- * @returns {Date}
- */
-const getLastDayOfMonth = (year, month) => new Date(year, month, 0);
-
-/**
- * isWeekend 确定某天是否周末
- * @param dayNum {Number} 日期号
- * @param firstDay {Number} 当月第一天的星期数
- * @return {Boolean}
- */
-const isWeekend = (dayNum, firstDay) => {
-    const num = (+dayNum + firstDay) % 7;
-    // 0是周六、1是周日
-    return num === 0 || num === 1;
-};
-
-/**
- * compareDate 对比两个日期的大小
- * @param date1 {Date}
- * @param date2 {Date}
- * @return {Number} [相差的天数]
- */
-const compareDate = (date1, date2) => {
-    return date1.getTime() - date2.getTime();
-};
-
-
-/**
- * isHoliday 判断是否是假期
- * @param year {number}
- * @param month {number}
- * @param day {number}
- * @returns {string} 节假日信息或者''
- */
-const isHoliday = (year, month, day) => {
-    let res = '';
-    const tempMonth = convert2digit(month);
-    const tempDay = convert2digit(day);
-    const lunar = solar2lunar(year, tempMonth, tempDay);
-    res += getHoliday(`${tempMonth}-${tempDay}`);
-    res += ' '; // 防止两个节日相连
-    if (lunar.Term) {   // !!lunar.Term
-        // 清明节，不固定
-        res += `${lunar.Term} `;
-    }
-    res += getHoliday(lunar.str, 'lunar');
-    return res.trim();
-};
-
-/**
- * formatMonthChinese 中文格式： 2016年8月
- * @param year {String}
- * @param month {String}
- * @returns {string}
- */
-const formatMonthChinese = (year, month) => `${year}年${month}月`;
-
-/**
- * 处理IOS不兼容2016-10-01， 但不改变原有日期格式
- * @param str {string}
- * @return Date
- */
-const getDate = str => new Date(str.replace(/-/g, '/'));
-
-/**
- * getArrayByLength 获取日历的空格数
- * @param length {number}
- * @returns
- */
-const getArrayByLength = (length) => {
-    const ret = [];
-    for (let i = 0; i < length; i++) {
-        ret[i] = null;
-    }
-    return ret;
-};
-
 
 class XCalendar extends React.Component {
     constructor(props) {
         super(props);
-        this.checkInDate = null;
-        this.beginDate = null; // 开始日期
-        this.endDate = null; // 结束日期
-        const { duration, selectionStart, selectionEnd } = props;
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
+        const formatToday = JSON.stringify(now).replace(/T.+|"/g, '');
+        const calendarDays = parseFloat(props.calendarDays) || 90;
+
         this.state = {
             heightStyle: {
                 height: getWeekHeightStyle()
             },
-            calendarArray: this.getData({ duration, selectionStart, selectionEnd }),
-            firstSelect: '',
-            secondSelect: ''
+            calendarArray: generateDates(currentYear, currentMonth, calendarDays),
+            isDoubleSelect: props.isDoubleSelect,   // 是否双选,默认单选
+            firstSelected:  props.firstSelected || formatToday,   // 选择第一个日期
+            secondSelected: props.secondSelected,    // 选择第二个日期
         };
+        this.updateCalendarData(this.state);  // 更新选择的日历页面状态
+
     }
 
-    /**
-     * isToday 某年某月某天是否是今天
-     * @param year {String}
-     * @param month {String}
-     * @param day {String}
-     * @returns {Boolean}
-     */
-    isToday(year, month, day) {
-        const [todayYear, todayMonth, todayDateNum] = getDateInfoArr();
-        return todayYear === parseFloat(year) && todayMonth === parseFloat(month) && todayDateNum === parseFloat(day);
-    }
-
-    /**
-     * getDate 获取日历列表
-     * @param duration {Number | Array} 时间间隔或起始时间日期
-     * @param selectionStart {String} 入店时间， eg: 2016-10-01
-     * @param selectionEnd {String} 离店时间， eg: 2016-10-01
-     * @param allowSingle {Boolean} 允许单选
-     * @returns {Array}
-     */
-    getData({ duration, selectionStart }) {
-        // 获取当前的年月日
-        const [todayYear, todayMonth, todayDateNum] = getDateInfoArr();
-        const todayDate = new Date(todayYear, todayMonth - 1, todayDateNum);
-        this.checkInDate = selectionStart ? getDate(selectionStart) : null;  //将2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
-        
-
-        // 选择的开始时间和结束时间
-        this.beginDate = todayDate;
-        this.endDate = getEndDate(this.beginDate, duration);  // 计算结束显示的时间
-        const compareBeginAndToday = compareDate(this.beginDate, todayDate); // beginDate 和 TodayDate比较返回值
-
-        const [beginYear, beginMonth] = getDateInfoArr(this.beginDate);   // 结束日期
-        const [endYear, endMonth, endDateNum, endDay] = getDateInfoArr(this.endDate);   // 开始日期
-        const endMonthLastDate = getLastDayOfMonth(endYear, endMonth).getDate(); // 最后一个月的天数
-
-        let tempYear = beginYear;
-        let tempMonth = beginMonth;
-
-        let resArr = [];
-        let dayFirst = getFirstDayOfMonth(beginYear, beginMonth - 1).getDay();  // 当月第一天的星期数
-        // baseIndex 基数值，用于补足日期显示范围最后一周的剩下几天
-        // addNormalDateFlag 避免超过当前月的最大值，如32
-        // disable 同上，最后一周补上额外的几天不可点击
-        let hasToday = false;
-        const addMapFn = (item, i, { baseIndex = 0, addNormalDateFlag = true, disable = false }) => {
-            const day = baseIndex + i + 1;
-            // 是否是今天
-            let isToday = false;
-            if (hasToday) {
-                isToday = false;
-            } else {
-                isToday = hasToday = this.isToday(tempYear, tempMonth, day);
-            }
-            // 禁止选择的日期：（1）为了美观的，日期超出duration之后的 （2）今天之前的 （3）日期在duration之前的
-            const disabled = disable || (compareBeginAndToday < 0 && !hasToday)
-                || (compareDate(new Date(tempYear, tempMonth - 1, day), this.beginDate) < 0);
-            if (addNormalDateFlag || day <= endMonthLastDate) {
-                return {
-                    day,
-                    date: formatMonth(tempYear, tempMonth),
-                    lunar: solar2lunar(tempYear, tempMonth, day).str,
-                    today: isToday,
-                    isCheckIn: false,
-                    isCheck: false,
-                    isCheckOut: false,
-                    weekend: isWeekend(day, dayFirst),
-                    holiday: isHoliday(tempYear, tempMonth, day),
-                    disabled
-                };
-            }
-            return { disabled: true };
-        };
-        while (tempYear < endYear || (tempYear === endYear && tempMonth <= endMonth)) {
-            const isEnd = tempYear === endYear && tempMonth === endMonth;
-            const tempDateObj = getLastDayOfMonth(tempYear, tempMonth);
-            const dayLast = isEnd ? endDay : tempDateObj.getDay();
-            const dayLength = isEnd ? endDateNum : tempDateObj.getDate();
-
-            // 某月第一天之前的空格数
-            const firstMonthArr = getArrayByLength(dayFirst).fill({ disabled: true });
-
-            // 某月最后一天之后的空格数
-            const lastMonthArr = getArrayByLength(6 - dayLast).fill({ disabled: true });
-
-            // 某月具体每个天数的信息对象
-            let tempMonthArr = getArrayByLength(dayLength).fill(0).map(addMapFn);
-
-            // 补足显示日期范围最后一周的剩下几天情况, 为了美观
-            if (isEnd) {
-                const lastWeekArr = getArrayByLength(6 - endDay).fill(0).map((item, i) => {
-                    return (
-                        addMapFn(item, i, {
-                            baseIndex: endDateNum,
-                            addNormalDateFlag: false,
-                            disable: true
-                        })
-                    );
-                });
-                tempMonthArr = tempMonthArr.concat(lastWeekArr);
-            }
-            const monthArr = firstMonthArr.concat(tempMonthArr, lastMonthArr);
-            const groupKey = formatMonthChinese(tempYear, tempMonth);
-            // 生成了 calendarArray 中数组的每一个元素
-            resArr = resArr.concat(this.getMonthArr(monthArr, groupKey));
-            if (tempMonth === 12) {
-                tempMonth = 1;
-                tempYear++;
-            } else {
-                tempMonth++;
-            }
-            // 下月的第一天的星期为当前月最后一天的星期+1
-            dayFirst = (dayLast + 1) % 7;
-        }
-        return resArr;
-    }
-
-    /**
-     * getMonthArr 将一个月的天数格式化成按周分组，一周一个对象
-     * @param monthArr {Array}
-     * @param groupKey {String}
-     * @returns {Array}
-     */
-    getMonthArr(monthArr, groupKey) {
-        const resMonthArr = [];
-        let tempWeekArr = [];
-        monthArr.forEach((item, i) => {
-            const itemDayObj = item;
-            if (!itemDayObj.disabled && !!this.checkInDate) {
-                const itemDate = getDate(`${itemDayObj.date}/${itemDayObj.day}`);
-                const compareIn = compareDate(itemDate, this.checkInDate);
-                const compareOut = !!this.checkOutDate && compareDate(itemDate, this.checkOutDate);
-                if (!compareIn) {
-                    this.checkInDate = itemDate;
-                    itemDayObj.isCheckIn = true;
-                }
-                if ((compareIn > 0 && compareOut < 0) || ((!compareIn || compareOut === 0) && !this.allowSingle)) {
-                    itemDayObj.isCheck = true;
-                }
-                if (compareOut === 0) {
-                    this.checkOutDate = itemDate;
-                    itemDayObj.isCheckOut = true;
-                }
-            }
-           
-            if (i % 7 === 6) {
-                tempWeekArr.push(itemDayObj);
-                resMonthArr.push({week: tempWeekArr, groupKey});
-                tempWeekArr = [];
-            } else {
-                tempWeekArr.push(itemDayObj);
-            }
+    updateCalendarData(state, cb) {
+        state.calendarArray.forEach(function(month) {
+            month.daysArray.forEach(function(day){
+                calculateDayClassName(day, state);
+            });
         });
-        return resMonthArr.map((item, i) => ({ ...item, key: item.groupKey + i, isRender: i === 0 }));
+        this.setState(state, cb);
     }
 
-    /**
-     * handleChange 点击日期时触发的函数
-     * @param param {Object} 点击的日期对象
-     * @returns {null}
-     */
-    handleChange(param) {
-        if (this.props.allowSingle){
-            this.dateSelectDefault(param);
+    dateSelected(item) {
+        var isDisabled = item.isDisabled;
+        if (isDisabled) {
+            return;
+        }
+        if (this.state.isDoubleSelect) {
+            // 双选的情况
+            this.dateSelectDouble(item);
         } else {
-            this.dateSelectDouble(param);
+            // 单选的情况
+            this.dateSelectDefault(item);
         }
     }
 
-    calculateDayClassName(param) {
-        this.state.calendarArray.forEach(function(item) {
-            item.week.forEach(function(day) {
-                if (day.date === param.date && day.day === param.day ){
-                    day.isCheckIn = true;
-                } else {
-                    day.isCheckIn = false;
-                }
-            });
-        });
-        this.setState({
-            calendarArray: this.state.calendarArray
-        });
-    }
-
-
-    // 单选
-    dateSelectDefault(param){
-        var date = param.date;
-        var day = param.day;
-        var selectedDate = getDate((date.replace(/\//g, '-') + '-' + day));  // 将传进来的2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
-        var format = getDateInfoArr(selectedDate)[0] + '-' + getDateInfoArr(selectedDate)[1] + '-' + getDateInfoArr(selectedDate)[2];
-       
-        this.calculateDayClassName(param);
-       
-
-        this.props.onChange({
-            selectionStart: format
-        });
-    }
-
-    // 双选
-    dateSelectDouble(param) {
-        // console.log('param', param);
-        var date = param.date;
-        var day = param.day;
-        var selectedDate = getDate((date.replace(/\//g, '-') + '-' + day));  // 将传进来的2019-06-22格式化成Thu Jan 01 1970 08:00:02 GMT+0800 (中国标准时间)
-        var format = getDateInfoArr(selectedDate)[0] + '-' + getDateInfoArr(selectedDate)[1] + '-' + getDateInfoArr(selectedDate)[2];
-        
-        // 双选
-        if (!this.state.firstSelect) {
-            this.calculateDayClassName(param);
-            this.setState({
-                firstSelect:format
-            });
+    // 单选的情况
+    dateSelectDefault(item){
+        //需要用户传入firstSelected
+        var state = this.state;
+        state.firstSelected = item.formateDate;
+        this.updateCalendarData( state, function(){
             this.props.onChange({
-                selectionStart: format
+                firstSelected: item.formateDate
             });
-        } else {
-            if (!this.state.secondSelect) {
-                if (selectedDate.getTime() <= getDate(this.state.firstSelect).getTime()) {
-                    this.calculateDayClassName(param);
-                    this.setState({
-                        firstSelect:format
-                    });
-                    this.props.onChange({
-                        selectionStart: format,
-                        selectionEnd: ''
-                    });
-                } else {
-                    this.state.calendarArray.forEach(function(item) {
-                        item.week.forEach(function(day) {
-                            if (day.date === param.date && day.day === param.day ){
-                                day.isCheckOut = true;
-                            } else {
-                                day.isCheckOut = false;
-                            }
-                        });
-                    });
-                    this.setState({
-                        secondSelect: format,
-                        calendarArray: this.state.calendarArray
-                    });
-                    this.props.onChange({
-                        selectionStart: this.state.firstSelect,
-                        selectionEnd: format
-                    });
-                }
-            }
-        }
-
+            this.gotoBack();
+        });
     }
 
+    // 多选的情况
+    dateSelectDouble(item) {
+        var firstSelected = this.state.firstSelected;
+        var secondSelected = this.state.secondSelected;
+        var selectedDate =  dateToNumber(item.formateDate);
+        // console.log(';;;selectedDate;;;', selectedDate);
+        // 当前入店日期
+        var curFirst = dateToNumber(firstSelected);
+        // 当前离店日期
+        var curSecond = dateToNumber(secondSelected);
+        if (this.state.confirmSecondDate){
+            if (selectedDate === curFirst || selectedDate === curSecond ){
+                this.state.confirmSecondDate = false;
+                this.updateCalendarData( this.state, function() {
+                    // console.log('选择第一个了');
+                    
+                    this.props.onChange({
+                        firstSelected,
+                        secondSelected: this.state.secondSelected
+                    });
+                    this.gotoBack();
+                    // this.props.onChange(item);
+                    // this.dateSelectedFinish({ eventType, storageType });
+                });//跳转
+            } else if (selectedDate < curFirst){
+                this.state.firstSelected = item.formateDate;
+                this.updateCalendarData( this.state); //不跳转
+            } else if (selectedDate > curFirst){
+                //由8月1日变成8月2日，说明用户只想改进店时间，离店时间不变
+                this.state.secondSelected = item.formateDate;
+                this.state.confirmSecondDate = false;
+                this.updateCalendarData( this.state, function() {
+                    // console.log('选择第二个了');
+
+                    this.props.onChange({
+                        firstSelected,
+                        secondSelected: this.state.secondSelected
+                    });
+                    this.gotoBack();
+                    // this.dateSelectedFinish({ eventType, storageType });
+                });  //跳转
+            }
+        } else {
+            //这里只有两种情况，改变一个日期，还是改变两个日期
+            if (selectedDate < curFirst){
+                this.state.firstSelected = item.formateDate;
+                if ( !this.state.secondSelected){
+                    this.state.secondSelected = this.state.eDate || this.getNextDay(item.formateDate);
+                }
+            } else if (selectedDate >= curFirst){
+                this.state.firstSelected = item.formateDate;
+                this.state.secondSelected = this.getNextDay(item.formateDate);
+                this.state.confirmSecondDate = true;
+            }
+            this.state.confirmSecondDate = true;
+            this.updateCalendarData(this.state);
+        }
+    }
+
+    getNextDay(formateDate){
+        var throwIt = false;
+        try {
+            this.state.calendarArray.forEach(function(month){
+                month.daysArray.forEach(function(day){
+                    if (day.formateDate === formateDate){
+                        throwIt = true;
+                    } else if (throwIt && day.formateDate){
+                        throw day.formateDate;
+                    }
+                });
+            });
+        } catch (e){
+            return e;
+        }
+    }
+
+    gotoBack(){
+        React.api.showToast({
+            title: '日期选择成功',
+            icon: 'success',
+            duration: 500,
+            success: function() {
+                setTimeout(function() {
+                    React.api.hideToast();
+                    React.api.navigateBack();
+                }, 100);
+            }
+        });
+    }
 
 
     render() {
@@ -417,44 +164,36 @@ class XCalendar extends React.Component {
                     }
                 </view>
                 <scroll-view
-                    className={'m-calendar anu-col '+(this.props.isMultiSelect ? 'multi' : '')}
+                    className="m-calendar  anu-col"
+                    scroll-y="true"
                 >
-                    {
-                        this.state.calendarArray && this.state.calendarArray.map(function(week){
-                            return (
-                                <list-item key={week.key} className="anu-row" >
-                                    {
-                                        week.isRender === true && <div className="m-header">{week.groupKey}</div>
-                                    }
-                                    {
-                                        week.week.map((item) => {
-                                            return (
-                                                <div
-                                                    key={item.lunar} 
-                                                    className={'anu-row anu-flex-center w-row' + (item.isCheckIn === true || item.isCheckOut === true ? ' selectBag whiteColor' : '')}
-                                                    onClick={item.disabled ? null: this.handleChange.bind(this, item)}
-                                                >
-                                                    <text className={
-                                                        item.disabled === true ? 'disabledColor'
-                                                            : 
-                                                            (item.weekend === true || item.isCheck === true ? 'weekColor': (item.isCheckIn === true || item.isCheckOut === true ? 'whiteColor' : '')) +
-                                                            (item.holiday !== '' ? ' holidayColor' : (item.isCheckIn === true || item.isCheckOut === true ? 'whiteColor' : ''))
-                                                    }>
-                                                        {
-                                                            item.isCheck === true ? 
-                                                                '今天'
-                                                                :
-                                                                item.holiday !== '' ? item.holiday : item.day
-                                                        }
-                                                    </text>
-                                                </div>
-                                            );
-                                        })
-                                    }
-                                </list-item>
-                            );
-                        }, this)
-                    }
+                    {this.state.calendarArray.map(function(month) {
+                        return (
+                            <list-item className="e-month anu-col" key={month.idMonth} >
+                                <text className="b-header anu-flex-center">{month.title}</text>
+                                <view className="b-row anu-row">
+                                    {month.daysArray.map(function(item){
+                                        if (item.isBlank){
+                                            return <view class="item"  key={item.middleText} />;
+                                        }
+                                        return (
+                                            <view
+                                                onTap={this.dateSelected.bind(this, item)}
+                                                className={
+                                                    'anu-flex-center anu-col-flex item item-a' +
+                                                    (item.isSelect ? ' select ': '') +
+                                                    (item.isWeekend || item.holiday ? ' weekend ' : '') +
+                                                    (item.isSelectSecond ? 'select-second' : '')
+                                                }
+                                            >
+                                                <div class={'dayclass ' + item.className}>{item.middleText}</div>
+                                            </view>
+                                        );
+                                    }, this)}
+                                </view>
+                            </list-item>
+                        );
+                    }, this)}
                 </scroll-view>
             </div>
         );
@@ -463,11 +202,7 @@ class XCalendar extends React.Component {
 
 
 XCalendar.defaultProps = {
-    dateTitle: ['日', '一', '二', '三', '四', '五', '六'],
-    selectionStart: '',  // 选择的初始日期
-    selectionEnd: '',    // 选择的结束日期
-    allowSingle: true,  // 是否允许单选 true单选 false双选（默认单选）
-    duration: 90  // 默认选中90天
+    dateTitle: ['日', '一', '二', '三', '四', '五', '六']
 };
 
 export default XCalendar;
@@ -487,3 +222,153 @@ function getWeekHeightStyle() {
     }
     return windowHeight;
 }
+
+/**
+ * getHoliday 根据传入的参数，对应到holiday.js，返回节假日信息
+ * @param str1 {string} 月-日 eg: '09-08'
+ * @param str2 {string} solar | lunar
+ * @returns {string} 节假日信息
+ */
+const getHoliday = (str1, str2 = 'solar') => Holiday[str2][str1] || '';
+
+/**
+ * isHoliday 判断是否是假期
+ * @param year {number}
+ * @param month {number}
+ * @param day {number}
+ * @returns {string} 节假日信息或者''
+ */
+const isHoliday = (year, month, day) => {
+    let res = '';
+    const tempMonth = convert2digit(month);
+    const tempDay = convert2digit(day);
+    const lunar = solar2lunar(year, tempMonth, tempDay);
+    res += getHoliday(`${tempMonth}-${tempDay}`);
+    res += ' '; // 防止两个节日相连
+    if (lunar.Term) {
+        // 清明节，不固定
+        res += `${lunar.Term} `;
+    }
+    res += getHoliday(lunar.str, 'lunar');
+    return res.trim();
+};
+
+// 生成日历表格
+function generateDates(currentYear, currentMonth, calendarDays) {
+    //月份是0到1
+    var day = new Date(currentYear ,currentMonth, 1).getDay();   // 获取星期
+    const monthLen = Math.floor(calendarDays/30);   // 显示的几个月
+    const months = [];    //收集几个月的
+    const formatToday = JSON.stringify(new Date()).replace(/T.+|"/g,'');   //今天的时间格式化 YYYY-MM-DD
+    let useEnabledCount = false, enabledCount = 0;
+    for (let i=0; i <= monthLen; i++) {
+        let month = [];
+        let curMonth = currentMonth + i;
+        if (curMonth + i > 11) {
+            currentYear++;
+            //月份从0开始， 0~11，大于11，年份加1，月份置0
+            curMonth = 0;
+        }
+        // 例如：月为5，转化为05
+        var formatMonth = curMonth+1 < 10 ?  '0' + (curMonth+1): (curMonth+1); 
+        //  日期列表数据的存储
+        month = {
+            idMonth: currentYear + '-' + formatMonth,   //  即: 2019-01
+            title: currentYear + '月' + formatMonth + '日',  // 即: 2019年01月
+            daysArray: []
+        };
+        //如果每个月的第一天不是星期日，那么需要补上空白的格子
+        if (day !== 0) {
+            for (let j = 0; j < day; j++){
+                month.daysArray.push({
+                    isBlank: true,
+                    middleText: Math.random()
+                });
+            }
+        }
+        for (let j = 1; j <= 31; j++) {
+            if (j > 27){    //28, 29, 30, 31 都需要特别处理,比如2月30日，4月31日
+                if ((new Date(currentYear, curMonth, j)).getMonth() !== curMonth){
+                    continue;
+                }
+            }
+            //{ item: "2010-01-12", week: 0}
+            const formateDate = currentYear + '-' + formatMonth + '-' + (j < 10 ? '0' + j : j);
+            //计算是否能点击，只有从今天起到未来90天或calendarDays天之内才能选择中
+            var isDisabled = null;  // void 0
+            if (!useEnabledCount){
+                isDisabled = formateDate !== formatToday;
+                if (isDisabled === false ){
+                    useEnabledCount = true;
+                    enabledCount = 1;
+                }
+            } else {
+                enabledCount++;
+                isDisabled = enabledCount > calendarDays;
+            }
+
+            var dateItem = {
+                date: currentYear+'/'+curMonth+'/'+j,
+                formateDate: formateDate,
+                day: day, //0-6,
+                isBlank: false,
+                topText: '',
+                isWeekend: day === 0 || day === 6,
+                middleText: formateDate == formatToday ? '今天': j,
+                bottomText: '',
+                isDisabled: isDisabled,
+                text: '',
+                holiday: isHoliday(currentYear, formatMonth, j),
+                lunar: solar2lunar(currentYear, formatMonth, j).str,
+            };
+
+            day ++;
+            if (day == 7){
+                day = 0;
+            }
+            month.daysArray.push(dateItem);
+        }
+        months.push(month);
+    }
+    return months;
+}
+
+function calculateDayClassName(item, state) {
+
+    // 处理选择或者取消或者是否周日的类名
+    const classArray = [];
+    item.isSelect = false;
+    item.isSelectSecond = false;
+
+    if (item.formateDate === state.firstSelected) {
+        classArray.push('select');
+        item.isSelect = true;
+    } else if (item.formateDate === state.secondSelected) {
+        // console.log(item.isSelectSecond, ';;;;;;state.confirmSecondDate', state.confirmSecondDate);
+        classArray.push(state.confirmSecondDate ? 'select-second': 'select');
+        if (state.confirmSecondDate) {
+            item.isSelectSecond = true;
+        } else {
+            item.isSelect = true;
+        }
+    }
+
+    if (item.isDisabled){
+        classArray.push('disabled');
+    } else if (item.isWeekend || item.holiday){
+        classArray.push('weekend');
+    }
+
+    item.className = classArray.join(' ');
+
+}
+
+function dateToNumber(date){
+    if (!date){
+        return NaN;
+    }
+    return parseFloat(date.replace(/-/g, ''));
+}
+
+
+
