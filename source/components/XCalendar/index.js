@@ -109,7 +109,7 @@ class XCalendar extends React.Component {
             if (selectedDate < curFirst){
                 this.state.firstSelected = item.formateDate;
                 if ( !this.state.secondSelected){
-                    this.state.secondSelected = this.state.eDate || this.getNextDay(item.formateDate);
+                    this.state.secondSelected = this.state.secondSelected || this.getNextDay(item.formateDate);
                 }
             } else if (selectedDate >= curFirst){
                 this.state.firstSelected = item.formateDate;
@@ -183,7 +183,7 @@ class XCalendar extends React.Component {
                                                     'anu-flex-center anu-col-flex item item-a' +
                                                     (item.isSelect ? ' select ': '') +
                                                     (item.isWeekend || item.holiday ? ' weekend ' : '') +
-                                                    (item.isSelectSecond ? 'select-second' : '')
+                                                    (item.isSelectSecond ? ' select-second ' : '')
                                                 }
                                             >
                                                 <text class={'base'}>{item.holiday}</text>
@@ -345,7 +345,6 @@ function calculateDayClassName(item, state) {
         classArray.push('select');
         item.isSelect = true;
     } else if (item.formateDate === state.secondSelected) {
-        // console.log(item.isSelectSecond, ';;;;;;state.confirmSecondDate', state.confirmSecondDate);
         classArray.push(state.confirmSecondDate ? 'select-second': 'select');
         if (state.confirmSecondDate) {
             item.isSelectSecond = true;
