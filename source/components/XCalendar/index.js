@@ -278,7 +278,7 @@ function generateDates(currentYear, currentMonth, calendarDays) {
         //  日期列表数据的存储
         month = {
             idMonth: currentYear + '-' + formatMonth,   //  即: 2019-01
-            title: currentYear + '月' + formatMonth + '日',  // 即: 2019年01月
+            title: currentYear + '年' + formatMonth + '月',  // 即: 2019年01月
             daysArray: []
         };
         //如果每个月的第一天不是星期日，那么需要补上空白的格子
