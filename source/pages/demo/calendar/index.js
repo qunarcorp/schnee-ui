@@ -31,6 +31,7 @@ class P extends React.Component {
                     // sDoubleSelect={false}
                     firstSelected={this.state.firstSelected}
                     secondSelected={this.state.secondSelected}
+                    calendarDays={980}
                 />
             </div>
         );

@@ -261,14 +261,17 @@ function generateDates(currentYear, currentMonth, calendarDays) {
     const monthLen = Math.floor(calendarDays/30);   // 显示的几个月
     const months = [];    //收集几个月的
     const formatToday = JSON.stringify(new Date()).replace(/T.+|"/g,'');   //今天的时间格式化 YYYY-MM-DD
-    let useEnabledCount = false, enabledCount = 0;
+    let useEnabledCount = false, enabledCount = 0, changeYear = false;
     for (let i=0; i < monthLen; i++) {
         let month = [];
         let curMonth = currentMonth + i;
         if (curMonth > 11) {
-            currentYear++;
+            if (!changeYear) {
+                currentYear++;
+                changeYear = true;
+            }
             //月份从0开始， 0~11，大于11，年份加1，月份置0
-            curMonth = 0;
+            curMonth = curMonth - 12;
         }
         // 例如：月为5，转化为05
         var formatMonth = curMonth+1 < 10 ?  '0' + (curMonth+1): (curMonth+1);
