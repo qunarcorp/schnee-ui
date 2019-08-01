@@ -32,8 +32,8 @@ function getSizeStyle(size) {
             break;
     }
     return {
-        width: `${width}rpx`,
-        fontSize: `${fontSize}rpx`
+        width: process.env.ANU_ENV === 'web' ? `${width/100}rem`: `${width}rpx`,
+        fontSize: process.env.ANU_ENV === 'web' ? `${fontSize/100}rem`: `${fontSize}rpx`
     };
 }
 
@@ -52,7 +52,6 @@ class XCheckbox extends React.Component {
             width,
             fontSize
         };
-
         this.onClick = this.onClick.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
@@ -114,6 +113,8 @@ class XCheckbox extends React.Component {
     }
 
     render() {
+        const unit = process.env.ANU_ENV === 'web' ? 'rem': 'rpx';
+        const factor =  process.env.ANU_ENV === 'web' ? 100: 1;
         return (
             <div className="checkbox-container">
                 {!this.props.isRight && <text>{this.props.text}</text>}
@@ -122,8 +123,8 @@ class XCheckbox extends React.Component {
                     onClick={this.onClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
-                        marginLeft: this.props.isRight ? '0rpx' : '10rpx',
-                        marginRight: this.props.isRight ? '10rpx' : '0rpx',
+                        marginLeft: this.props.isRight ? 0/factor+unit :  10/factor+unit,
+                        marginRight: this.props.isRight ? 10/factor+unit : 0/factor+unit,
                         minWidth: this.state.width,
                         minHeight: this.state.width,
                         width: this.state.width,
