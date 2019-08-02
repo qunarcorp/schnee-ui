@@ -47,8 +47,12 @@ const configs = [
 ];
 
 const getValue = value => value !== undefined ? value : undefined;
+const unit = process.env.ANU_ENV === 'web' ? 'rem': 'rpx';
+const factor =  process.env.ANU_ENV === 'web' ? 100: 1;
 
 export {
     getValue,
-    configs
+    configs,
+    unit,
+    factor
 };

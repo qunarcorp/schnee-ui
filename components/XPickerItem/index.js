@@ -6,7 +6,7 @@ import './index.scss';
 class XPickerItem extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props======', props);
+    
     this.state = {
       touching: false,
       touchId: undefined,
@@ -16,6 +16,10 @@ class XPickerItem extends React.Component {
       selected: 0,
       totalHeight: props.items.length * props.indicatorHeight
     };
+
+    this.props.items = this.props.items.map((el)=>{
+      return Object.assign(el, {keyItem: el[this.props.mapKeys.label]} || el );
+    });
   }
 
   componentDidMount() {
@@ -184,7 +188,7 @@ class XPickerItem extends React.Component {
           {this.props.items.map(function(item, index) {
             return (
               <text
-                key={item[this.props.mapKeys.label] || item}
+                key={item.keyItem}
                 class={'anu-picker__item ' + (item.disabled ? 'anu-picker__item_disabled' : '')}
               >
                 {item[this.props.mapKeys.label] || item}

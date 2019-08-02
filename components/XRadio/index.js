@@ -1,4 +1,5 @@
 import React from '@react';
+import {unit, factor} from '@common/utils/config';
 import './index.scss';
 
 function collectRadioInstances(p, ret, instance) {
@@ -33,7 +34,7 @@ function getSizeWidth(type, size) {
             width -= gap;
             break;
     }
-    return `${width}rpx`;
+    return width/factor + unit;
 }
 
 const BACKGROUND_COLOR = '#ffffff'; // 正常背景色
@@ -128,6 +129,7 @@ class XRadio extends React.Component {
     }
 
     render() {
+        const zero=0, ten=10;
         return (
             <div className='anu-radio-container'>
                 {!this.props.isRight && <text>{this.props.text}</text>}
@@ -140,8 +142,8 @@ class XRadio extends React.Component {
                         borderRadius: this.state.check_width, // 快应用不支持百分比形式
                         width: this.state.check_width,
                         height: this.state.check_width,
-                        marginLeft: this.props.isRight ? '0rpx' : '10rpx',
-                        marginRight: this.props.isRight ? '10rpx' : '0rpx'
+                        marginLeft: this.props.isRight ? zero/factor+unit : ten/factor+unit,
+                        marginRight: this.props.isRight ? ten/factor+unit : zero/factor+unit
                     }}
                 >
                     {

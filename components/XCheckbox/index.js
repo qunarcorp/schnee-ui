@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import React from '@react';
+import {unit, factor} from '@common/utils/config';
 import './index.scss';
 // import XIcon from '../XIcon/index';
 
@@ -32,8 +33,8 @@ function getSizeStyle(size) {
             break;
     }
     return {
-        width: `${width}rpx`,
-        fontSize: `${fontSize}rpx`
+        width: width/factor + unit,
+        fontSize: fontSize/factor + unit
     };
 }
 
@@ -52,7 +53,6 @@ class XCheckbox extends React.Component {
             width,
             fontSize
         };
-
         this.onClick = this.onClick.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
@@ -114,6 +114,7 @@ class XCheckbox extends React.Component {
     }
 
     render() {
+        const zero=0, ten=10; 
         return (
             <div className="checkbox-container">
                 {!this.props.isRight && <text>{this.props.text}</text>}
@@ -122,8 +123,8 @@ class XCheckbox extends React.Component {
                     onClick={this.onClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
-                        marginLeft: this.props.isRight ? '0rpx' : '10rpx',
-                        marginRight: this.props.isRight ? '10rpx' : '0rpx',
+                        marginLeft: this.props.isRight ? zero/factor+unit :  ten/factor+unit,
+                        marginRight: this.props.isRight ? ten/factor+unit : zero/factor+unit,
                         minWidth: this.state.width,
                         minHeight: this.state.width,
                         width: this.state.width,
