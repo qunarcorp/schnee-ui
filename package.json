@@ -24,9 +24,9 @@
   "homepage": "https://github.com/qunarcorp/schnee-ui#readme",
   "nanachi": {
     "alias": {
-        "@components": "components",
-        "@common": "common",
-        "@assets": "assets"
+      "@components": "components",
+      "@common": "common",
+      "@assets": "assets"
     }
   }
 }
