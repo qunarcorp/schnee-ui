@@ -21,12 +21,5 @@
   "bugs": {
     "url": "https://github.com/qunarcorp/schnee-ui/issues"
   },
-  "homepage": "https://github.com/qunarcorp/schnee-ui#readme",
-  "nanachi": {
-    "alias": {
-      "@components": "components",
-      "@common": "common",
-      "@assets": "assets"
-    }
-  }
+  "homepage": "https://github.com/qunarcorp/schnee-ui#readme"
 }
