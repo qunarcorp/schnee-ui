@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import React from '@react';
 import './index.scss';
+import {unit, factor} from '@common/utils/config';
 // import XIcon from '../XIcon/index';
 
 function collectCheckboxInstances(fiber, ret, instance) {
@@ -32,8 +33,8 @@ function getSizeStyle(size) {
             break;
     }
     return {
-        width: process.env.ANU_ENV === 'web' ? `${width/100}rem`: `${width}rpx`,
-        fontSize: process.env.ANU_ENV === 'web' ? `${fontSize/100}rem`: `${fontSize}rpx`
+        width: width/factor + unit,
+        fontSize: fontSize/factor + unit
     };
 }
 
@@ -113,8 +114,7 @@ class XCheckbox extends React.Component {
     }
 
     render() {
-        const unit = process.env.ANU_ENV === 'web' ? 'rem': 'rpx';
-        const factor =  process.env.ANU_ENV === 'web' ? 100: 1;
+        const zero=0, ten=10; 
         return (
             <div className="checkbox-container">
                 {!this.props.isRight && <text>{this.props.text}</text>}
@@ -123,8 +123,8 @@ class XCheckbox extends React.Component {
                     onClick={this.onClick}
                     style={{
                         backgroundColor: this.props.disabled ? DISABLED_COLOR : BACKGROUND_COLOR,
-                        marginLeft: this.props.isRight ? 0/factor+unit :  10/factor+unit,
-                        marginRight: this.props.isRight ? 10/factor+unit : 0/factor+unit,
+                        marginLeft: this.props.isRight ? zero/factor+unit :  ten/factor+unit,
+                        marginRight: this.props.isRight ? ten/factor+unit : zero/factor+unit,
                         minWidth: this.state.width,
                         minHeight: this.state.width,
                         width: this.state.width,

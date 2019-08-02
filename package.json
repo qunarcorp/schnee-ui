@@ -10,7 +10,8 @@
         "release": "hap release",
         "watch": "hap watch",
         "eslint": "eslint source",
-        "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
+        "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
+        "eslint:fix": "eslint --fix ./source"
     },
     "pre-commit": [
         "precommit-msg",
@@ -30,7 +31,8 @@
     "nanachi": {
         "alias": {
             "@components": "source/components",
-            "@common": "source/common"
+            "@common": "source/common",
+            "@assets": "source/assets"
         }
     }
 }
