@@ -1,5 +1,5 @@
 import React from '@react';
-import {unit, factor} from '@common/utils/config';
+import {unit, factor} from '@common/utils/config.js';
 import './index.scss';
 
 function collectRadioInstances(p, ret, instance) {

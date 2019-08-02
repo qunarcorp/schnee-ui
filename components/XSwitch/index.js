@@ -1,5 +1,5 @@
 import React from '@react';
-import {unit} from '@common/utils/config';
+import {unit} from '@common/utils/config.js';
 import './index.scss';
 
 const env = process.env.ANU_ENV;
