@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React from '@react';
-import './index.scss';
 import {unit, factor} from '@common/utils/config';
+import './index.scss';
 // import XIcon from '../XIcon/index';
 
 function collectCheckboxInstances(fiber, ret, instance) {

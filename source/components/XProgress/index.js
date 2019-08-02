@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import React from '@react';
+import {unit, factor} from '@common/utils/config';
 import './index.scss';
 class XProgress extends React.Component {
     constructor(props) {
@@ -13,16 +14,16 @@ class XProgress extends React.Component {
                     <div
                         class="anu-progress-inner"
                         style={{
-                            height: `${this.props.strokeHeight}rpx`,
-                            borderRadius: `${this.props.borderRadius}rpx`
+                            height: this.props.strokeHeight/factor + unit,
+                            borderRadius: this.props.borderRadius/factor + unit
                         }}
                     >
                         <div
                             style={{
                                 width: `${this.props.percent}%`,
                                 'background-color': `${this.props.strokeColor}`,
-                                height: `${this.props.strokeHeight}rpx`,
-                                borderRadius: `${this.props.borderRadius}rpx`
+                                height: this.props.strokeHeight/factor + unit,
+                                borderRadius: this.props.borderRadius/factor + unit
                             }}
                         />
                     </div>
