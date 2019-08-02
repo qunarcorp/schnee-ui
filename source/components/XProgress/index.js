@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React from '@react';
-import {unit, factor} from '@common/utils/config';
+import {unit, factor} from '@common/utils/config.js';
 import './index.scss';
 class XProgress extends React.Component {
     constructor(props) {
