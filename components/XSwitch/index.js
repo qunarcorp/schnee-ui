@@ -1,8 +1,9 @@
 import React from '@react';
-import {unit} from '@common/utils/config.js';
+import {unit} from '../../common/utils/config.js';
 import './index.scss';
 
 const env = process.env.ANU_ENV;
+const factor = process.env.ANU_ENV === 'web' ? 50 : 1;
 
 function jsonEqual(objA, objB) {
     let flag = false;
@@ -41,8 +42,8 @@ class XSwitch extends React.Component {
         const backgroundColor = checked ? this.props.color : this.props.checkColor;
         const newWrapperStyle = Object.assign({}, XSwitch.defaultProps.wrapperStyle, wrapperStyle, { backgroundColor });
         let newInnerStyle = Object.assign({}, XSwitch.defaultProps.innerStyle, innerStyle);
-        const mobile = checked ? (parseFloat(newWrapperStyle.width) - parseFloat(newInnerStyle.width) - parseFloat(newWrapperStyle.height) + parseFloat(newInnerStyle.height)) /50 + unit : '0';
-        newInnerStyle.margin = ((parseFloat(newWrapperStyle.height) - parseFloat(newInnerStyle.height)) / 2) /50 + unit;
+        const mobile = checked ? (parseFloat(newWrapperStyle.width) - parseFloat(newInnerStyle.width) - parseFloat(newWrapperStyle.height) + parseFloat(newInnerStyle.height)) /factor + unit : '0';
+        newInnerStyle.margin = ((parseFloat(newWrapperStyle.height) - parseFloat(newInnerStyle.height)) / 2) /factor + unit;
         newInnerStyle.transform = `translateX(${mobile})`;
         return {
             checked,
