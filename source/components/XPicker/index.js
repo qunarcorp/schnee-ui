@@ -1,7 +1,7 @@
 import React from '@react';
 import './index.scss';
 import XOverlay from '../XOverlay/index';
-import XPickerItem from '@components/XPickerItem/index';
+import XPickerItem from '../XPickerItem/index';
 import XDatePickerItem from '../XDatePickerItem/index';
 import { nextDate, timeStrToDate, getDate, nextMinute, getTime } from '../../common/utils/time';
 import cnCity from '../../common/utils/cnCity';
