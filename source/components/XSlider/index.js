@@ -239,14 +239,15 @@ class XSlider extends React.Component {
     calcBlockHandler(size = 1) {
         let radius = this.props['block-size'];
         // 快应用上的px需要 *2
-        let coefficient = process.env.ANU_ENV === 'quick' ? 2 : 1;
+        // let coefficient = process.env.ANU_ENV === 'quick' ? 2 : 1;
         radius =
             radius < MIN_BLOCK_SIZE
                 ? MIN_BLOCK_SIZE
                 : radius > MAX_BLOCK_SIZE
                     ? MAX_BLOCK_SIZE
                     : radius;
-        return radius * size * coefficient;
+        // return radius * size * coefficient;
+        return radius * size;
     }
 
     render() {
