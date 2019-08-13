@@ -178,9 +178,9 @@ class XSlider extends React.Component {
 
         this.setState({
             touching: true,
-            touchId: e.touches[0].identifier,
+            touchId: e.changedTouches[0].identifier,
             totalWidth: TOTAL_WIDTH,
-            touchStartPageX: e.touches[0].pageX,
+            touchStartPageX: e.changedTouches[0].pageX,
             touchStartPercent: this.state.percent,
         });
     }
@@ -189,12 +189,12 @@ class XSlider extends React.Component {
         // eslint-disable-next-line no-console
         // console.log('touch move e:::', e.touches[0]);
         if (!this.state.touching || this.props.disabled) return;
-        if (e.touches[0].identifier !== this.state.touchId) return;
+        if (e.changedTouches[0].identifier !== this.state.touchId) return;
 
         //prevent move background
         // e.preventDefault();
 
-        const pageX = e.touches[0].pageX;
+        const pageX = e.changedTouches[0].pageX;
         const diffX = pageX - this.state.touchStartPageX;
         // eslint-disable-next-line no-console
         // console.log('\ndiffX:::', diffX);
