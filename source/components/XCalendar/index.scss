@@ -159,12 +159,23 @@ page {
     .e-month .b-row .weekend {
       color: #fe9808;
     }
+    .e-month .b-row .weekend text{ // 写text是因为要支持华为快应用
+      color: #fe9808;
+    }
   
     .e-month .b-row .select {
       color: #fff;
       background: #11b4ca;
     }
+    .e-month .b-row .select text {
+      color: #fff;
+      background: #11b4ca;
+    }
     .e-month .b-row .select-second {
+      color: #fff;
+      background: #ccc;
+    }
+    .e-month .b-row .select-second text {
       color: #fff;
       background: #ccc;
     }
