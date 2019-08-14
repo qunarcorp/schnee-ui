@@ -178,9 +178,9 @@ class XSlider extends React.Component {
 
         this.setState({
             touching: true,
-            touchId: e.touches[0].identifier,
+            touchId: e.changedTouches[0].identifier,
             totalWidth: TOTAL_WIDTH,
-            touchStartPageX: e.touches[0].pageX,
+            touchStartPageX: e.changedTouches[0].pageX,
             touchStartPercent: this.state.percent,
         });
     }
@@ -189,12 +189,12 @@ class XSlider extends React.Component {
         // eslint-disable-next-line no-console
         // console.log('touch move e:::', e.touches[0]);
         if (!this.state.touching || this.props.disabled) return;
-        if (e.touches[0].identifier !== this.state.touchId) return;
+        if (e.changedTouches[0].identifier !== this.state.touchId) return;
 
         //prevent move background
         // e.preventDefault();
 
-        const pageX = e.touches[0].pageX;
+        const pageX = e.changedTouches[0].pageX;
         const diffX = pageX - this.state.touchStartPageX;
         // eslint-disable-next-line no-console
         // console.log('\ndiffX:::', diffX);
@@ -239,14 +239,15 @@ class XSlider extends React.Component {
     calcBlockHandler(size = 1) {
         let radius = this.props['block-size'];
         // 快应用上的px需要 *2
-        let coefficient = process.env.ANU_ENV === 'quick' ? 2 : 1;
+        // let coefficient = process.env.ANU_ENV === 'quick' ? 2 : 1;
         radius =
             radius < MIN_BLOCK_SIZE
                 ? MIN_BLOCK_SIZE
                 : radius > MAX_BLOCK_SIZE
                     ? MAX_BLOCK_SIZE
                     : radius;
-        return radius * size * coefficient;
+        // return radius * size * coefficient;
+        return radius * size;
     }
 
     render() {
