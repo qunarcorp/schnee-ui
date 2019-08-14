@@ -213,6 +213,18 @@ window.ydoc_plugin_search_json = {
       ]
     },
     {
+      "title": "Clander (外部组件)",
+      "content": "日历。\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n举例\n\n\n\n\nisDoubleSelect\nBoolean\n\nfalse\n是否双选,默认单选\n\n\n\n\n\n\n\ncalendarDays\nNumber\nfalse\n90\n日历显示的天数\n\n\n\n\n\n\n\nfirstSelected\nString\ntrue\n\n例如：'2019-02-01'。\n\n\n\n\n默认格式'YYYY-MM-dd'\n\n\nsecondSelected\nString\nfalse\n\n例如：'2019-02-01'。双选时的第二个日期\n\n\n\n\n默认格式'YYYY-MM-dd'\n\n\nonChange\nFunction\ntrue\n\n选择日期的回调函数\n\n\n\n\n\n\n\n",
+      "url": "/components/ClanderOuter.html",
+      "children": [
+        {
+          "title": "示例",
+          "url": "/components/ClanderOuter.html#示例",
+          "content": "示例基本使用：// 单选\n// 双选\n\n"
+        }
+      ]
+    },
+    {
       "title": "CitySelector (内部组件)",
       "content": "\n\n属性名\n类型\n必填\n默认值\n说明\n微信\n支付宝\n百度\n快应用\nH5\n\n\n\n\ntype\nNumber\ntrue\n\n0: 机票 1: 火车票 2: 汽车票 3: 酒店 4: 攻略\n\n\n\n\n\n\n\ncitySuggestService\nString\nfalse\n\n用于搜索框的接口路径\n\n\n\n\n\n\n\ncitySuggestHost\nString\nfalse\n\n用于搜索框的 host\n\n\n\n\n\n\n\ncityListHost\nString\nfalse\n\n用于获取热门/全部城市的 host\n\n\n\n\n\n\n\ncityListService\nString\nfalse\n\n用于获取热门/全部城市的接口路径\n\n\n\n\n\n\n\neventType\nString\nfalse\n\n事件类型，在点击城市后会调用名称为 eventType 的回调函数，参数为 {city, cityUrl, isDep, source}\n\n\n\n\n\n\n\nplaceholder\nString\nfalse\n''\n搜索框的placeholder\n\n\n\n\n\n\n\nisDep\nBoolean\nfalse\n无\n用于设置标题 true: 出发城市 false: 到达城市\n\n\n\n\n\n\n\n",
       "url": "/components/CitySelector.html",
