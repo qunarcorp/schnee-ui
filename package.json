@@ -20,8 +20,9 @@
     "devDependencies": {
         "babel-eslint": "^10.0.1",
         "eslint": "^5.14.1",
+        "eslint-plugin-hybrid": "0.0.5",
         "eslint-plugin-react": "^7.12.4",
-        "hap-toolkit": "^0.2.0",
+        "hap-toolkit": "latest",
         "pre-commit": "^1.2.2"
     },
     "dependencies": {
