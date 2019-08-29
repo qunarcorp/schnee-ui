@@ -12,7 +12,7 @@ class XPickerViewColumn extends React.Component {
         this._moveToTimer = null;
         this.transition = '';
         this.parentInstance = null;
-        this.index = props.index;
+        this.index = 0;
         this._childrenCount = props.children.length;
         this._preCurrentIndex = 0;
         this.indicatorStyle = null;
@@ -62,6 +62,8 @@ class XPickerViewColumn extends React.Component {
                 this.parentInstance = fiber.stateNode;
             }
         }
+        this.index = this.parentInstance.columnIndex;
+        this.parentInstance.columnIndex++;
         let props = this.parentInstance.props;
         const { value } = props;
 
@@ -223,6 +225,5 @@ class XPickerViewColumn extends React.Component {
     }
 }
 XPickerViewColumn.defaultProps = {
-    index: 0
 };
 export default XPickerViewColumn;

@@ -4,9 +4,13 @@ import './index.scss';
 class XPickerView extends React.Component {
     constructor(props) {
         super(props);
+        this.columnIndex = 0;
         this.state = {
             value: new Array(props.children.length).fill(0)
         };    
+    }
+    componentDidMount(){
+        this.columnIndex = 0;
     }
     // 子组件回调函数
     emitEvent(item, type) {

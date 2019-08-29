@@ -70,7 +70,7 @@ class P extends React.Component {
               console.log('bindpickend', item);
             }}
           >
-            <XPickerViewColumn index={0} >
+            <XPickerViewColumn >
               {
                 this.state.years.map((item, idx) => {
                   return <text key={idx} 
@@ -79,7 +79,7 @@ class P extends React.Component {
                 })
               }
             </XPickerViewColumn>
-            <XPickerViewColumn index={1}>
+            <XPickerViewColumn >
               {
                 this.state.months.map((item, idx) => {
                   return <text key={idx} 
@@ -88,7 +88,7 @@ class P extends React.Component {
                 })
               }
             </XPickerViewColumn>
-            <XPickerViewColumn index={2}>
+            <XPickerViewColumn >
               {
                 this.state.days.map((item, idx) => {
                   return <text key={idx} 
