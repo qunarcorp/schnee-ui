@@ -10,13 +10,14 @@ import './pages/demo/navigator/index';
 import './pages/demo/picker/index';
 import './pages/demo/progress/index';
 import './pages/demo/radio/index';
-import './pages/demo/richText/index';
+// import './pages/demo/richText/index';
 import './pages/demo/slider/index';
 import './pages/demo/swiper/index';
 import './pages/demo/switch/index';
 import './pages/demo/webView/index';
 import './pages/demo/dialog/index';
 import './pages/demo/calendar/index';
+import './pages/demo/pickerView/index';
 import './app.scss';
 
 class Global extends React.Component {
