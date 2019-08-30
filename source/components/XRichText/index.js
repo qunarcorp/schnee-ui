@@ -2,7 +2,7 @@
 import React from '@react';
 import './index.scss';
 import parseHtmlFromStr from '../../common/richtext-utils/parseHtmlFromStr';
-import XRichTextTemp01 from '../XRichTextTemp01';
+import XRichTextTemp01 from '../XRichTextTemp01/index';
 
 /**
  * item
