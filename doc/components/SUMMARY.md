@@ -7,6 +7,7 @@
 * [Picker](Picker.md)
 * [Radio](Radio.md)
 * [ScrollView](ScrollView.md)
+* [PickerView](PickerView.md)
 * [Slider](Slider.md)
 * [Swiper](Swiper.md)
 * [Switch](Switch.md)
