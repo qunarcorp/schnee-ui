@@ -21,7 +21,7 @@ import './pages/demo/pickerView/index';
 import './app.scss';
 
 class Global extends React.Component {
-    config = {
+    static config = {
         window: {
             backgroundTextStyle: 'light',
             // navigationBarBackgroundColor: '#0088a4',
