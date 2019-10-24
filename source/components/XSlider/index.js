@@ -217,7 +217,7 @@ class XSlider extends React.Component {
                 >
                     <div 
 
-                        style={{left: this.state.btnLeft+'PX', background: '#f00'}}
+                        style={{left: this.state.btnLeft+'PX'}}
                         // ref={dom => this.btnLeft = dom}
                         onTouchStart={event => this.handleTouchStart('btnLeft', event)}
                         onTouchMove={event => this.handleTouchMove('btnLeft', event)}
