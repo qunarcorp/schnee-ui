@@ -26,9 +26,21 @@ class P extends React.Component {
     }
 
     render() {
+        // console.log('slider');
         return (
             <div className="anu-col demo-page">
-                <span className="demo-header">目前快应用计算不出dom的宽高(2018-12-12), 写死270</span>
+
+                <XSlider 
+                    show-value={true}
+                    isSingle={false}
+                    min={0}
+                    max={100}
+                    // value={30}
+                    value={[10, 30]}
+                />
+
+
+                {/* <span className="demo-header">目前快应用计算不出dom的宽高(2018-12-12), 写死270</span>
                 <span className="demo-header">default</span>
                 <div className="demo-content">
                     <div className="anu-col">
@@ -102,7 +114,7 @@ class P extends React.Component {
                             activeColor="#dadb1a"
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }

@@ -2,233 +2,187 @@ import React from '@react';
 import classNames from '../../common/utils/classnames';
 import './index.scss';
 
-/**
- *  A Slider is an element used to set a value,
- *  good choice when users think it as relative quantity rather than value
- *  因目前style支持不完善, 导致目前滑块的css写法有些麻烦(2018-12-12)
- */
 
 // 目前快应用计算不出dom的宽高(2018-12-12), 写死
-const TOTAL_WIDTH = 240;
+// const TOTAL_WIDTH = 240;
 // 滑块的大小，取值范围为 12 - 28
-const MAX_BLOCK_SIZE = 28;
-const MIN_BLOCK_SIZE = 12;
+// const MAX_BLOCK_SIZE = 28;
+// const MIN_BLOCK_SIZE = 12;
 
 class XSlider extends React.Component {
-    static defaultProps = {
-        max: 100,
-        min: 0,
-        step: 1,
-        showValue: true,
-        disabled: false,
-        defaultValue: 0,
-        snapToValue: false,
-        backgroundColor: '#e9e9e9',
-        activeColor: '#1aad19',
-        'block-size': 28,
-        'block-color': '#e9e9e9',
-    };
-
     constructor(props) {
         super(props);
-        this.checkProps(props);
-        const {
-            className,
-            max,
-            min,
-            value,
-            defaultValue,
-            ...domProps
-        } = props;
-        let percent = value
-            ? ~~(((value - min) / (max - min)) * 100)
-            : defaultValue
-                ? ~~(((defaultValue - min) / (max - min)) * 100)
-                : 0;
+        this.buttons = [{}, {}];  // 存储两个滑块的信息
+        this.progressBar = 0;
+        this.moving = false;   // 控制滑块是否滑动
         this.state = {
-            value: value ? value : defaultValue ? defaultValue : 0,
-            controlled: typeof value !== 'undefined',
-            totalWidth: 0,
-            touching: false,
-            touchStartPageX: 0,
-            touchID: undefined,
-            percent,
-            animating: false,
-            domProps,
-            cls: classNames('weui-slider-box', className),
-            trackStyles: {
-                width: `${percent}%`,
-            },
-            trackWidth: (TOTAL_WIDTH * percent) / 100,
-            handlerStyles: {
-                transition: 'none',
-            },
+            onChange: props.bindchange || Date,
+            onChanging: props.bindchanging || Date,
+            btnLeft:  0, // props.value[0],
+            btnRight: 0,  // props.value[1]
+            showValue: this.props.value
         };
-
-        this.handleTouchStart = this.handleTouchStart.bind(this);
-        this.handleTouchMove = this.handleTouchMove.bind(this);
-        this.handleTouchEnd = this.handleTouchEnd.bind(this);
-        this.updateValue = this.updateValue.bind(this);
-        this.calcBlockHandler = this.calcBlockHandler.bind(this);
+        this.sliderWidth = this.props['block-size']; // 滑块的宽度
+        this.singleActiveColor = this.props.isSingle ? this.props.activeColor : this.props.backgroundColor;
+        this.showValueWidth = this.props.isSingle ? '40px' : '80px';
     }
 
-    componentDidMount() {
-        if (this.state.value === 0) this.updateValue();
-        // eslint-disable-next-line no-console
-        console.log('componentDidMount -> this.props:::', this.props);
+    getPercent(value){
+        //将props.value转换成基于[min, max]区间的位置的百分比
+        return  (value - this.props.min) / (this.props.max- this.props.min);
+    }
+    getSlideValue(percent){
+        //将百分比转换为value
+        return ~~(percent * (this.props.max- this.props.min) ) + this.props.min;
+    }
+    getEventPageX(e){
+        // console.log('e:',e);
+        var object = e.changedTouches || e.touches || [e];
+        return object[0].pageX;
+    }
+    componentDidMount(){
+        function execAfterGetPogressBar(val){
+            this.progressBar = val - this.sliderWidth;
+
+            var value = this.props.value;
+            var valueOne = (Array.isArray(value) ? value[0]: value);  // 第一个滑块
+            var valueTwo = value[1];    // // 第二个滑块
+            var percentOne = this.getPercent(valueOne);
+            var percentTow = this.getPercent(valueTwo);
+            this.stepPercent = this.getPercent(this.props.step);
+            //  console.log('valueTwo', valueOne, valueTwo);
+            this.setState({
+                btnLeft: ~~ (percentOne * this.progressBar),  // 左滑块位置
+                btnRight: ~~ (percentTow * this.progressBar ) // 右滑块位置
+            }, function() {
+                this.buttons = [{
+                    value: valueOne //~~(this.state.btnLeft / this.maxRight * 100)
+                }, {
+                    value:  valueTwo  //~~(this.state.btnRight / this.maxRight * 100)
+                }];
+            });
+            // console.log("++++++",this)
+        }
+        var ANU_ENV = process.env.ANU_ENV;
+        var ref = this.refs.trackDom;
+        var that = this;
+        if (ANU_ENV === 'wx') {     // wx中获取进度条的长度
+            const query = wx.createSelectorQuery().in(this.wx);
+            query.select('.anu-slider-track').boundingClientRect(function(res){
+                execAfterGetPogressBar.call(that,  res.width);
+            });
+            query.exec();
+            // console.log('this.progressBar', that.progressBar);
+
+        } else if (ANU_ENV === 'web'){   // h5中获取进度条的长度
+            execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+            //  this.progressBar = document.querySelector('.anu-slider-thumb').getBoundingClientRect().width - this.sliderWidth; 
+
+        } else if (ANU_ENV === '360'){  // 360中获取进度条的长度
+            execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+            //  this.progressBar = document.querySelector('.anu-slider-thumb').getBoundingClientRect().width - this.sliderWidth; 
+        } else if (ANU_ENV === 'ali'){  // 百度小程序中获取进度条的长度
+            const query = my.createSelectorQuery();
+            query.select('.anu-slider-track').boundingClientRect();
+            query.exec(ret => {
+                execAfterGetPogressBar.call(that, ret[0].width);
+            });
+        }
+        
     }
 
-    componentWillReceiveProps(nextProps) {
-        const { min, max } = this.props;
-        // eslint-disable-next-line no-console
-        if (this.state.controlled) {
-            if (nextProps.value <= max && nextProps.value >= min) {
-                let percent = ~~(((nextProps.value - min) / (max - min)) * 100);
-                this.setState({
-                    value: nextProps.value,
-                    percent,
-                    trackStyles: {
-                        width: `${percent}%`,
-                    },
-                    trackWidth: (TOTAL_WIDTH * percent) / 100,
-                    handlerStyles: {
-                        transition: 'none',
-                    },
-                });
+    handleTouchStart(which, event){
+        console.log('.......1111');
+        // event.preventDefault();   // 阻止事件默认行为
+        // event.stopPropagation();  // 阻止事件冒泡和捕获
+        if (this.props.disabled) {
+            return;
+        }
+        var pageX  = this.getEventPageX(event);   //event.touches[0].pageX;
+        this.moving = true;
+        var index = 'btnLeft' ===  which ? 0: 1; // 判断是左滑块还是右滑块
+        this.buttons[index].startX  = pageX;  // 开始位置
+        this.buttons[index].left = this.state[which];  // 初始传入的滑块
+    }
+
+    handleTouchMove(which, event){
+        console.log('.......2222');
+        if (this.props.disabled) {
+            return;
+        }
+        if (!this.moving ){
+            return;
+        }
+        var pageX  =  this.getEventPageX(event);  // event.changedTouches[0].pageX;  // 滑块在页面中的x坐标。
+        
+        var index = 'btnLeft' ===  which ? 0: 1; // 判断是左滑块还是右滑块
+        var button = this.buttons[index]; 
+      
+        var move = pageX - button.startX; // 移动距离
+        var left = button.left + move;    // 当前滑块的css left
+       
+        var p = left / this.progressBar;  // 100%
+
+        if (this.props.step != 1){
+            var number =  p / this.stepPercent;
+            var integer = Math.trunc(number);
+            var decimal = number - integer;
+            if (decimal > 0.5){
+                integer ++;
             }
+            p = this.stepPercent * integer;
         }
-    }
 
-    checkProps(props){
-        const { min, max, step } = props;
-        if (step > 0 && (max - min) % step !== 0) {
-            throw new Error('步长，取值必须大于 0，并且可被(max - min)整除');
+        if (p  < 0){   //0~1
+            p = 0;
         }
-    }
+        if (p > 1){
+            p = 1;
+        }
+        this.setState({
+            [which]: p  *  this.progressBar 
+        });
+        if (!event.detail){
+            event.detail = {};
+        }
+        event.detail.value =  this.getSlideValue(p);
+        this.setState({
+            showValue: event.detail.value
+        });
 
-    updateValue(snap = false) {
-        // eslint-disable-next-line no-console
-        // console.log('updateValue');
-        let value = 0;
-        const percent = this.state.percent,
-            { min, max, step, onChange } = this.props,
-            steps = ~~((max - min) / step),
-            perPercent = (100 / steps).toFixed(1);
-
-        if (percent >= 100) {
-            value = max;
-        } else if (percent === 0) {
-            value = min;
-        } else {
-            for (let i = 0; i < steps; i++) {
-                //over 50 margin than next
-                if (
-                    percent > i * perPercent &&
-                    percent <= (i + 1) * perPercent
-                ) {
-                    value =
-                        percent - i * perPercent > perPercent / 2
-                            ? (i + 1) * step + min
-                            : i * step + min;
+        // 判断两个滑块，滑动。左滑块不能超过右滑块，右滑块不能超过左滑块
+        if (!this.props.isSingle){
+            if (which === 'btnLeft'){
+                if (p < 0){
+                    p = 0;
+                }
+                if (p >= this.state.btnRight / this.progressBar ){
+                    p = this.state.btnRight / this.progressBar;
+                }
+            } else if (which === 'btnRight'){
+                if (p <= this.state.btnLeft / this.progressBar ){
+                    p = this.state.btnLeft / this.progressBar;
+                }
+                if (p > 1){
+                    p = 1;
                 }
             }
+            this.setState({
+                [which]:  p *  this.progressBar 
+            });
+            button.value = this.getSlideValue(p);
+            event.detail.value = [this.buttons[0].value, this.buttons[1].value];
+            this.setState({
+                showValue: [this.buttons[0].value, this.buttons[1].value]
+            });
         }
-
-        if (value !== this.state.value) {
-            this.setState({ value });
-            onChange && onChange(value);
-        }
-
-        if (snap) {
-            let percentVal =
-                value === min
-                    ? 0
-                    : value === max
-                        ? 100
-                        : ((value - min) / step) * perPercent;
-
-            this.setState(
-                {
-                    percent: percentVal,
-                    animating: true,
-                    trackStyles: {
-                        width: `${percentVal}%`,
-                    },
-                    trackWidth: (TOTAL_WIDTH * percentVal) / 100,
-                    handlerStyles: {
-                        transition: 'transform .3s',
-                    },
-                },
-                () =>
-                    this.setState({
-                        animating: false,
-                        handlerStyles: {
-                            transition: 'none',
-                        },
-                    })
-            );
-        }
+        this.state.onChanging(event);   // 拖动过程中触发的事件，event.detail = {value: value}
     }
 
-    handleTouchStart(e) {
-        if (this.state.touching || this.props.disabled) return;
-        // eslint-disable-next-line no-console
-        console.log('start');
-        // let barDOM = ReactDOM.findDOMNode(this.refs.bar);
-
-        this.setState({
-            touching: true,
-            touchId: e.changedTouches[0].identifier,
-            totalWidth: TOTAL_WIDTH,
-            touchStartPageX: e.changedTouches[0].pageX,
-            touchStartPercent: this.state.percent,
-        });
-    }
-
-    handleTouchMove(e) {
-        // eslint-disable-next-line no-console
-        // console.log('touch move e:::', e.touches[0]);
-        if (!this.state.touching || this.props.disabled) return;
-        if (e.changedTouches[0].identifier !== this.state.touchId) return;
-
-        //prevent move background
-        // e.preventDefault();
-
-        const pageX = e.changedTouches[0].pageX;
-        const diffX = pageX - this.state.touchStartPageX;
-        // eslint-disable-next-line no-console
-        // console.log('\ndiffX:::', diffX);
-
-        let percent =
-            ~~((diffX / this.state.totalWidth) * 100) +
-            this.state.touchStartPercent;
-        percent = percent < 0 ? 0 : percent > 100 ? 100 : percent;
-        // console.log('percent:::', percent);
-
-        this.setState(
-            {
-                percent,
-                handlerStyles: {
-                    transition: this.state.animating ? 'transform .3s' : 'none',
-                },
-            },
-            () => this.updateValue()
-        );
-    }
-
-    handleTouchEnd() {
-        if (!this.state.touching || this.props.disabled) return;
-
-        if (this.props.snapToValue) {
-            this.updateValue(true);
-        }
-
-        this.setState({
-            touching: false,
-            touchStartPageX: 0,
-            touchId: undefined,
-            touchStartPercent: 0,
-        });
+    handleTouchEnd(which, event){
+        this.handleTouchMove(which, event); 
+        this.state.onChange(event);     // 完成一次拖动后触发的事件，event.detail = {value: value}
+        this.moving = false;
     }
 
     /**
@@ -236,87 +190,113 @@ class XSlider extends React.Component {
      * size 正常大小 width=height
      * borderRadius 设置为圆形 数值为width的一半
      */
-    calcBlockHandler(size = 1) {
-        let radius = this.props['block-size'];
-        // 快应用上的px需要 *2
-        // let coefficient = process.env.ANU_ENV === 'quick' ? 2 : 1;
-        radius =
-            radius < MIN_BLOCK_SIZE
-                ? MIN_BLOCK_SIZE
-                : radius > MAX_BLOCK_SIZE
-                    ? MAX_BLOCK_SIZE
-                    : radius;
-        // return radius * size * coefficient;
-        return radius * size;
-    }
+    // calcBlockHandler(size = 1) {
+    //     let radius = this.props['block-size'];
+    //     // 快应用上的px需要 *2
+    //     // let coefficient = process.env.ANU_ENV === 'quick' ? 2 : 1;
+    //     radius =
+    //         radius < MIN_BLOCK_SIZE
+    //             ? MIN_BLOCK_SIZE
+    //             : radius > MAX_BLOCK_SIZE
+    //                 ? MAX_BLOCK_SIZE
+    //                 : radius;
+    //     // return radius * size * coefficient;
+    //     return radius * size;
+    // }
 
     render() {
-        const { backgroundColor } = this.props;
+        // console.log('...', this.props.isSingle, this.state.btnLeft, this.state.btnRight);
         return (
-            <div class="anu-slider">
-                <stack className="anu-bar-container">
-                    <div
-                        className="anu-slider-block"
-                        style={{
-                            width: `${TOTAL_WIDTH + this.calcBlockHandler()}PX`,
-                        }}
+            <div className='anu-slider'>
+                <div
+                    className="anu-slider-track"
+                    style={{
+                        backgroundImage: `linear-gradient(to bottom, ${this.props.backgroundColor}, ${this.props.backgroundColor})`
+                    }}
+                    ref="trackDom"
+                >
+                    <div 
+
+                        style={{left: this.state.btnLeft+'PX', background: '#f00'}}
+                        // ref={dom => this.btnLeft = dom}
+                        onTouchStart={event => this.handleTouchStart('btnLeft', event)}
+                        onTouchMove={event => this.handleTouchMove('btnLeft', event)}
+                        onTouchEnd={event => this.handleTouchEnd('btnLeft', event)}
+                        className="anu-slider-thumb-0"
                     >
-                        <div
-                            className="weui-slider__inner"
+                        <span 
+                            className="anu-slider-progressBar"
                             style={{
-                                paddingLeft: `${this.calcBlockHandler(0.5)}PX`,
-                                paddingRight: `${this.calcBlockHandler(0.5)}PX`
+                                backgroundColor: this.singleActiveColor
                             }}
-                        >
-                            <div
-                                className="weui-slider__inner"
-                                style={{ backgroundColor }}
-                            />
-                        </div>
-                    </div>
-                    <div
-                        className="anu-slider-block slider-block"
-                        style={{width: `${TOTAL_WIDTH + this.calcBlockHandler()}PX`,}}
-                    >
-                        <div
-                            className="weui-slider__track"
-                            style={{width: `${this.state.trackWidth}PX`}}
-                        >
-                            <div
-                                className="weui-slider__track-inner"
-                                style={{
-                                    width: `${this.state.trackWidth - this.calcBlockHandler(0.5)}PX`,
-                                    backgroundColor: this.props.activeColor,
-                                    marginLeft: `${this.calcBlockHandler(0.5)}PX`,
-                                }}
-                            />
-                        </div>
-                        <div
-                            catchTouchStart={this.handleTouchStart}
-                            catchTouchMove={this.handleTouchMove}
-                            onTouchEnd={this.handleTouchEnd}
-                            className="weui-slider__handler"
+                        />
+                        <span 
+                            className="anu-slider-sliderBlock"
                             style={{
-                                transition: this.state.handlerStyles.transition,
-                                width: `${this.calcBlockHandler()}PX`,
-                                height: `${this.calcBlockHandler()}PX`,
-                                backgroundColor: this.props['block-color'],
-                                borderRadius: `${this.calcBlockHandler(0.5)}PX`,
-                                boxShadow: '0 0 4PX rgba(0, 0, 0, 0.2)',
-                                marginTop: `-${this.calcBlockHandler(0.5)}PX`
+                                width: `${this.props['block-size']}PX`,
+                                height: `${this.props['block-size']}PX`,
+                                top: `${(30-this.props['block-size'])/2}PX`,
+                                backgroundColor: `${this.props['block-color']}`
                             }}
                         />
                     </div>
-                </stack>
-
-                {this.props.showValue && (
-                    <text className="weui-slider-box__value">
-                        {this.state.value}
-                    </text>
-                )}
+                    {!this.props.isSingle && 
+                        <span 
+                            style={{left: this.state.btnRight +'PX'}}
+                            // ref={dom => this.btnRight = dom}
+                            onTouchStart={event => this.handleTouchStart('btnRight', event)}
+                            onTouchMove={event => this.handleTouchMove('btnRight', event)}
+                            onTouchEnd={event => this.handleTouchEnd('btnRight', event)}
+                            className="anu-slider-thumb-1"
+                        >
+                            <span 
+                                className="anu-slider-progressBar"
+                                style={{
+                                    backgroundColor: this.props.activeColor
+                                }}
+                            />
+                            <span 
+                                className="anu-slider-sliderBlock"
+                                style={{
+                                    width: `${this.props['block-size']}PX`,
+                                    height: `${this.props['block-size']}PX`,
+                                    top: `${(30-this.props['block-size'])/2}PX`,
+                                    backgroundColor: `${this.props['block-color']}`
+                                }}
+                            />
+                        </span>
+                    }                      
+                </div>
+                {this.props['show-value'] &&
+                    <span 
+                        className="anu-slider-showValue"
+                        style={{
+                            flexBasis: this.showValueWidth
+                        }}
+                    >
+                        {this.props.isSingle ? 
+                            this.state.showValue : 
+                            `${this.state.showValue[0]},${this.state.showValue[1]}`
+                        }
+                    </span>
+                }
             </div>
         );
     }
 }
+
+XSlider.defaultProps = {
+    isSingle: true, // 默认表示单滑块。若为双滑块一定要传入false。
+    min: 0,   // 滑块最左边表示的值。受控属性：滑块滑到最左边应该表示的值。
+    max: 100, // 滑块最右边表示的值。受控属性：滑块滑到最右边应该表示的值。 注意：有传入step属性时，必须保证 (max - min) 能被 step 整除。
+    step: 1,  // 步长，取值必须大于 0，并且可被(max - min)整除。
+    disabled: false,  // 禁用滑块。 受控属性：禁止滑块滑动，阻止touch事件。
+    value: 0, // 当前取值, 可以是数组
+    activeColor: '#00bcd4', // 已选择的颜色
+    backgroundColor: '#ccc', // 背景条的颜色
+    'block-size': 28,   // 滑块的大小，取值范围为 12 - 28
+    'block-color': '#fff',  // 滑块的颜色
+    'show-value': false // 是否显示当前 value
+};
 
 export default XSlider;
