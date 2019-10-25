@@ -17,12 +17,9 @@ class P extends React.Component {
         this.sliderChange = this.sliderChange.bind(this);
     }
 
-    sliderChange(idx, value) {
+    sliderChange(idx) {
         // eslint-disable-next-line no-console
-        console.log('slider 发生 change 事件，携带值为', value, 'idx:', idx);
-        this.setState({
-            [`slider${idx}`]: value,
-        });
+        console.log('event:', idx);
     }
 
     render() {
@@ -37,6 +34,7 @@ class P extends React.Component {
                     max={100}
                     // value={30}
                     value={[10, 30]}
+                    bindchange={e => this.sliderChange(e)}
                 />
 
 

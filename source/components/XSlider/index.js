@@ -174,6 +174,7 @@ class XSlider extends React.Component {
                 showValue: [this.buttons[0].value, this.buttons[1].value]
             });
         }
+        // console.log('组件的', event);
         this.state.onChanging(event);   // 拖动过程中触发的事件，event.detail = {value: value}
     }
 
