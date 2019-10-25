@@ -92,7 +92,6 @@ class XSlider extends React.Component {
     }
 
     handleTouchStart(which, event){
-        console.log('.......1111');
         // event.preventDefault();   // 阻止事件默认行为
         // event.stopPropagation();  // 阻止事件冒泡和捕获
         if (this.props.disabled) {
@@ -106,7 +105,6 @@ class XSlider extends React.Component {
     }
 
     handleTouchMove(which, event){
-        console.log('.......2222');
         if (this.props.disabled) {
             return;
         }
@@ -215,8 +213,7 @@ class XSlider extends React.Component {
                     }}
                     ref="trackDom"
                 >
-                    <div 
-
+                    <stack
                         style={{left: this.state.btnLeft+'PX'}}
                         // ref={dom => this.btnLeft = dom}
                         onTouchStart={event => this.handleTouchStart('btnLeft', event)}
@@ -239,33 +236,33 @@ class XSlider extends React.Component {
                                 backgroundColor: `${this.props['block-color']}`
                             }}
                         />
-                    </div>
-                    {!this.props.isSingle && 
+                    </stack>
+                    
+                    <stack 
+                        style={{left: this.state.btnRight +'PX'}}
+                        // ref={dom => this.btnRight = dom}
+                        onTouchStart={event => this.handleTouchStart('btnRight', event)}
+                        onTouchMove={event => this.handleTouchMove('btnRight', event)}
+                        onTouchEnd={event => this.handleTouchEnd('btnRight', event)}
+                        className="anu-slider-thumb-1"
+                    >
                         <span 
-                            style={{left: this.state.btnRight +'PX'}}
-                            // ref={dom => this.btnRight = dom}
-                            onTouchStart={event => this.handleTouchStart('btnRight', event)}
-                            onTouchMove={event => this.handleTouchMove('btnRight', event)}
-                            onTouchEnd={event => this.handleTouchEnd('btnRight', event)}
-                            className="anu-slider-thumb-1"
-                        >
-                            <span 
-                                className="anu-slider-progressBar"
-                                style={{
-                                    backgroundColor: this.props.activeColor
-                                }}
-                            />
-                            <span 
-                                className="anu-slider-sliderBlock"
-                                style={{
-                                    width: `${this.props['block-size']}PX`,
-                                    height: `${this.props['block-size']}PX`,
-                                    top: `${(30-this.props['block-size'])/2}PX`,
-                                    backgroundColor: `${this.props['block-color']}`
-                                }}
-                            />
-                        </span>
-                    }                      
+                            className="anu-slider-progressBar"
+                            style={{
+                                backgroundColor: this.props.activeColor
+                            }}
+                        />
+                        <span 
+                            className="anu-slider-sliderBlock"
+                            style={{
+                                width: `${this.props['block-size']}PX`,
+                                height: `${this.props['block-size']}PX`,
+                                top: `${(30-this.props['block-size'])/2}PX`,
+                                backgroundColor: `${this.props['block-color']}`
+                            }}
+                        />
+                    </stack>
+                                        
                 </div>
                 {this.props['show-value'] &&
                     <span 
