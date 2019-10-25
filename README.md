@@ -14,3 +14,11 @@ schnee，念希尼， RWBY中白衣少女的名字
 [文档](https://qunarcorp.github.io/schnee-ui/index.html)
 
 [更新日志](./CHANGELOG.md)
+
+## 发布文档
+
+bin/doc.sh
+
+切换到gh-pages分支
+
+git push
