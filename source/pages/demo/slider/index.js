@@ -35,6 +35,7 @@ class P extends React.Component {
                     // value={30}
                     value={[10, 30]}
                     bindchange={e => this.sliderChange(e)}
+                    // show-value={false}
                 />
 
 

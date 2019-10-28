@@ -62,7 +62,9 @@
     //     display: inline;
     // }
     &-track {
-        width: 100%;
+        // width: 100%;
+        // flex: 5;
+        width: 85%;
         overflow: hidden;
         position: relative;
         height: 30px;
@@ -119,6 +121,8 @@
         // content: '';
     }
     &-showValue {
+        // flex: 1;
+        width: 15%;
         height: 30px;
         line-height: 30px;
         color: #888888;

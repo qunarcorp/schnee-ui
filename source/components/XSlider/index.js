@@ -1,5 +1,4 @@
 import React from '@react';
-// import classNames from '../../common/utils/classnames';
 import './index.scss';
 
 
@@ -12,6 +11,7 @@ import './index.scss';
 class XSlider extends React.Component {
     constructor(props) {
         super(props);
+
         this.buttons = [{}, {}];  // 存储两个滑块的信息
         this.progressBar = 0;
         this.moving = false;   // 控制滑块是否滑动
@@ -24,7 +24,8 @@ class XSlider extends React.Component {
         };
         this.sliderWidth = this.props['block-size']; // 滑块的宽度
         this.singleActiveColor = this.props.isSingle ? this.props.activeColor : this.props.backgroundColor;
-        this.showValueWidth = this.props.isSingle ? '40px' : '80px';
+        // this.showValueWidth = this.props.isSingle ? 40 : 80;
+        // this.showValue = this.props['show-value'];
     }
 
     getPercent(value){
@@ -43,7 +44,7 @@ class XSlider extends React.Component {
     componentDidMount(){
         function execAfterGetPogressBar(val){
             this.progressBar = val - this.sliderWidth;
-
+            console.log('总宽度=', val, '可以滑动的宽度', this.progressBar, '滑块宽度', this.sliderWidth, '显示value宽度', this.showValueWidth);
             var value = this.props.value;
             var valueOne = (Array.isArray(value) ? value[0]: value);  // 第一个滑块
             var valueTwo = value[1];    // // 第二个滑块
@@ -64,6 +65,7 @@ class XSlider extends React.Component {
             // console.log("++++++",this)
         }
         var ANU_ENV = process.env.ANU_ENV;
+        console.log('ANU_ENV', ANU_ENV);
         var ref = this.refs.trackDom;
         var that = this;
         if (ANU_ENV === 'wx') {     // wx中获取进度条的长度
@@ -76,17 +78,32 @@ class XSlider extends React.Component {
 
         } else if (ANU_ENV === 'web'){   // h5中获取进度条的长度
             execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
-            //  this.progressBar = document.querySelector('.anu-slider-thumb').getBoundingClientRect().width - this.sliderWidth; 
-
         } else if (ANU_ENV === '360'){  // 360中获取进度条的长度
             execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
-            //  this.progressBar = document.querySelector('.anu-slider-thumb').getBoundingClientRect().width - this.sliderWidth; 
-        } else if (ANU_ENV === 'ali'){  // 百度小程序中获取进度条的长度
+        } else if (ANU_ENV === 'ali'){  // 支付宝小程序中获取进度条的长度
             const query = my.createSelectorQuery();
-            query.select('.anu-slider-track').boundingClientRect();
-            query.exec(ret => {
+            query.select('.anu-slider-track').boundingClientRect(ret => {
                 execAfterGetPogressBar.call(that, ret[0].width);
             });
+            query.exec();
+        } else if (ANU_ENV === 'bu'){  // 百度小程序中获取进度条的长度
+            const query = swan.createSelectorQuery().in(this.wx);
+
+            query.select('.anu-slider-track').boundingClientRect(ret => {
+                console.log('ret宽度111', ret);
+                execAfterGetPogressBar.call(that, ret.width);
+            });
+
+            query.select('.anu-slider-showValue').boundingClientRect(ret => {
+                console.log('ret宽度222', ret);
+                // execAfterGetPogressBar.call(that, ret.width);
+            });
+
+            query.exec();
+        } else if (ANU_ENV === 'quick'){
+            console.log('快应用 还没有做兼容');
+        } else if (ANU_ENV === 'tt'){
+            console.log('头条 还没有做兼容');
         }
         
     }
@@ -204,7 +221,6 @@ class XSlider extends React.Component {
     // }
 
     render() {
-        // console.log('...', this.props.isSingle, this.state.btnLeft, this.state.btnRight);
         return (
             <div className='anu-slider'>
                 <div
@@ -238,8 +254,7 @@ class XSlider extends React.Component {
                             }}
                         />
                     </stack>
-                    
-                    <stack 
+                    {!this.props.isSingle && <stack 
                         style={{left: this.state.btnRight +'PX'}}
                         // ref={dom => this.btnRight = dom}
                         onTouchStart={event => this.handleTouchStart('btnRight', event)}
@@ -262,21 +277,15 @@ class XSlider extends React.Component {
                                 backgroundColor: `${this.props['block-color']}`
                             }}
                         />
-                    </stack>
-                                        
+                    </stack>}                 
                 </div>
                 {this.props['show-value'] &&
-                    <span 
-                        className="anu-slider-showValue"
-                        style={{
-                            flexBasis: this.showValueWidth
-                        }}
-                    >
+                    <div className="anu-slider-showValue">
                         {this.props.isSingle ? 
                             this.state.showValue : 
                             `${this.state.showValue[0]},${this.state.showValue[1]}`
                         }
-                    </span>
+                    </div>
                 }
             </div>
         );

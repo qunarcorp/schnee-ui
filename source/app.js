@@ -42,6 +42,9 @@ class Global extends React.Component {
         }
         console.log('App launched'); //eslint-disable-line
     }
+    onError(e){
+        console.log(e)
+    }
 }
 //这样写相当于为每一个页面组件的外面都加上一个<Provider />，如果你想在页面上用到store里的数据，
 //需要用react-redux的connect方法包一下，详见pages/demo/syntax/redux
