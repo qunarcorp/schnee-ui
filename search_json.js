@@ -119,14 +119,36 @@ window.ydoc_plugin_search_json = {
       ]
     },
     {
+      "title": "",
+      "content": "",
+      "url": "/components/PickerView.html",
+      "children": [
+        {
+          "title": "PickerView",
+          "url": "/components/PickerView.html#pickerview",
+          "content": "PickerView嵌入页面的滚动选择器。其中只可放置 PickerViewColumn组件，其它节点无效。\n\n属性名\n类型\n必填\n默认值\n说明\n\n\n\n\nvalue\nArray\n否\n[0, 0, 0]\n数组中的数字依次表示 PickerView 内的 PickerViewColumn 选择的第几项（下标从 0 开始），数字大于 PickerViewColumn 可选项长度时，选择最后一项。\n\n\nindicator-style\nObject\n否\n\n设置选择器中间选中框的样式\n\n\nmask-style\nObject\n否\n\n设置蒙层的样式\n\n\nstyle\nObject\n否\n\n设置滚动区域样式\n\n\nbindchange\nfunction\n否\n\n滚动选择时触发change事件\n\n\nbindpickstart\nfunction\n否\n\n当滚动选择开始时候触发事件\n\n\nbindpickend\nfunction\n否\n\n当滚动选择结束时候触发事件\n\n\n"
+        },
+        {
+          "title": "说明",
+          "url": "/components/PickerView.html#说明",
+          "content": "说明PickerView 是参照微信小程序的 picker-view 组件实现的 但是因为快应用平台下样式是局部起作用，所以 indicator-class 和 mask-class 接口无法实现。"
+        },
+        {
+          "title": "示例代码",
+          "url": "/components/PickerView.html#示例代码",
+          "content": "示例代码import React from '@react';import XPickerView from '@components/XPickerView/index';\nimport XPickerViewColumn from '@components/XPickerViewColumn/index';\n\nimport './index.scss';\n\nconst date = new Date()\nconst years = []\nconst months = []\nconst days = []\n\nfor (let i = 1990; i \n        \n           {\n              console.log('bindpickstart', item);\n            }}\n            bindchange={(item) => {\n              console.log('bindchange', item);\n            }}\n            bindpickend={(item) => {\n              console.log('bindpickend', item);\n            }}\n          >\n            \n              {\n                this.state.years.map((item, idx) => {\n                  return {item}年\n                })\n              }\n            \n            \n              {\n                this.state.months.map((item, idx) => {\n                  return {item}月\n                })\n              }\n            \n            \n              {\n                this.state.days.map((item, idx) => {\n                  return {item}日\n                })\n              }\n            \n          \n\n           {\n            this.changeValue()\n          }}>changeValue\n\n        \n\n      \n    );\n  }\n}\n\nexport default P;\n\n"
+        }
+      ]
+    },
+    {
       "title": "Slider",
-      "content": "滑动选择器，这是一个受控组件。\n\n属性名\n类型\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nmin\nNumber\n0\n最小值\n-\n-\n-\n√\n\n\nmax\nNumber\n100\n最大值\n-\n-\n-\n√\n\n\nstep\nNumber\n1\n步长，取值必须大于 0，并且可被(max - min)整除\n-\n-\n-\n√\n\n\ndisabled\nBoolean\nfalse\n是否禁用\n-\n-\n-\n√\n\n\nvalue\nNumber\n0\n当前取值\n-\n-\n-\n√\n\n\nactiveColor\nColor\n#1aad19\n已选择的颜色\n-\n-\n-\n√\n\n\nbackgroundColor\nColor\n#e9e9e9\n背景条的颜色\n-\n-\n-\n√\n\n\nblock-size\nNumber\n28\n滑块的大小，取值范围为 12 - 28\n-\n-\n-\n√\n\n\nblock-color\nColor\n#ffffff\n滑块的颜色\n-\n-\n-\n√\n\n\nshow-value\nBoolean\nfalse\n是否显示当前 value\n-\n-\n-\n√\n\n\nbindchange\nEventHandle\n\n完成一次拖动后触发的事件，event.detail = {value: value}\n-\n-\n-\n-\n\n\nbindchanging\nEventHandle\n\n拖动过程中触发的事件，event.detail = {value: value}\n-\n-\n-\n-\n\n\n",
+      "content": "滑动选择器，这是一个受控组件。\n\n属性名\n类型\n默认值\n说明\n微信\n支付宝\n百度\n快应用\n\n\n\n\nisSingle\nBoolean\ntrue\n单个滑块\n-\n-\n-\n-\n\n\nmin\nNumber\n0\n最小值\n-\n-\n-\n√\n\n\nmax\nNumber\n100\n最大值\n-\n-\n-\n√\n\n\nstep\nNumber\n1\n步长，取值必须大于 0，并且可被(max - min)整除\n-\n-\n-\n√\n\n\ndisabled\nBoolean\nfalse\n是否禁用\n-\n-\n-\n√\n\n\nvalue\nNumber或者 Array\n0\n当前取值，若双滑块则为数组\n-\n-\n-\n√\n\n\nactiveColor\nColor\n#1aad19\n已选择的颜色\n-\n-\n-\n√\n\n\nbackgroundColor\nColor\n#e9e9e9\n背景条的颜色\n-\n-\n-\n√\n\n\nblock-size\nNumber\n28\n滑块的大小，取值范围为 12 - 28\n-\n-\n-\n√\n\n\nblock-color\nColor\n#ffffff\n滑块的颜色\n-\n-\n-\n√\n\n\nshow-value\nBoolean\nfalse\n是否显示当前 value\n-\n-\n-\n√\n\n\nbindchange\nEventHandle\n\n完成一次拖动后触发的事件，event.detail = {value: value}\n-\n-\n-\n-\n\n\nbindchanging\nEventHandle\n\n拖动过程中触发的事件，event.detail = {value: value}\n-\n-\n-\n-\n\n\n",
       "url": "/components/Slider.html",
       "children": [
         {
           "title": "示例",
           "url": "/components/Slider.html#示例",
-          "content": "示例基本用法：import React from '@react';import XSlider from '@components/XSlider/index';\nclass P extends React.Component {\n  constructor() {\n    super();\n    this.state = {\n      value: 0,\n    };\n    this.handleChange = this.handleChange.bind(this);\n  }\n  handleChange(idx, value) {\n    this.setState({\n      value: value,\n    });\n  }\n  render() {\n    return (\n      \n    );\n  }\n}\nexport default P;\n自定义滑块大小：Disabled：不显示当前 value：步长：最大值和最小值：自定义样式："
+          "content": "示例基本用法：import React from '@react';import XSlider from '@components/XSlider/index';\nclass P extends React.Component {\n  constructor() {\n    super();\n    this.state = {\n      value: 0,\n    };\n    this.handleChange = this.handleChange.bind(this);\n    this.sliderChange = this.sliderChange.bind(this);\n  }\n  handleChange(idx, value) {\n    this.setState({\n      value: value,\n    });\n  }\n  sliderChange(idx) {\n      // eslint-disable-next-line no-console\n      console.log('event:', idx);\n  }\n  render() {\n    return (\n      \n    );\n  }\n}\nexport default P;\n自定义滑块大小：Disabled：不显示当前 value：步长：最大值和最小值：自定义样式：双滑块(目前只支持微信 支付宝 百度, 不支持快应用)： this.sliderChange(e)}  min={40}\n  max={120}\n  step={40}\n  value={[10, 30]}\n/>\n"
         }
       ]
     },
