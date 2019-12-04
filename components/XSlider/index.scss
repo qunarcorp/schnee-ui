@@ -1,53 +1,54 @@
 .anu-slider {
     display: flex;
-    align-items: center;
     flex-direction: row;
+    &-track {
+        width: 85%;
+        overflow: hidden;
+        position: relative;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 2px;
+    }
+    &-progressBar {
+        position: absolute;
+        top: 15px;
+        right: 0;
+        left: -9999px;
+        height: 2px;
+    }
+
+    @for $i from 0 through 1 {
+        &-thumb-#{$i}{
+            position: absolute;
+            @if $i == 0 {
+                z-index: 1;
+                .aun-slider-progressBar {
+                    background-color: #ccc;
+                }
+            }
+        }
+    }
+    
+    &-sliderBlock {
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: 0 0 1px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+        background-color: #fff;
+    }
+    &-showValue {
+        width: 15%;
+        height: 30px;
+        line-height: 30px;
+        color: #888888;
+        text-align: center;
+        font-size: 14px;
+    }
 }
 
-.anu-bar-container {
-    height: 30px;
-    width: 100%;
-}
 
-.slider-block {
-    height: 28px;
-    display: flex;
-    flex-direction: row;
-}
 
-.anu-slider-block {
-    padding: 15px 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    position: absolute;
-    width: 100%;
-}
 
-.weui-slider__inner {
-    position: relative;
-    height: 2px;
-    width: 100%;
-}
 
-.weui-slider__track {
-    height: 2px;
-}
 
-.weui-slider__track-inner {
-    height: 2px;
-}
 
-.weui-slider__handler {
-    justify-content: center;
-    align-items: center;
-}
-
-.weui-slider-box__value {
-    margin-left: 0.5em;
-    flex-basis: 40px;
-    color: #888888;
-    text-align: center;
-    font-size: 14px;
-}
