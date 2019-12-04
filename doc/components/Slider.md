@@ -34,11 +34,16 @@ class P extends React.Component {
       value: 0,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.sliderChange = this.sliderChange.bind(this);
   }
   handleChange(idx, value) {
     this.setState({
       value: value,
     });
+  }
+  sliderChange(idx) {
+      // eslint-disable-next-line no-console
+      console.log('event:', idx);
   }
   render() {
     return (
@@ -115,5 +120,17 @@ Disabled：
   backgroundColor="#00BCD4"
   block-color="#f00"
   activeColor="#dadb1a"
+/>
+```
+
+双滑块(目前只支持微信 支付宝 百度, 不支持快应用)：
+
+```js
+<XSlider
+  bindchange={e => this.sliderChange(e)}
+  min={40}
+  max={120}
+  step={40}
+  value={[10, 30]}
 />
 ```
