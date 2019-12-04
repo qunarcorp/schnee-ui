@@ -24,11 +24,10 @@ class XSlider extends React.Component {
         };
         this.sliderWidth = this.props['block-size']; // 滑块的宽度
         this.singleActiveColor = this.props.isSingle ? this.props.activeColor : this.props.backgroundColor;
-        // this.showValueWidth = this.props.isSingle ? 40 : 80;
-        // this.showValue = this.props['show-value'];
     }
 
     getPercent(value){
+        console.log('第几个滑块',value);
         //将props.value转换成基于[min, max]区间的位置的百分比
         return  (value - this.props.min) / (this.props.max- this.props.min);
     }
@@ -44,7 +43,7 @@ class XSlider extends React.Component {
     componentDidMount(){
         function execAfterGetPogressBar(val){
             this.progressBar = val - this.sliderWidth;
-            console.log('总宽度=', val, '可以滑动的宽度', this.progressBar, '滑块宽度', this.sliderWidth, '显示value宽度', this.showValueWidth);
+            // console.log('总宽度=', val, '可以滑动的宽度', this.progressBar, '滑块宽度', this.sliderWidth, '显示value宽度', this.showValueWidth);
             var value = this.props.value;
             var valueOne = (Array.isArray(value) ? value[0]: value);  // 第一个滑块
             var valueTwo = value[1];    // // 第二个滑块
@@ -65,39 +64,35 @@ class XSlider extends React.Component {
             // console.log("++++++",this)
         }
         var ANU_ENV = process.env.ANU_ENV;
-        console.log('ANU_ENV', ANU_ENV);
+        // console.log(' 当前所处于哪个平台', ANU_ENV);
         var ref = this.refs.trackDom;
         var that = this;
         if (ANU_ENV === 'wx') {     // wx中获取进度条的长度
             const query = wx.createSelectorQuery().in(this.wx);
             query.select('.anu-slider-track').boundingClientRect(function(res){
+                console.log('微信的res', res);
                 execAfterGetPogressBar.call(that,  res.width);
             });
             query.exec();
-            // console.log('this.progressBar', that.progressBar);
-
         } else if (ANU_ENV === 'web'){   // h5中获取进度条的长度
             execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
         } else if (ANU_ENV === '360'){  // 360中获取进度条的长度
             execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
         } else if (ANU_ENV === 'ali'){  // 支付宝小程序中获取进度条的长度
             const query = my.createSelectorQuery();
-            query.select('.anu-slider-track').boundingClientRect(ret => {
+            query.select('.anu-slider-track').boundingClientRect().exec(ret => {
                 execAfterGetPogressBar.call(that, ret[0].width);
             });
-            query.exec();
         } else if (ANU_ENV === 'bu'){  // 百度小程序中获取进度条的长度
             const query = swan.createSelectorQuery().in(this.wx);
-
             query.select('.anu-slider-track').boundingClientRect(ret => {
-                console.log('ret宽度111', ret);
                 execAfterGetPogressBar.call(that, ret.width);
             });
 
-            query.select('.anu-slider-showValue').boundingClientRect(ret => {
-                console.log('ret宽度222', ret);
-                // execAfterGetPogressBar.call(that, ret.width);
-            });
+            // query.select('.anu-slider-showValue').boundingClientRect(ret => {
+            //     console.log('ret宽度222', ret);
+            //     // execAfterGetPogressBar.call(that, ret.width);
+            // });
 
             query.exec();
         } else if (ANU_ENV === 'quick'){
