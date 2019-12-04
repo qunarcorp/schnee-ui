@@ -4,11 +4,12 @@
 
 属性名 | 类型 | 默认值 | 说明 | 微信 | 支付宝 | 百度 | 快应用 |
 --- | --- | --- | --- | --- | --- | --- | --- | --- |
+isSingle | Boolean | true | 单个滑块 |  - | - | - | - |
 min | Number | 0 | 最小值 |  - | - | - | √ |
 max | Number | 100 | 最大值 |  - | - | - | √ |
 step | Number | 1 | 步长，取值必须大于 0，并且可被(max - min)整除 |  - | - | - | √ |
 disabled | Boolean | false | 是否禁用 |  - | - | - | √ |
-value | Number | 0 | 当前取值 |  - | - | - | √ |
+value | Number或者 Array | 0 | 当前取值，若双滑块则为数组 |  - | - | - | √ |
 activeColor | Color | #1aad19 | 已选择的颜色 |  - | - | - | √ |
 backgroundColor | Color | #e9e9e9 | 背景条的颜色 |  - | - | - | √ |
 block-size | Number | 28 | 滑块的大小，取值范围为 12 - 28 | - | - | - | √ |
@@ -42,7 +43,7 @@ class P extends React.Component {
   render() {
     return (
       <XSlider
-        onChange={this.handleChange}
+        bindchange={this.handleChange}
         value={this.state.slider0}
       />
     );
@@ -54,7 +55,7 @@ export default P;
 
 ```js
 <XSlider
-  onChange={this.handleChange}
+  bindchange={this.handleChange}
   value={this.state.slider1}
   block-size={16}
 />
@@ -65,7 +66,7 @@ Disabled：
 
 ```js
 <XSlider
-  onChange={this.handleChange}
+  bindchange={this.handleChange}
   value={this.state.slider2}
   step={20}
   disabled={true}
@@ -76,7 +77,7 @@ Disabled：
 
 ```js
 <XSlider
-  onChange={this.handleChange}
+  bindchange={this.handleChange}
   value={this.state.slider3}
   show-value={true}
   showValue={false}
@@ -87,7 +88,7 @@ Disabled：
 
 ```js
 <XSlider
-  onChange={this.handleChange}
+  bindchange={this.handleChange}
   step={40}
   value={this.state.slider4}
 />
@@ -97,7 +98,7 @@ Disabled：
 
 ```js
 <XSlider
-  onChange={this.handleChange}
+  bindchange={this.handleChange}
   min={40}
   max={120}
   step={40}
@@ -109,7 +110,7 @@ Disabled：
 
 ```js
 <XSlider
-  onChange={this.handleChange}
+  bindchange={this.handleChange}
   value={this.state.slider5}
   backgroundColor="#00BCD4"
   block-color="#f00"
