@@ -29,11 +29,11 @@ class P extends React.Component {
 
                 <XSlider 
                     show-value={true}
-                    isSingle={false}
+                    // isSingle={false}
                     min={0}
                     max={100}
-                    // value={30}
-                    value={[10, 30]}
+                    value={30}
+                    // value={[10, 30]}
                     bindchange={e => this.sliderChange(e)}
                     // show-value={false}
                 />

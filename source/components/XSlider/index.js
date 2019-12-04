@@ -27,7 +27,7 @@ class XSlider extends React.Component {
     }
 
     getPercent(value){
-        console.log('第几个滑块',value);
+        // console.log('第几个滑块',value);
         //将props.value转换成基于[min, max]区间的位置的百分比
         return  (value - this.props.min) / (this.props.max- this.props.min);
     }
@@ -70,7 +70,7 @@ class XSlider extends React.Component {
         if (ANU_ENV === 'wx') {     // wx中获取进度条的长度
             const query = wx.createSelectorQuery().in(this.wx);
             query.select('.anu-slider-track').boundingClientRect(function(res){
-                console.log('微信的res', res);
+                // console.log('微信的res', res);
                 execAfterGetPogressBar.call(that,  res.width);
             });
             query.exec();
