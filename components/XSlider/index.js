@@ -68,33 +68,37 @@ class XSlider extends React.Component {
         var ref = this.refs.trackDom;
         var that = this;
         if (ANU_ENV === 'wx') {     // wx中获取进度条的长度
-            const query = wx.createSelectorQuery().in(this.wx);
-            query.select('.anu-slider-track').boundingClientRect(function(res){
-                // console.log('微信的res', res);
-                execAfterGetPogressBar.call(that,  res.width);
-            });
-            query.exec();
+            setTimeout(() => {
+                const query = wx.createSelectorQuery().in(this.wx);
+                query.select('.anu-slider-track').boundingClientRect(function(res){
+                    // console.log('微信的res', res);
+                    execAfterGetPogressBar.call(that,  res.width);
+                });
+                query.exec();
+            }, 300);
         } else if (ANU_ENV === 'web'){   // h5中获取进度条的长度
-            execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+            setTimeout(() => {
+                execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+            }, 300);
         } else if (ANU_ENV === '360'){  // 360中获取进度条的长度
-            execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+            setTimeout(() => {
+                execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+            }, 300);
         } else if (ANU_ENV === 'ali'){  // 支付宝小程序中获取进度条的长度
-            const query = my.createSelectorQuery();
-            query.select('.anu-slider-track').boundingClientRect().exec(ret => {
-                execAfterGetPogressBar.call(that, ret[0].width);
-            });
+            setTimeout(() => {
+                const query = my.createSelectorQuery();
+                query.select('.anu-slider-track').boundingClientRect().exec(ret => {
+                    execAfterGetPogressBar.call(that, ret[0].width);
+                });
+            }, 300);
         } else if (ANU_ENV === 'bu'){  // 百度小程序中获取进度条的长度
-            const query = swan.createSelectorQuery().in(this.wx);
-            query.select('.anu-slider-track').boundingClientRect(ret => {
-                execAfterGetPogressBar.call(that, ret.width);
-            });
-
-            // query.select('.anu-slider-showValue').boundingClientRect(ret => {
-            //     console.log('ret宽度222', ret);
-            //     // execAfterGetPogressBar.call(that, ret.width);
-            // });
-
-            query.exec();
+            setTimeout(() => {
+                const query = swan.createSelectorQuery().in(this.wx);
+                query.select('.anu-slider-track').boundingClientRect(ret => {
+                    execAfterGetPogressBar.call(that, ret.width);
+                });
+                query.exec();
+            }, 300);
         } else if (ANU_ENV === 'quick'){
             console.log('快应用 还没有做兼容');
         } else if (ANU_ENV === 'tt'){
