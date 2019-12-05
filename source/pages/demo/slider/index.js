@@ -11,7 +11,9 @@ class P extends React.Component {
             slider2: 40,
             slider3: 0,
             slider4: 80,
-            slider5: 0
+            slider5: 0,
+            start: 10,
+            end:40
         };
 
         this.sliderChange = this.sliderChange.bind(this);
@@ -19,25 +21,42 @@ class P extends React.Component {
 
     sliderChange(idx) {
         // eslint-disable-next-line no-console
-        console.log('event:', idx);
+        
+        // console.log('event:', idx);
+
+        let result = idx.detail.value;
+        this.setState({
+            start: result[0],
+            end:result[1],
+        });
+
+    }
+
+    clear(){
+        console.log('清楚');
+        this.setState({
+            start: 0,
+            end: 100
+        });
     }
 
     render() {
-        // console.log('slider');
+        console.log(this.state.start, 'slider', this.state.end);
         return (
             <div className="anu-col demo-page">
 
                 <XSlider 
                     show-value={true}
-                    // isSingle={false}
+                    isSingle={false}
                     min={0}
                     max={100}
                     value={30}
-                    // value={[10, 30]}
+                    value={[this.state.start, this.state.end]}
                     bindchange={e => this.sliderChange(e)}
                     // show-value={false}
                 />
 
+                <button onClick={this.clear.bind(this)}>按钮</button>
 
                 {/* <span className="demo-header">目前快应用计算不出dom的宽高(2018-12-12), 写死270</span>
                 <span className="demo-header">default</span>
