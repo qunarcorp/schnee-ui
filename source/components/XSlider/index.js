@@ -202,9 +202,15 @@ class XSlider extends React.Component {
                 [which]:  p *  this.progressBar 
             });
             button.value = this.getSlideValue(p);
-            event.detail.value = [this.buttons[0].value, this.buttons[1].value];
+            var btn1 = this.buttons[0].value;
+            var btn2 = this.buttons[1].value;
+            if (btn1 > btn2 ){
+                btn2 = btn1;
+            }
+            event.detail.value = [btn1, btn2];
+        
             this.setState({
-                showValue: [this.buttons[0].value, this.buttons[1].value]
+                showValue: event.detail.value
             });
         }
         // console.log('组件的', event);

@@ -25,9 +25,10 @@ class P extends React.Component {
         // console.log('event:', idx);
 
         let result = idx.detail.value;
+        console.log('result', result);
         this.setState({
             start: result[0],
-            end:result[1],
+            end: result[1],
         });
 
     }
@@ -41,7 +42,7 @@ class P extends React.Component {
     }
 
     render() {
-        console.log(this.state.start, 'slider', this.state.end);
+        // console.log(this.state.start, 'slider', this.state.end);
         return (
             <div className="anu-col demo-page">
 
