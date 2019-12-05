@@ -26,6 +26,13 @@ class XSlider extends React.Component {
         this.singleActiveColor = this.props.isSingle ? this.props.activeColor : this.props.backgroundColor;
     }
 
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            showValue: nextProps.value
+        });
+        this.getAunEnv();
+    }
+
     getPercent(value){
         // console.log('第几个滑块',value);
         //将props.value转换成基于[min, max]区间的位置的百分比
@@ -40,29 +47,35 @@ class XSlider extends React.Component {
         var object = e.changedTouches || e.touches || [e];
         return object[0].pageX;
     }
+   
     componentDidMount(){
-        function execAfterGetPogressBar(val){
-            this.progressBar = val - this.sliderWidth;
-            // console.log('总宽度=', val, '可以滑动的宽度', this.progressBar, '滑块宽度', this.sliderWidth, '显示value宽度', this.showValueWidth);
-            var value = this.props.value;
-            var valueOne = (Array.isArray(value) ? value[0]: value);  // 第一个滑块
-            var valueTwo = value[1];    // // 第二个滑块
-            var percentOne = this.getPercent(valueOne);
-            var percentTow = this.getPercent(valueTwo);
-            this.stepPercent = this.getPercent(this.props.step);
-            //  console.log('valueTwo', valueOne, valueTwo);
-            this.setState({
-                btnLeft: ~~ (percentOne * this.progressBar),  // 左滑块位置
-                btnRight: ~~ (percentTow * this.progressBar ) // 右滑块位置
-            }, function() {
-                this.buttons = [{
-                    value: valueOne //~~(this.state.btnLeft / this.maxRight * 100)
-                }, {
-                    value:  valueTwo  //~~(this.state.btnRight / this.maxRight * 100)
-                }];
-            });
-            // console.log("++++++",this)
-        }
+        this.getAunEnv();
+    }
+
+    execAfterGetPogressBar(val){
+        this.progressBar = val - this.sliderWidth;
+        // console.log('总宽度=', val, '可以滑动的宽度', this.progressBar, '滑块宽度', this.sliderWidth, '显示value宽度', this.showValueWidth);
+        var value = this.props.value;
+        var valueOne = (Array.isArray(value) ? value[0]: value);  // 第一个滑块
+        var valueTwo = value[1];    // // 第二个滑块
+        var percentOne = this.getPercent(valueOne);
+        var percentTow = this.getPercent(valueTwo);
+        this.stepPercent = this.getPercent(this.props.step);
+        //  console.log('valueTwo', valueOne, valueTwo);
+        this.setState({
+            btnLeft: ~~ (percentOne * this.progressBar),  // 左滑块位置
+            btnRight: ~~ (percentTow * this.progressBar ) // 右滑块位置
+        }, function() {
+            this.buttons = [{
+                value: valueOne //~~(this.state.btnLeft / this.maxRight * 100)
+            }, {
+                value:  valueTwo  //~~(this.state.btnRight / this.maxRight * 100)
+            }];
+        });
+        // console.log("++++++",this)
+    }
+
+    getAunEnv(){
         var ANU_ENV = process.env.ANU_ENV;
         // console.log(' 当前所处于哪个平台', ANU_ENV);
         var ref = this.refs.trackDom;
@@ -72,30 +85,30 @@ class XSlider extends React.Component {
                 const query = wx.createSelectorQuery().in(this.wx);
                 query.select('.anu-slider-track').boundingClientRect(function(res){
                     // console.log('微信的res', res);
-                    execAfterGetPogressBar.call(that,  res.width);
+                    this.execAfterGetPogressBar.call(that,  res.width);
                 });
                 query.exec();
             }, 300);
         } else if (ANU_ENV === 'web'){   // h5中获取进度条的长度
             setTimeout(() => {
-                execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+                this.execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
             }, 300);
         } else if (ANU_ENV === '360'){  // 360中获取进度条的长度
             setTimeout(() => {
-                execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
+                this.execAfterGetPogressBar.call(this, ref.getBoundingClientRect().width );
             }, 300);
         } else if (ANU_ENV === 'ali'){  // 支付宝小程序中获取进度条的长度
             setTimeout(() => {
                 const query = my.createSelectorQuery();
                 query.select('.anu-slider-track').boundingClientRect().exec(ret => {
-                    execAfterGetPogressBar.call(that, ret[0].width);
+                    this.execAfterGetPogressBar.call(that, ret[0].width);
                 });
             }, 300);
         } else if (ANU_ENV === 'bu'){  // 百度小程序中获取进度条的长度
             setTimeout(() => {
                 const query = swan.createSelectorQuery().in(this.wx);
                 query.select('.anu-slider-track').boundingClientRect(ret => {
-                    execAfterGetPogressBar.call(that, ret.width);
+                    this. execAfterGetPogressBar.call(that, ret.width);
                 });
                 query.exec();
             }, 300);
@@ -104,7 +117,6 @@ class XSlider extends React.Component {
         } else if (ANU_ENV === 'tt'){
             console.log('头条 还没有做兼容');
         }
-        
     }
 
     handleTouchStart(which, event){
