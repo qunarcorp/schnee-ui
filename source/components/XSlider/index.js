@@ -12,7 +12,7 @@ class XSlider extends React.Component {
     constructor(props) {
         super(props);
 
-        this.buttons = [{}, {}];  // 存储两个滑块的信息
+        this.buttons = [{ }, { }];  // 存储两个滑块的信息
         this.progressBar = 0;
         this.moving = false;   // 控制滑块是否滑动
         this.state = {
@@ -120,6 +120,8 @@ class XSlider extends React.Component {
     }
 
     handleTouchStart(which, event){
+        
+
         // event.preventDefault();   // 阻止事件默认行为
         // event.stopPropagation();  // 阻止事件冒泡和捕获
         if (this.props.disabled) {
@@ -129,7 +131,10 @@ class XSlider extends React.Component {
         this.moving = true;
         var index = 'btnLeft' ===  which ? 0: 1; // 判断是左滑块还是右滑块
         this.buttons[index].startX  = pageX;  // 开始位置
+        this.buttons[index].zIndex  = 10;  //  当前的 z-index 调大一下
         this.buttons[index].left = this.state[which];  // 初始传入的滑块
+
+        // console.log('....', this.buttons);
     }
 
     handleTouchMove(which, event){
@@ -242,7 +247,9 @@ class XSlider extends React.Component {
                     ref="trackDom"
                 >
                     <stack
-                        style={{left: this.state.btnLeft+'PX'}}
+                        style={{
+                            left: this.state.btnLeft+'PX'
+                        }}
                         // ref={dom => this.btnLeft = dom}
                         onTouchStart={event => this.handleTouchStart('btnLeft', event)}
                         onTouchMove={event => this.handleTouchMove('btnLeft', event)}
@@ -261,12 +268,16 @@ class XSlider extends React.Component {
                                 width: `${this.props['block-size']}PX`,
                                 height: `${this.props['block-size']}PX`,
                                 top: `${(30-this.props['block-size'])/2}PX`,
-                                backgroundColor: `${this.props['block-color']}`
+                                backgroundColor: `${this.props['block-color']}`,
+                                zIndex: this.buttons[0].zIndex || 1
                             }}
                         />
                     </stack>
                     {!this.props.isSingle && <stack 
-                        style={{left: this.state.btnRight +'PX'}}
+                        style={{
+                            left: this.state.btnRight +'PX',
+                           
+                        }}
                         // ref={dom => this.btnRight = dom}
                         onTouchStart={event => this.handleTouchStart('btnRight', event)}
                         onTouchMove={event => this.handleTouchMove('btnRight', event)}
@@ -285,7 +296,8 @@ class XSlider extends React.Component {
                                 width: `${this.props['block-size']}PX`,
                                 height: `${this.props['block-size']}PX`,
                                 top: `${(30-this.props['block-size'])/2}PX`,
-                                backgroundColor: `${this.props['block-color']}`
+                                backgroundColor: `${this.props['block-color']}`,
+                                zIndex: this.buttons[1].zIndex || 0
                             }}
                         />
                     </stack>}                 

@@ -50,7 +50,7 @@ class P extends React.Component {
                     isSingle={false}
                     min={0}
                     max={100}
-                    value={30}
+                    // value={30}
                     value={[this.state.start, this.state.end]}
                     bindchange={e => this.sliderChange(e)}
                     // show-value={false}
