@@ -83,7 +83,7 @@ class XSlider extends React.Component {
         if (ANU_ENV === 'wx') {     // wx中获取进度条的长度
             setTimeout(() => {
                 const query = wx.createSelectorQuery().in(this.wx);
-                query.select('.anu-slider-track').boundingClientRect(function(res){
+                query.select('.anu-slider-track').boundingClientRect((res) =>{
                     // console.log('微信的res', res);
                     this.execAfterGetPogressBar.call(that,  res.width);
                 });
