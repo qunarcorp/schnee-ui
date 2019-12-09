@@ -65,12 +65,16 @@ class XSlider extends React.Component {
         this.setState({
             btnLeft: ~~ (percentOne * this.progressBar),  // 左滑块位置
             btnRight: ~~ (percentTow * this.progressBar ) // 右滑块位置
-        }, function() {
-            this.buttons = [{
-                value: valueOne //~~(this.state.btnLeft / this.maxRight * 100)
-            }, {
-                value:  valueTwo  //~~(this.state.btnRight / this.maxRight * 100)
-            }];
+        },  () =>{
+            if (this.buttons[0].hasOwnProperty('value')){
+                return false;
+            } else {
+                this.buttons = [{
+                    value: valueOne //~~(this.state.btnLeft / this.maxRight * 100)
+                }, {
+                    value: valueTwo  //~~(this.state.btnRight / this.maxRight * 100)
+                }];
+            }
         });
         // console.log("++++++",this)
     }
