@@ -107,7 +107,7 @@ class XSlider extends React.Component {
                 query.select('.anu-slider-track').boundingClientRect().exec(ret => {
                     this.execAfterGetPogressBar.call(that, ret[0].width);
                 });
-            }, 300);
+            }, 1000);
         } else if (ANU_ENV === 'bu'){  // 百度小程序中获取进度条的长度
             setTimeout(() => {
                 const query = swan.createSelectorQuery().in(this.wx);
