@@ -78,23 +78,24 @@ class XPickerItem extends React.Component {
 
   handleTouchStart(e) {
     if (this.state.touching || this.props.items.length <= 1) return;
-    
+    var touchObj = e.type === 'touchstart' ? e.touches[0] : e;
     this.setState({
       touching: true,
       ogTranslate: this.state.translate,
-      touchId: e.touches[0].identifier,
+      touchId:touchObj.identifier,
       ogY:
-        this.state.translate === 0 ? e.touches[0].pageY : e.touches[0].pageY - this.state.translate,
+        this.state.translate === 0 ? touchObj.pageY : touchObj.pageY - this.state.translate,
       animating: false
     });
   }
 
   handleTouchMove(e) {
-    
     if (!this.state.touching || this.props.items.length <= 1) return;
-    if (e.touches[0].identifier !== this.state.touchId) return;
+    var touchObj =  e.type === 'touchmove' ? e.touches[0] : e;
 
-    const pageY = e.touches[0].pageY;
+    if (touchObj.identifier !== this.state.touchId) return;
+
+    const pageY =touchObj.pageY;
     const diffY = pageY - this.state.ogY;
    
 
@@ -172,6 +173,9 @@ class XPickerItem extends React.Component {
   render() {
     return (
       <stack
+        catchMouseDown={this.handleTouchStart.bind(this)}
+        catchMouseMove={this.handleTouchMove.bind(this)}
+        catchMouseUp={this.handleTouchEnd.bind(this)}
         catchTouchStart={this.handleTouchStart.bind(this)}
         catchTouchMove={this.handleTouchMove.bind(this)}
         onTouchEnd={this.handleTouchEnd.bind(this)}
