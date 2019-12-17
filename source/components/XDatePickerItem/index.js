@@ -52,26 +52,30 @@ class XDatePickerItem extends React.Component {
   }
 
   handleTouchStart(e) {
+    // console.log('刚开始点击了', e);
     if (this.state.touching) return;
     this.moveDateCount = 0;
-
-    this.touchY = e.touches[0].pageY; // 移动开始的位置
+   
+    var touchObj = e.type === 'touchstart' ? e.touches[0] : e;
+    this.touchY = touchObj.pageY; // 移动开始的位置
     this.translateY = this.state.translateY;
 
     this.setState({
       touching: true,
       ogTranslate: this.state.translateY,
-      touchId: e.touches[0].identifier,
-      ogY: e.touches[0].pageY - this.state.translate,
+      touchId:touchObj.identifier,
+      ogY: touchObj.pageY - this.state.translate,
       animating: false
     });
   }
 
   handleTouchMove(e) {
     if (!this.state.touching) return;
-    if (e.touches[0].identifier !== this.state.touchId) return;
-
-    const touchY = e.touches[0].pageY; // 当前的位置
+   
+    var touchObj = e.type === 'touchmove' ? e.touches[0] : e;
+    if (touchObj.identifier !== this.state.touchId) return;
+    
+    const touchY = touchObj.pageY; // 当前的位置
     const dir = touchY - this.touchY; // 移动的位置差
     const translateY = this.translateY + dir; // 现在坐标应该在的位置
     this.setState({
@@ -173,6 +177,9 @@ class XDatePickerItem extends React.Component {
   render() {
     return (
       <stack
+        catchMouseDown={this.handleTouchStart.bind(this)}
+        catchMouseMove={this.handleTouchMove.bind(this)}
+        catchMouseUp={this.handleTouchEnd.bind(this)}
         catchTouchStart={this.handleTouchStart.bind(this)}
         catchTouchMove={this.handleTouchMove.bind(this)}
         onTouchEnd={this.handleTouchEnd.bind(this)}

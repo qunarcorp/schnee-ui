@@ -168,7 +168,7 @@ class P extends React.Component {
         </div>
         <div class="item-li">
           <text class="item-li-detail">时间选择器</text>
-          <picker
+          <XPicker
             mode="time"
             value={this.state.time}
             start="09:01"
@@ -177,7 +177,7 @@ class P extends React.Component {
             onChange={this.bindTimeChange.bind(this)}
           >
             <text class="picker-text">当前选择：{this.state.time}</text>
-          </picker>
+          </XPicker>
         </div>
         <div class="item-li">
           <text class="item-li-detail">省市区选择器</text>
