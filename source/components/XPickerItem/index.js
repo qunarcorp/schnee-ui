@@ -189,7 +189,7 @@ class XPickerItem extends React.Component {
             transform: 'translateY('+this.state.translate +'PX)'
           }}
         >
-          {this.props.items.map(function(item, index) {
+          {this.props.items.map((item, index) => {
             return (
               <text
                 key={item.keyItem}
