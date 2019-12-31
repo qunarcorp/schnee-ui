@@ -15,6 +15,7 @@ import XSwiper from './components/XSwiper';
 import XSwitch from './components/XSwitch';
 import XWebview from './components/XWebview';
 
+
 import Audio from './h5/components/Audio';
 import ErrorBoundary from './h5/components/ErrorBoundary';
 import Image from './h5/components/Image';
@@ -31,6 +32,7 @@ import SwiperItem from './h5/components/SwiperItem';
 import TabBar from './h5/components/TabBar';
 import Textarea from './h5/components/Textarea';
 import TitleBar from './h5/components/TitleBar';
+
 
 const externalComponents = {
     XButton,
@@ -70,7 +72,4 @@ const h5Components = {
     TitleBar
 };
 
-export default {
-    ...externalComponents,
-    ...h5Components
-};
+export default { ...externalComponents, ...h5Components };

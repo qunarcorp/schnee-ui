@@ -1,5 +1,5 @@
 import React from 'react';
-import { MAX_VIEWPORT_WIDTH, MIN_VIEWPORT_WIDTH } from '@internalConsts/runtime/index';
+import { MAX_VIEWPORT_WIDTH } from '@internalConsts/runtime/index';
 
 export default function calculateRem(App) {
     return class RootRemAutoCalculated extends React.Component {
@@ -12,7 +12,7 @@ export default function calculateRem(App) {
 
         calculateRem() {
             let  clientWidth  = this.rootElement.clientWidth;
-            if(clientWidth  >= MAX_VIEWPORT_WIDTH){
+            if (clientWidth  >= MAX_VIEWPORT_WIDTH){
                 clientWidth = MAX_VIEWPORT_WIDTH;
             }
             let normalizeWidth = clientWidth * 100 / 750;

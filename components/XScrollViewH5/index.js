@@ -13,7 +13,7 @@ class XScrollViewH5 extends React.Component {
                     'onScrollToUpper 必须为函数类型'
                 );
             }
-            this.onScrollToUpper = this.debounce(this.props.onScrollToUpper, 100, this)
+            this.onScrollToUpper = this.debounce(this.props.onScrollToUpper, 100, this);
         }
 
         

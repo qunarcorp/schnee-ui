@@ -1,43 +1,43 @@
 import React from 'react';
 
 export default class Audio extends React.Component {
-  constructor(props) {
-    super(props);
-    // if(React.appType === 'h5' ){
-    // } else if(React.appType === 'quick') {
-    // }
-    
-    this.onPlay = this.onPlay.bind(this);
-    this.onPause = this.onPause.bind(this);
-    this.onError = this.onError.bind(this);
-    this.onEnded = this.onEnded.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        // if(React.appType === 'h5' ){
+        // } else if(React.appType === 'quick') {
+        // }
 
-  onPlay() {
-    this.props.onPlay && this.props.onPlay();
-  }
+        this.onPlay = this.onPlay.bind(this);
+        this.onPause = this.onPause.bind(this);
+        this.onError = this.onError.bind(this);
+        this.onEnded = this.onEnded.bind(this);
+    }
 
-  onPause() {
-    this.props.onPause && this.props.onPause();
-  }
+    onPlay() {
+        this.props.onPlay && this.props.onPlay();
+    }
 
-  onError() {
-    this.props.onError && this.props.onError();
-  }
+    onPause() {
+        this.props.onPause && this.props.onPause();
+    }
 
-  onEnded() {
-    this.props.onEnded && this.props.onEnded();
-  }
+    onError() {
+        this.props.onError && this.props.onError();
+    }
 
-  render() {
-    return (
-      <audio
-          {...this.props}
-          onplay={this.onPlay}
-          onended={this.onEnded}
-          onpause={this.onPause}
-          onerror={this.onError}
-        />
-    );
-  }
+    onEnded() {
+        this.props.onEnded && this.props.onEnded();
+    }
+
+    render() {
+        return (
+            <audio
+                {...this.props}
+                onplay={this.onPlay}
+                onended={this.onEnded}
+                onpause={this.onPause}
+                onerror={this.onError}
+            />
+        );
+    }
 }

@@ -110,6 +110,7 @@ class XSlider extends React.Component {
             }, 1000);
         } else if (ANU_ENV === 'bu'){  // 百度小程序中获取进度条的长度
             setTimeout(() => {
+                // eslint-disable-next-line no-undef
                 const query = swan.createSelectorQuery().in(this.wx);
                 query.select('.anu-slider-track').boundingClientRect(ret => {
                     this. execAfterGetPogressBar.call(that, ret.width);
@@ -117,8 +118,10 @@ class XSlider extends React.Component {
                 query.exec();
             }, 300);
         } else if (ANU_ENV === 'quick'){
+            // eslint-disable-next-line no-console
             console.log('快应用 还没有做兼容');
         } else if (ANU_ENV === 'tt'){
+            // eslint-disable-next-line no-console
             console.log('头条 还没有做兼容');
         }
     }
