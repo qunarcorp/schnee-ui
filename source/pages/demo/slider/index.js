@@ -25,7 +25,6 @@ class P extends React.Component {
         // console.log('event:', idx);
 
         let result = idx.detail.value;
-        console.log('result', result);
         this.setState({
             start: result[0],
             end: result[1],
@@ -34,7 +33,6 @@ class P extends React.Component {
     }
 
     clear(){
-        console.log('清楚');
         this.setState({
             start: 0,
             end: 100
