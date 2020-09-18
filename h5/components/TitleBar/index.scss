@@ -24,6 +24,15 @@
     top: 0;
     left: 0;
 }
+
+.__internal__Header-share {
+    width: 48px;
+    height: 100%;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .__internal__Header-back:active {
     background-color: rgba(255, 255, 255, 0.15);
 }

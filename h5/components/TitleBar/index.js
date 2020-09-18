@@ -18,6 +18,15 @@ class TitleBar extends Component {
         React.api.navigateBack();
     }
 
+    handleQhShare() {
+        if (global && global.qh) {
+            qh.shareAppMessage({
+                path: location.pathname.replace(/\/web/,'') + location.search
+            })
+        }
+       
+    }
+
     render() {
         const {
             titleBarHeight,
@@ -25,6 +34,7 @@ class TitleBar extends Component {
             navigationBarTitleText,
             navigationBarBackgroundColor,
             backButton = false,
+            qhShare = true
             // animation: { duration, timingFunc }
         } = this.props;
         return (
@@ -49,6 +59,16 @@ class TitleBar extends Component {
                         {navigationBarTitleText}
                     </div>
                 </div>
+
+                { qhShare ? (
+                    <div
+                        className="__internal__Header-share"
+                        onClick={this.handleQhShare}
+                    >
+                        分享
+                    </div>
+                ) : null}
+                
             </header>
         );
     }
