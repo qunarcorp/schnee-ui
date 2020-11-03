@@ -55,8 +55,8 @@ class XDatePickerItem extends React.Component {
     // console.log('刚开始点击了', e);
     if (this.state.touching) return;
     this.moveDateCount = 0;
-   
-    var touchObj = e.type === 'touchstart' ? e.touches[0] : e;
+    var touches = e.touches || e.changedTouches;
+    var touchObj = e.type === 'touchstart' ? touches[0] : e;
     this.touchY = touchObj.pageY; // 移动开始的位置
     this.translateY = this.state.translateY;
 
@@ -71,8 +71,9 @@ class XDatePickerItem extends React.Component {
 
   handleTouchMove(e) {
     if (!this.state.touching) return;
-   
-    var touchObj = e.type === 'touchmove' ? e.touches[0] : e;
+    
+    var touches = e.touches || e.changedTouches;
+    var touchObj = e.type === 'touchmove' ? touches[0] : e;
     if (touchObj.identifier !== this.state.touchId) return;
     
     const touchY = touchObj.pageY; // 当前的位置

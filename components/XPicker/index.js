@@ -225,7 +225,7 @@ class XPicker extends React.Component {
       <div catchTouchMove={this.handleTouchMove}>
         <div catchTap={this.click.bind(this)}>{this.props.children}</div>
         <XOverlay visible={this.state.show} onClose={this.cancelClick.bind(this)} />
-        <div id="quist-picker" class={'quist-picker  ' + this.state.animationClass} hidden={!this.state.show}>
+        <div id="quist-picker" class={'quist-picker  '} hidden={!this.state.show}>
         <div class="quist-picker-title">
           <text class="quist-picker-cancel" catchTap={this.cancelClick.bind(this)}>
             {this.props.cancelText}
