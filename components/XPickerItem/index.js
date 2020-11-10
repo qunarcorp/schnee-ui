@@ -78,7 +78,8 @@ class XPickerItem extends React.Component {
 
   handleTouchStart(e) {
     if (this.state.touching || this.props.items.length <= 1) return;
-    var touchObj = e.type === 'touchstart' ? e.touches[0] : e;
+    var touches = e.touches || e.changedTouches;
+    var touchObj = e.type === 'touchstart' ? touches[0] : e;
     this.setState({
       touching: true,
       ogTranslate: this.state.translate,
@@ -91,7 +92,8 @@ class XPickerItem extends React.Component {
 
   handleTouchMove(e) {
     if (!this.state.touching || this.props.items.length <= 1) return;
-    var touchObj =  e.type === 'touchmove' ? e.touches[0] : e;
+    var touches = e.touches || e.changedTouches;
+    var touchObj =  e.type === 'touchmove' ? touches[0] : e;
 
     if (touchObj.identifier !== this.state.touchId) return;
 
